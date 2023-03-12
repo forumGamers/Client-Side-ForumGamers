@@ -1,5 +1,8 @@
 import { AES, enc } from "crypto-ts";
-require("dotenv").config();
+import { config } from "dotenv";
+
+config();
+
 const key: string = process.env.ENCRYPTION_KEY as string;
 
 export default abstract class Encryption {
