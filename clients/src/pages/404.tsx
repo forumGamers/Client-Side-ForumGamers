@@ -14,7 +14,7 @@ export default function Custom404(): JSX.Element {
           The page you're looking for doesn't exist.
         </div>
         <p onClick={() => router.back()} className="btn">
-          Go back home
+          Go back
         </p>
       </div>
       <div className="image-container">
