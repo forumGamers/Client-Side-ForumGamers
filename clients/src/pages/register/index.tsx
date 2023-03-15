@@ -6,21 +6,7 @@ import { REGISTER } from "@/queries/user";
 import Loading from "@/components/loading";
 import { swalError } from "@/helper/swal";
 
-export function getStaticProps() {
-  const { auth } = require("../../constant/index");
-
-  return {
-    props: {
-      access: auth,
-    },
-  };
-}
-
-export default function RegisterPage({
-  access,
-}: {
-  access: string;
-}): JSX.Element {
+export default function RegisterPage(): JSX.Element {
   const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [username, setUserName] = useState("");
@@ -46,7 +32,7 @@ export default function RegisterPage({
   const nextPage = () => (page <= 5 ? setPage(page + 1) : setErrorMsg("Limit"));
 
   const previousPage = () =>
-    page <= 1 ? setPage(page - 1) : setErrorMsg("Limit");
+    page >= 1 ? setPage(page - 1) : setErrorMsg("Limit");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +51,7 @@ export default function RegisterPage({
       body: payload,
       headers: {
         "Content-Type": "application/json",
-        access,
+        access: process.env.KEY as string,
       },
     });
 
@@ -88,18 +74,20 @@ export default function RegisterPage({
 
   if (page === 1) {
     return (
-      <div className="container">
-        <h2>Register your account</h2>
-        <label>
-          Nama lengkap
-          <input
-            type="text"
-            value={fullName}
-            onChange={(event) => setFullName(event.target.value)}
-            required
-          />
-        </label>
-        <button onClick={nextPage}>next</button>
+      <div className="body">
+        <div className="container">
+          <h2>Register your account</h2>
+          <label>
+            Nama lengkap
+            <input
+              type="text"
+              value={fullName}
+              onChange={(event) => setFullName(event.target.value)}
+              required
+            />
+          </label>
+          <button onClick={nextPage}>next</button>
+        </div>
       </div>
     );
   } else if (page === 2) {

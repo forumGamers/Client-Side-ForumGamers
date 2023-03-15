@@ -1,64 +1,88 @@
+.body {
+  background-color: rgba(91, 112, 131, 0.4);
+}
+
 .container {
-  max-width: 400px;
-  margin: 0 auto 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 10% auto;
+  width: 400px;
+  padding: 40px;
+  border: 1px solid #e6ecf0;
+  border-radius: 4px;
+  background-color: #000;
 }
 
 h2 {
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #1da1f2;
 }
 
 label {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  text-align: left;
-  font-size: 18px;
-  width: 100%;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-input {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  margin-top: 10px;
+input[type="text"],
+input[type="password"] {
   width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e6ecf0;
+  margin-bottom: 16px;
+  background-color: #fff;
+  color: #1c1e21;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
 }
 
 button {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #2196f3;
+  display: inline-block;
+  background-color: #1da1f2;
   color: #fff;
-  font-size: 18px;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-weight: bold;
+  border: none;
   cursor: pointer;
-  margin-top: 20px;
+  transition: all 0.2s ease-in-out;
 }
 
 button:hover {
-  background-color: #0d8bf2;
+  background-color: #0c8de4;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
-[type="checkbox"] {
-  margin-right: 10px;
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.term-and-sheet {
+  margin-bottom: 16px;
+}
+
+.term-and-sheet label {
+  font-weight: normal;
+  font-size: 12px;
+  color: #1c1e21;
+  margin-bottom: 0;
+}
+
+.term-and-sheet a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.term-and-sheet a:hover {
+  text-decoration: underline;
 }

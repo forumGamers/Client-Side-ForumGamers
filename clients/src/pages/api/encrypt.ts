@@ -11,8 +11,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     for (const key in req.body) {
       if (
-        (!key.toLowerCase().includes("password") ||
-          key.toLowerCase() === "access") &&
+        !key.toLowerCase().includes("password") &&
         validateChar(req.body[key])
       )
         return res

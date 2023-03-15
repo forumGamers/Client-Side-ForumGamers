@@ -2,7 +2,7 @@ import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "@/lib/apolloClient";
 import { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const client = useApollo(pageProps.initialApolloState);
 
   return (
@@ -11,5 +11,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ApolloProvider>
   );
 }
-
-export default MyApp;
