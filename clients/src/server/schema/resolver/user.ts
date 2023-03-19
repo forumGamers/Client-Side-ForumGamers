@@ -22,7 +22,7 @@ export const userResolver = {
           },
         });
 
-        if (status !== 201) throw { message: userResponse?.message, status };
+        if (status !== 201) throw { message: userResponse?.message };
 
         await axios({
           method: "POST",
@@ -39,7 +39,6 @@ export const userResolver = {
 
         return { message: "success" };
       } catch (err) {
-        console.log(err);
         errorHandling(err);
       }
     },

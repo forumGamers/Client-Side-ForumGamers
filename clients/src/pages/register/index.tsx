@@ -16,17 +16,15 @@ export default function RegisterPage(): JSX.Element {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [page, setPage] = useState(1);
   const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const [register, { data }] = useMutation(REGISTER, {
+  const [register, { loading }] = useMutation(REGISTER, {
     onError: (error) => {
-      console.log(error);
-      setErrorMsg(error.name);
+      setErrorMsg(error.message);
       swalError(errorMsg);
-      setPage(5);
+      setPage(1);
     },
     onCompleted(data, clientOptions) {
-      router.push("/");
+      router.push("/login");
     },
   });
 
@@ -37,36 +35,10 @@ export default function RegisterPage(): JSX.Element {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    // const payload = JSON.stringify({
-    //   fullName,
-    //   username,
-    //   email,
-    //   password,
-    //   phoneNumber,
-    // });
-
-    // const resp = await fetch("/api/encrypt", {
-    //   method: "post",
-    //   body: payload,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     access: process.env.KEY as string,
-    //   },
-    // });
-
-    // const dataSend = await resp.json();
-    // console.log(dataSend.data);
-
-    const a = await register({
+    await register({
       variables: {
         register: {
-          // fullName: dataSend.data.fullName,
-          // username: dataSend.data.username,
-          // email: dataSend.data.email,
-          // password: dataSend.data.password,
-          // phoneNumber: dataSend.data.phoneNumber,
           fullName,
           username,
           email,
@@ -75,9 +47,6 @@ export default function RegisterPage(): JSX.Element {
         },
       },
     });
-    console.log(a, "<<<<<<<");
-
-    setLoading(false);
   };
 
   if (loading) return <Loading />;
