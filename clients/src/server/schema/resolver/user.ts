@@ -1,4 +1,4 @@
-import { registerInput } from "@/server/interfaces/user";
+import { registerInput, loginInput } from "@/server/interfaces/user";
 import errorHandling from "@/server/middlewares/errorHandler";
 import axios from "axios";
 import { userUrl, eventUrl } from "@/server/constants";
@@ -38,6 +38,33 @@ export const userResolver = {
         });
 
         return { message: "success" };
+      } catch (err) {
+        errorHandling(err);
+      }
+    },
+    login: async (_: never, args: { login: loginInput }) => {
+      try {
+        const { login } = args;
+
+        const { data, status } = await axios({
+          method: "POST",
+          url: `${userUrl}/auth/login`,
+          data: login,
+          headers: {
+            Origin: process.env.ORIGIN,
+          },
+        });
+
+        if (status !== 200) throw { message: data?.message };
+
+        const { access_token, email, username, imageUrl } = data;
+
+        return {
+          access_token,
+          email,
+          username,
+          imageUrl,
+        };
       } catch (err) {
         errorHandling(err);
       }

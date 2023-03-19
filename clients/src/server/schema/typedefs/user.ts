@@ -5,6 +5,13 @@ export const userTypeDefs = gql`
     message: String!
   }
 
+  type access_token {
+    access_token: String!
+    username: String!
+    email: String!
+    imageUrl: String!
+  }
+
   input registerInput {
     fullName: String!
     username: String!
@@ -13,11 +20,17 @@ export const userTypeDefs = gql`
     phoneNumber: String!
   }
 
+  input loginInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
     hello: String
   }
 
   type Mutation {
     register(register: registerInput!): message!
+    login(login: loginInput!): access_token!
   }
 `;
