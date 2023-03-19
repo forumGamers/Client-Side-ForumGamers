@@ -20,9 +20,10 @@ export default function RegisterPage(): JSX.Element {
 
   const [register, { data }] = useMutation(REGISTER, {
     onError: (error) => {
+      console.log(error);
       setErrorMsg(error.name);
       swalError(errorMsg);
-      setPage(1);
+      setPage(5);
     },
     onCompleted(data, clientOptions) {
       router.push("/");
@@ -32,40 +33,49 @@ export default function RegisterPage(): JSX.Element {
   const nextPage = () => (page <= 5 ? setPage(page + 1) : setErrorMsg("Limit"));
 
   const previousPage = () =>
-    page >= 1 ? setPage(page - 1) : setErrorMsg("Limit");
+    page > 1 ? setPage(page - 1) : setErrorMsg("Limit");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const payload = JSON.stringify({
-      fullName,
-      username,
-      email,
-      password,
-      phoneNumber,
-    });
+    // const payload = JSON.stringify({
+    //   fullName,
+    //   username,
+    //   email,
+    //   password,
+    //   phoneNumber,
+    // });
 
-    const resp = await fetch("/api/encrypt", {
-      method: "post",
-      body: payload,
-      headers: {
-        "Content-Type": "application/json",
-        access: process.env.KEY as string,
-      },
-    });
+    // const resp = await fetch("/api/encrypt", {
+    //   method: "post",
+    //   body: payload,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     access: process.env.KEY as string,
+    //   },
+    // });
 
-    const data = await resp.json();
+    // const dataSend = await resp.json();
+    // console.log(dataSend.data);
 
-    await register({
+    const a = await register({
       variables: {
-        fn: data.fullName,
-        un: data.username,
-        e: data.email,
-        p: data.password,
-        pn: data.phoneNumber,
+        register: {
+          // fullName: dataSend.data.fullName,
+          // username: dataSend.data.username,
+          // email: dataSend.data.email,
+          // password: dataSend.data.password,
+          // phoneNumber: dataSend.data.phoneNumber,
+          fullName,
+          username,
+          email,
+          password,
+          phoneNumber,
+        },
       },
     });
+    console.log(a, "<<<<<<<");
 
     setLoading(false);
   };
@@ -78,7 +88,12 @@ export default function RegisterPage(): JSX.Element {
         <div className="container">
           <h2>Register your account</h2>
           <label>
-            Nama lengkap
+            {errorMsg ? (
+              <div className="errorMsg">{errorMsg}</div>
+            ) : (
+              <div></div>
+            )}
+            FullName
             <input
               type="text"
               value={fullName}
@@ -94,6 +109,7 @@ export default function RegisterPage(): JSX.Element {
     return (
       <div className="container">
         <label>
+          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           email
           <input
             type="text"
@@ -103,6 +119,7 @@ export default function RegisterPage(): JSX.Element {
           />
         </label>
         <label>
+          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           Password
           <input
             type="password"
@@ -119,6 +136,7 @@ export default function RegisterPage(): JSX.Element {
     return (
       <div className="container">
         <label>
+          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           username
           <input
             type="text"
@@ -135,6 +153,7 @@ export default function RegisterPage(): JSX.Element {
     return (
       <div className="container">
         <label>
+          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           PhoneNumber
           <input
             type="text"
@@ -152,6 +171,11 @@ export default function RegisterPage(): JSX.Element {
       <div className="container">
         <form onSubmit={handleSubmit}>
           <label>
+            {errorMsg ? (
+              <div className="errorMsg">{errorMsg}</div>
+            ) : (
+              <div></div>
+            )}
             Term and sheet
             <input
               type="checkbox"
