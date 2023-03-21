@@ -18,3 +18,11 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const VERIFYUSER = gql`
+  mutation VerifyUser($token: tokenVerification!) {
+    verifyUser(token: $token) {
+      message
+    }
+  }
+`;

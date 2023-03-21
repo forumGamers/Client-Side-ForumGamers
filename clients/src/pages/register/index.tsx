@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "@/styles/pages/register.css";
 import { useMutation } from "@apollo/client";
 import { REGISTER } from "@/queries/user";
@@ -16,6 +16,12 @@ export default function RegisterPage(): JSX.Element {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [page, setPage] = useState(1);
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("access_token") || null;
+
+    if (user) router.replace("/");
+  }, [router]);
 
   const [register, { loading }] = useMutation(REGISTER, {
     onError: (error) => {

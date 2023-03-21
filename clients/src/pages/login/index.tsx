@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "@/styles/pages/login.css";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
@@ -27,6 +27,12 @@ export default function LoginPage() {
       router.push("/");
     },
   });
+
+  useEffect(() => {
+    const user = localStorage.getItem("access_token") || null;
+
+    if (user) router.replace("/");
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

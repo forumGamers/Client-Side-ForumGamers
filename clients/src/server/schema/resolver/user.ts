@@ -1,4 +1,8 @@
-import { registerInput, loginInput } from "@/server/interfaces/user";
+import {
+  registerInput,
+  loginInput,
+  tokenVerification,
+} from "@/server/interfaces/user";
 import errorHandling from "@/server/middlewares/errorHandler";
 import axios from "axios";
 import { userUrl, eventUrl } from "@/server/constants";
@@ -64,6 +68,27 @@ export const userResolver = {
           email,
           username,
           imageUrl,
+        };
+      } catch (err) {
+        errorHandling(err);
+      }
+    },
+    verifyUser: async (_: never, args: { token: tokenVerification }) => {
+      try {
+        const { token } = args;
+
+        const { data, status } = await axios({
+          method: "PATCH",
+          url: `${userUrl}/users/verify?token=${token.token}`,
+          headers: {
+            Origin: process.env.ORIGIN,
+          },
+        });
+
+        if (status !== 201) throw { message: data.message };
+
+        return {
+          message: data.message,
         };
       } catch (err) {
         errorHandling(err);

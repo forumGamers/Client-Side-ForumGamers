@@ -10,3 +10,7 @@ export type loginInput = {
   email: string;
   password: string;
 };
+
+export type tokenVerification = {
+  token: string;
+};

@@ -20,6 +20,10 @@ export const userTypeDefs = gql`
     phoneNumber: String!
   }
 
+  input tokenVerification {
+    token: String!
+  }
+
   input loginInput {
     email: String!
     password: String!
@@ -32,5 +36,6 @@ export const userTypeDefs = gql`
   type Mutation {
     register(register: registerInput!): message!
     login(login: loginInput!): access_token!
+    verifyUser(token: tokenVerification!): message
   }
 `;
