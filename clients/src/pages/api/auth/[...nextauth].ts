@@ -18,7 +18,6 @@ export default NextAuth({
       },
       async authorize(credentials) {
         try {
-          console.log(credentials);
           const { data, status } = await axios({
             method: "POST",
             url: `${userUrl}/auth/login`,
@@ -55,7 +54,6 @@ export default NextAuth({
 
           return user;
         } catch (err) {
-          console.log(err);
           return null;
         }
       },
