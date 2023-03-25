@@ -5,6 +5,27 @@ import { LOGIN } from "@/queries/user";
 import Loading from "@/components/loading";
 import { swalError } from "@/helper/swal";
 import { useRouter } from "next/router";
+import { getSession, signIn } from "next-auth/react";
+import { NextApiRequest, NextApiResponse } from "next";
+
+export async function getServerSideProps(context: {
+  req: NextApiRequest;
+  res: NextApiResponse;
+}) {
+  const session = await getSession(context);
+  console.log(session);
+
+  if (session)
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+
+  return {
+    props: {},
+  };
+}
 
 export default function LoginPage() {
   const router = useRouter();
@@ -13,20 +34,21 @@ export default function LoginPage() {
     password: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [login, { data, loading }] = useMutation(LOGIN, {
-    onError: (error) => {
-      setErrorMsg(error.message);
-      swalError(errorMsg);
-    },
-    onCompleted(data, clientOptions) {
-      localStorage.setItem("email", data.login.email);
-      localStorage.setItem("access_token", data.login.access_token);
-      localStorage.setItem("username", data.login.username);
-      localStorage.setItem("imageUrl", data.login.imageUrl);
-      router.push("/");
-    },
-  });
+  // const [login, { data, loading }] = useMutation(LOGIN, {
+  //   onError: (error) => {
+  //     setErrorMsg(error.message);
+  //     swalError(errorMsg);
+  //   },
+  //   onCompleted(data, clientOptions) {
+  //     // localStorage.setItem("email", data.login.email);
+  //     // localStorage.setItem("access_token", data.login.access_token);
+  //     // localStorage.setItem("username", data.login.username);
+  //     // localStorage.setItem("imageUrl", data.login.imageUrl);
+  //     router.push("/");
+  //   },
+  // });
 
   useEffect(() => {
     const user = localStorage.getItem("access_token") || null;
@@ -36,14 +58,21 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
-    await login({
-      variables: {
-        login: {
-          email: formData.email,
-          password: formData.password,
-        },
-      },
+    // await login({
+    //   variables: {
+    //     login: {
+    //       email: formData.email,
+    //       password: formData.password,
+    //     },
+    //   },
+    // });
+    await signIn("credentials", {
+      email: formData.email,
+      password: formData.password,
+      redirect: true,
+      callbackUrl: "/",
     });
   };
 

@@ -6,10 +6,29 @@ import {
 import errorHandling from "@/server/middlewares/errorHandler";
 import axios from "axios";
 import { userUrl, eventUrl } from "@/server/constants";
+import { signIn } from "next-auth/react";
 
 export const userResolver = {
   Query: {
-    hello: () => "hello",
+    getUserData: async (_: never, args: string) => {
+      try {
+        const { data, status } = await axios({
+          method: "GET",
+          url: `${userUrl}/users/myData`,
+          headers: {
+            Origin: process.env.ORIGIN,
+            access_token: args,
+          },
+        });
+        console.log(data);
+
+        if (status !== 200) throw { message: data.message };
+
+        return data;
+      } catch (err) {
+        errorHandling(err);
+      }
+    },
   },
 
   Mutation: {

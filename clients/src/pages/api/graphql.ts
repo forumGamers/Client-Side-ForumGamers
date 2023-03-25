@@ -8,7 +8,7 @@ type Context = {
   res: NextApiResponse;
 };
 
-const apolloServer = new ApolloServer<Context>({ schema });
+const apolloServer = new ApolloServer<Context>({ schema, introspection: true });
 
 export default startServerAndCreateNextHandler(apolloServer, {
   context: async (req, res) => ({ req, res }),

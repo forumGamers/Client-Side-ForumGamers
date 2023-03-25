@@ -26,3 +26,33 @@ export const VERIFYUSER = gql`
     }
   }
 `;
+
+export const GETUSERDATA = gql`
+  query Query {
+    getUserData {
+      id
+      fullName
+      exp
+      email
+      createdAt
+      balance
+      StoreId
+      imageUrl
+      isVerified
+      phoneNumber
+      point
+      role
+      updatedAt
+      username
+      Followings {
+        StoreId
+        UserId
+      }
+      TopUps {
+        status
+        amount
+        createdAt
+      }
+    }
+  }
+`;
