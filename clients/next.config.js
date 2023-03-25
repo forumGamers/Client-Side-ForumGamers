@@ -10,6 +10,7 @@ const nextConfig = {
     KEY: process.env.KEY,
     REDIS_HOST: process.env.REDIS_HOST,
     REDIS_PASS: process.env.REDIS_PASS,
+    secret: process.env.secret,
   },
   typescript: {
     ignoreBuildErrors: false,

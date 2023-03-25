@@ -12,9 +12,6 @@ export const LOGIN = gql`
   mutation Login($login: loginInput!) {
     login(login: $login) {
       access_token
-      email
-      username
-      imageUrl
     }
   }
 `;

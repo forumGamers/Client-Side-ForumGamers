@@ -1,6 +1,4 @@
 import { verifyToken } from "@/helper/jwt";
-import { userUrl } from "@/server/constants";
-import axios from "axios";
 import NextAuth from "next-auth";
 import credentials from "next-auth/providers/credentials";
 
@@ -9,30 +7,15 @@ export default NextAuth({
     credentials({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "Email" },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password",
+        access_token: {
+          placeholder: "access_token",
+          type: "access_token",
+          label: "access_token",
         },
       },
       async authorize(credentials) {
         try {
-          const { data, status } = await axios({
-            method: "POST",
-            url: `${userUrl}/auth/login`,
-            data: {
-              email: credentials?.email,
-              password: credentials?.password,
-            },
-            headers: {
-              Origin: process.env.ORIGIN,
-            },
-          });
-
-          if (status !== 200) throw { message: data?.message };
-
-          const payload = verifyToken(data?.access_token);
+          const payload = verifyToken(credentials?.access_token);
 
           const {
             id,
@@ -62,4 +45,5 @@ export default NextAuth({
   pages: {
     signIn: "/login",
   },
+  
 });

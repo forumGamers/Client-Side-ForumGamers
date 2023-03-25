@@ -7,9 +7,6 @@ export const userTypeDefs = gql`
 
   type access_token {
     access_token: String!
-    username: String!
-    email: String!
-    imageUrl: String!
   }
 
   type following {

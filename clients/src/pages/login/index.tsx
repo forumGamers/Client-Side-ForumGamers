@@ -5,13 +5,14 @@ import { swalError } from "@/helper/swal";
 import { useRouter } from "next/router";
 import { getSession, signIn } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "@/queries/user";
 
 export async function getServerSideProps(context: {
   req: NextApiRequest;
   res: NextApiResponse;
 }) {
-  const session = await getSession(context);
-  console.log(session);
+  const session = (await getSession(context)) || null;
 
   if (session)
     return {
@@ -32,22 +33,32 @@ export default function LoginPage() {
     password: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const [login, { loading }] = useMutation(LOGIN, {
+    onError: (error) => {
+      setErrorMsg(error.message);
+      swalError(errorMsg);
+    },
+    async onCompleted(data, clientOptions) {
+      await signIn("credentials", {
+        access_token: data.login.access_token,
+        redirect: false,
+      });
+      router.push("/");
+    },
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    const resp = await signIn("credentials", {
-      email: formData.email,
-      password: formData.password,
+    await login({
+      variables: {
+        login: {
+          email: formData.email,
+          password: formData.password,
+        },
+      },
     });
-    console.log(resp, "<<<<<");
-
-    if (resp?.error) setErrorMsg(resp.error);
-
-    setLoading(false);
-    // router.push("/");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
