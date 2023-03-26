@@ -36,6 +36,7 @@ export const userTypeDefs = gql`
     imageUrl: String
     phoneNumber: String
     StoreId: Int
+    StoreName: String
     role: String
     point: Int
     exp: Int
