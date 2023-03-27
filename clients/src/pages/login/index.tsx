@@ -7,6 +7,7 @@ import { getSession, signIn } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
+import Link from "next/link";
 
 export async function getServerSideProps(context: {
   req: NextApiRequest;
@@ -108,13 +109,13 @@ export default function LoginPage() {
         </button>
       </form>
       <div className="login-links-container">
-        <a href="#" className="login-link">
+        <Link href="#" className="login-link">
           Forgot password?
-        </a>
+        </Link>
         <span className="login-divider">·</span>
-        <a href="/register" className="login-link">
+        <Link href="/register" className="login-link">
           Not have an account yet? Sign Up
-        </a>
+        </Link>
       </div>
     </div>
   );

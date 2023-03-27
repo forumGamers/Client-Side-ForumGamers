@@ -5,6 +5,12 @@ import { useLazyQuery } from "@apollo/client";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import "@/styles/pages/user/index.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+const blankProfile =
+  "https://ik.imagekit.io/b8ugipzgo/FrontEnd/guest.webp?updatedAt=1679878710354";
+const blankBackground =
+  "https://ik.imagekit.io/b8ugipzgo/FrontEnd/default_background?updatedAt=1679931892521";
 
 export default function UserProfile(): JSX.Element {
   const router = useRouter();
@@ -93,19 +99,38 @@ export default function UserProfile(): JSX.Element {
   };
 
   if (status === "loading" || loading) return <Loading />;
+
   return (
-    <div>
-      <p>{user.id}</p>
-      <p>{user.fullName}</p>
-      <p>{user.username}</p>
-      <p>{user.imageUrl || "-"}</p>
-      <p>{user.exp}</p>
-      <p>{user.email}</p>
-      <p>{user.point}</p>
-      <p>{user.isVerified}</p>
-      <p>{user.role}</p>
-      <p>{user.balance}</p>
-      <button onClick={s}>sign out</button>
-    </div>
+    <section className="container">
+      <div className="coverImage">
+        <LazyLoadImage src={blankBackground} alt="cover" />
+      </div>
+      <div className="avatar">
+        <LazyLoadImage src={user.imageUrl || blankProfile} alt="avatar" />
+      </div>
+      <div className="userInfo">
+        <h1 className="name">{user.username}</h1>
+        <span className="username">@{user.username}</span>
+        <div className="stats">
+          <div className="stat">
+            <span className="statLabel">Tweets</span>
+            <span className="statValue">user.tweets</span>
+          </div>
+          <div className="stat">
+            <span className="statLabel">Following</span>
+            <span className="statValue">{user.Followings.length}</span>
+          </div>
+          <div className="stat">
+            <span className="statLabel">Point</span>
+            <span className="statValue">{user.point}</span>
+          </div>
+          <div className="stat">
+            <span className="statLabel">EXP</span>
+            <span className="statValue">{user.exp}</span>
+          </div>
+        </div>
+        <div className="bio">testing aja</div>
+      </div>
+    </section>
   );
 }
