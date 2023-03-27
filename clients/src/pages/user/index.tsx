@@ -26,6 +26,7 @@ export default function UserProfile(): JSX.Element {
         role,
         username,
         Followings,
+        StoreName,
       } = data.getUserData;
 
       setUser({
@@ -41,7 +42,7 @@ export default function UserProfile(): JSX.Element {
         role,
         username,
         Followings,
-        StoreName: "s",
+        StoreName,
       });
     },
   });
@@ -62,7 +63,7 @@ export default function UserProfile(): JSX.Element {
     role: "",
     point: "",
     isVerified: false,
-    imageUrl: null,
+    imageUrl: "",
     balance: 0,
     StoreName: "",
     exp: 0,

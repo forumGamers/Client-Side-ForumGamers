@@ -5,7 +5,7 @@ import {
 } from "@/server/interfaces/user";
 import errorHandling from "@/server/middlewares/errorHandler";
 import axios from "axios";
-import { userUrl, eventUrl } from "@/server/constants";
+import { userUrl, eventUrl, storeUrl } from "@/server/constants";
 
 export const userResolver = {
   Query: {
@@ -21,6 +21,19 @@ export const userResolver = {
         });
 
         if (status !== 200) throw { message: data.message };
+
+        if (data?.StoreId) {
+          const { data: store } = await axios({
+            method: "GET",
+            url: `${storeUrl}/api/store/name`,
+            headers: {
+              Origin: process.env.ORIGIN,
+              id: data.id,
+            },
+          });
+
+          data.StoreName = store;
+        }
 
         return data;
       } catch (err) {

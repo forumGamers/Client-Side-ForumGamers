@@ -42,6 +42,7 @@ export const GETUSERDATA = gql`
       phoneNumber
       role
       StoreId
+      StoreName
     }
   }
 `;
