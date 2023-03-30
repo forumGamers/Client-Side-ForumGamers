@@ -25,24 +25,33 @@ export const VERIFYUSER = gql`
 `;
 
 export const GETUSERDATA = gql`
-  query Query($accessToken: String!) {
+  query GetUserData($accessToken: String!) {
     getUserData(access_token: $accessToken) {
-      email
-      fullName
-      point
-      balance
-      exp
-      username
       Followings {
         StoreId
       }
+      Store {
+        background
+        description
+        id
+        image
+        name
+      }
+      TopUps {
+        amount
+        status
+      }
+      balance
+      email
+      exp
+      fullName
       id
       imageUrl
       isVerified
       phoneNumber
+      point
       role
-      StoreId
-      StoreName
+      username
     }
   }
 `;

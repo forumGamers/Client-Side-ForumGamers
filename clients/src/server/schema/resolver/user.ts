@@ -25,14 +25,14 @@ export const userResolver = {
         if (data?.StoreId) {
           const { data: store } = await axios({
             method: "GET",
-            url: `${storeUrl}/api/store/name`,
+            url: `${storeUrl}/store/${data?.StoreId}`,
             headers: {
               Origin: process.env.ORIGIN,
-              id: data.id,
+              storeId: data.StoreId,
             },
           });
 
-          data.StoreName = store;
+          data.Store = store;
         }
 
         return data;

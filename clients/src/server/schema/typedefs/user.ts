@@ -26,6 +26,14 @@ export const userTypeDefs = gql`
     updatedAt: String
   }
 
+  type store {
+    id: ID
+    name: String
+    image: String
+    background: String
+    description: String
+  }
+
   type user {
     id: ID
     fullName: String
@@ -36,7 +44,6 @@ export const userTypeDefs = gql`
     imageUrl: String
     phoneNumber: String
     StoreId: Int
-    StoreName: String
     role: String
     point: Int
     exp: Int
@@ -44,6 +51,7 @@ export const userTypeDefs = gql`
     updatedAt: String
     Followings: [following]
     TopUps: [topUp]
+    Store: store
   }
 
   input registerInput {

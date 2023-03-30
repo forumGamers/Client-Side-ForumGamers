@@ -36,6 +36,28 @@
   object-fit: cover;
 }
 
+.store {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  height: auto;
+  margin-left: 90%;
+  text-align: right;
+  right: 0;
+  position: relative;
+}
+
+.store-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 25%;
+  object-fit: cover;
+}
+
 .avatar :hover {
   transform: scale(1.1);
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
@@ -72,6 +94,7 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .stat {

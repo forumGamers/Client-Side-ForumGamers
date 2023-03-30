@@ -11,6 +11,8 @@ const blankProfile =
   "https://ik.imagekit.io/b8ugipzgo/FrontEnd/guest.webp?updatedAt=1679878710354";
 const blankBackground =
   "https://ik.imagekit.io/b8ugipzgo/FrontEnd/default_background?updatedAt=1679931892521";
+const blackStoreImage =
+  "https://ik.imagekit.io/b8ugipzgo/FrontEnd/Placeholder_view_vector.svg.png?updatedAt=1680189187245";
 
 export default function UserProfile(): JSX.Element {
   const router = useRouter();
@@ -32,7 +34,7 @@ export default function UserProfile(): JSX.Element {
         role,
         username,
         Followings,
-        StoreName,
+        Store,
       } = data.getUserData;
 
       setUser({
@@ -48,7 +50,7 @@ export default function UserProfile(): JSX.Element {
         role,
         username,
         Followings,
-        StoreName,
+        Store,
       });
     },
   });
@@ -71,7 +73,7 @@ export default function UserProfile(): JSX.Element {
     isVerified: false,
     imageUrl: "",
     balance: 0,
-    StoreName: "",
+    Store: {} as any,
     exp: 0,
     Followings: [],
   });
@@ -108,6 +110,26 @@ export default function UserProfile(): JSX.Element {
       <div className="avatar">
         <LazyLoadImage src={user.imageUrl || blankProfile} alt="avatar" />
       </div>
+      {user.Store?.name ? (
+        <div className="store">
+          {user.Store?.image ? (
+            <LazyLoadImage
+              src={user.Store?.image}
+              alt="store img"
+              className="store-img"
+            />
+          ) : (
+            <LazyLoadImage
+              src={blackStoreImage}
+              alt="store img"
+              className="store-img"
+            />
+          )}
+          <p>{user.Store?.name}</p>
+        </div>
+      ) : (
+        <div className="store"></div>
+      )}
       <div className="userInfo">
         <h1 className="name">{user.username}</h1>
         <span className="username">@{user.username}</span>
@@ -131,6 +153,7 @@ export default function UserProfile(): JSX.Element {
         </div>
         <div className="bio">testing aja</div>
       </div>
+      <button onClick={s}>sign out</button>
     </section>
   );
 }
