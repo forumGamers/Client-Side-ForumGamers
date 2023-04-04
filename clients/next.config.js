@@ -1,11 +1,3 @@
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  child-src example.com;
-  style-src 'self' example.com;
-  font-src 'self';  
-`;
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -16,6 +8,9 @@ const nextConfig = {
     ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
     SECRET: process.env.SECRET,
     KEY: process.env.KEY,
+    REDIS_HOST: process.env.REDIS_HOST,
+    REDIS_PASS: process.env.REDIS_PASS,
+    secret: process.env.secret,
   },
   typescript: {
     ignoreBuildErrors: false,
@@ -36,10 +31,6 @@ const nextConfig = {
           {
             key: "X-Content-Type-Options",
             value: "nosniff",
-          },
-          {
-            key: "Content-Security-Policy",
-            value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
           },
         ],
       },
