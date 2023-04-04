@@ -5,7 +5,7 @@ import {
 } from "@/server/interfaces/user";
 import errorHandling from "@/server/middlewares/errorHandler";
 import axios from "axios";
-import { userUrl, eventUrl, storeUrl } from "@/server/constants";
+import { userUrl, eventUrl, storeUrl, tourUrl } from "@/server/constants";
 
 export const userResolver = {
   Query: {
@@ -36,6 +36,33 @@ export const userResolver = {
         }
 
         return data;
+      } catch (err) {
+        errorHandling(err);
+      }
+    },
+    getUserAchievement: async (
+      _: never,
+      args: { access_token: string; gameId: string }
+    ) => {
+      try {
+        const { access_token, gameId } = args;
+
+        const { data: userAchievement } = await axios({
+          method: "GET",
+          url: `${userUrl}/achievement/`,
+          headers: {
+            access_token,
+            Origin: process.env.ORIGIN,
+          },
+        });
+
+        const { data: achievementData } = await axios({
+          method: "GET",
+          url: `${tourUrl}/achievement/${gameId}`,
+          headers: {
+            Origin: process.env.ORIGIN,
+          },
+        });
       } catch (err) {
         errorHandling(err);
       }
