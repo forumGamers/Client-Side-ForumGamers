@@ -11,6 +11,11 @@
   background-color: #000;
 }
 
+.errorMsg {
+  font-size: medium;
+  color: white;
+}
+
 h2 {
   font-size: 22px;
   font-weight: bold;
@@ -23,6 +28,7 @@ label {
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 8px;
+  color: white;
 }
 
 input[type="text"],
