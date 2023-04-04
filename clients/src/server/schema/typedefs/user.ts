@@ -34,6 +34,21 @@ export const userTypeDefs = gql`
     description: String
   }
 
+  type game {
+    id: String
+    name: String
+    type: String
+    image: String
+    description: String
+  }
+
+  type achievement {
+    id: ID
+    name: String
+    image: String
+    Game: game
+  }
+
   type user {
     id: ID
     fullName: String
@@ -73,6 +88,7 @@ export const userTypeDefs = gql`
 
   type Query {
     getUserData(access_token: String!): user
+    getUserAchievement(access_token: String!, gameId: String!): [achievement]
   }
 
   type Mutation {
