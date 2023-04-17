@@ -9,6 +9,8 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
 import Link from "next/link";
 
+
+
 export async function getServerSideProps(context: {
   req: NextApiRequest;
   res: NextApiResponse;
@@ -75,48 +77,56 @@ export default function LoginPage() {
   if (errorMsg) swalError(errorMsg);
 
   return (
-    <div className="login-container">
-      <h2 className="login-title">Log in to your account</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="login-input-container">
-          <label htmlFor="email" className="login-label">
-            Email
-          </label>
-          <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="login-input"
-          />
+    <div className="container d-flex justify-content-center align-items-center">
+      <div className="img-bg-wp d-flex justify-content-center align-items-center">
+        <div className="login-wrapper">
+          <h2 className="login-title">LOGIN</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="login-input-wrapper">
+              <label htmlFor="email" className="login-label">
+                Email
+              </label>
+              <input
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="login-input border border-secondary rounded-3"
+                placeholder="Masukkan Email Anda" />
+            </div>
+            <div className="login-input-wrapper">
+              <label htmlFor="password" className="login-label">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="login-input border border-secondary rounded-3"
+                placeholder="Masukkan Password yang Sesuai" />
+            </div>
+            <button type="submit" className="login-button ">
+              Log in
+            </button>
+          </form>
+          <div className="login-links-wrapper">
+            <Link href="#" className="login-link">
+              Forgot password?
+            </Link>
+            <span className="login-divider">  </span>
+            <Link href="/register" className="login-link">
+              Not have an account yet? Sign Up
+            </Link>
+          </div>
+          <div>
+            <Link href="https://ik.imagekit.io/b8ugipzgo/FrontEnd/joystick.png?updatedAt=1681635187372" className="joystick">
+            </Link>
+          </div>
         </div>
-        <div className="login-input-container">
-          <label htmlFor="password" className="login-label">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="login-input"
-          />
-        </div>
-        <button type="submit" className="login-button">
-          Log in
-        </button>
-      </form>
-      <div className="login-links-container">
-        <Link href="#" className="login-link">
-          Forgot password?
-        </Link>
-        <span className="login-divider">·</span>
-        <Link href="/register" className="login-link">
-          Not have an account yet? Sign Up
-        </Link>
       </div>
-    </div>
+      </div>
   );
 }
