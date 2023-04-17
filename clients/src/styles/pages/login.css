@@ -3,7 +3,11 @@ html,
 body {
   padding: 0;
   margin: 0;
+<<<<<<< HEAD
   font-family: 'Silkscreen', cursive;
+=======
+  font-family: "Silkscreen", cursive;
+>>>>>>> 960c46b39ab4a7fcc4245644300fb0e3c54a278b
 }
 
 :root {
