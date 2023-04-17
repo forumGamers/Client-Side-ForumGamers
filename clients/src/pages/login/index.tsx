@@ -123,9 +123,14 @@ export default function LoginPage() {
               Not have an account yet? Sign Up
             </Link>
           </div>
-          <div>
-            <Link href={joystickImage} className="joystick"></Link>
+          <div className="joystick">
+            <div className="set">
+              <div><Link href={joystickImage}></Link></div>
+            </div>
           </div>
+        </div>
+        <div className="image-wrapper">
+        <h2>apakabar</h2>
         </div>
       </div>
     </div>
