@@ -1,19 +1,19 @@
 *,
 html,
-body{
-    padding: 0;
-    margin: 0;
-    /*font-family: 'Silkscreen', cursive;*/
+body {
+  padding: 0;
+  margin: 0;
+  /*font-family: 'Silkscreen', cursive;*/
 }
 
-:root{
-    --main-background: #fff;
-    --sec-background: rgba(141, 60, 150, 1);
-    --txt-primary: #f7f7f7;
-    --txt-secondary: #222;
+:root {
+  --main-background: #fff;
+  --sec-background: rgba(141, 60, 150, 1);
+  --txt-primary: #f7f7f7;
+  --txt-secondary: #222;
 }
 
-.image{
+.image {
   position: absolute;
   scale: 0.65;
   pointer-events: none;
@@ -21,42 +21,40 @@ body{
 }
 
 @keyframes animateImage {
-  0%{
+  0% {
     transform: translateX(calc(100% + 100vw));
   }
-  50%{
+  50% {
     transform: translateX(calc(-100% - 100vw));
   }
-  50.01%{
+  50.01% {
     transform: translateX(calc(-100% - 100vw)) rotateY(100deg);
   }
-  100%{
+  100% {
     transform: translateX(calc(100% + 100vw)) rotateY(100deg);
   }
 }
 
-.container{
+.container {
   width: 100%;
-	height: auto;
+  height: auto;
   min-height: 100vh;
   position: absolute;
-	background-image: url(../img/bg.jpg);
+  background-image: url("https://ik.imagekit.io/b8ugipzgo/FrontEnd/bg-login.jpg?updatedAt=1681700343737");
   background-position: center;
   background-size: cover;
-	background-repeat: no-repeat;
-
+  background-repeat: no-repeat;
 }
 
-.img-bg-wp{  
+.img-bg-wp {
   min-width: 100%;
   height: 100vh;
   position: absolute;
-	background-image: url(../img/g.png);
+  background-image: url("https://ik.imagekit.io/b8ugipzgo/FrontEnd/g.png?updatedAt=1681700368076");
   background-position: center;
   background-size: 580px 560px;
-	background-repeat: no-repeat;
+  background-repeat: no-repeat;
 }
-
 
 .login-wrapper {
   position: relative;
@@ -75,13 +73,12 @@ body{
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
 }
 
-
 .login-title {
   font-size: 30px;
   font-weight: 600;
   color: var(--txt-primary);
   text-align: center;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin-bottom: 32px;
 }
 
@@ -105,7 +102,7 @@ body{
   border-radius: 2dvb;
   font-size: 12px;
   color: #1c1e21;
-  transition: .1s ease-in-out;
+  transition: 0.1s ease-in-out;
 }
 
 .login-input:focus {
@@ -113,22 +110,22 @@ body{
   outline: none;
 }
 
-.login-button{
+.login-button {
   display: block;
   border-radius: 2dvb;
   width: 100%;
   padding: 16px;
-  background-color:rgba(141, 60, 150, 1);
+  background-color: rgba(141, 60, 150, 1);
   color: #fff;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-.login-button:hover{
+.login-button:hover {
   background-color: var(--main-background);
   color: var(--sec-background);
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .login-link {
@@ -136,20 +133,20 @@ body{
   justify-content: space-between;
   font-size: 14px;
   color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
 }
 
 @media screen and (max-width: 476px) {
-  .login-wrapper{
-      width: 250px;
+  .login-wrapper {
+    width: 250px;
   }
 
-  .login-input{
-      width: 90%;
+  .login-input {
+    width: 90%;
   }
 
-  .img-bg-wp{
+  .img-bg-wp {
     background-size: 470px 510px;
   }
 }

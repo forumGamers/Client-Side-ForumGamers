@@ -8,8 +8,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
 import Link from "next/link";
-
-
+const joystickImage =
+  "https://ik.imagekit.io/b8ugipzgo/FrontEnd/joystick.png?updatedAt=1681635187372";
 
 export async function getServerSideProps(context: {
   req: NextApiRequest;
@@ -93,7 +93,8 @@ export default function LoginPage() {
                 onChange={handleChange}
                 required
                 className="login-input border border-secondary rounded-3"
-                placeholder="Masukkan Email Anda" />
+                placeholder="Masukkan Email Anda"
+              />
             </div>
             <div className="login-input-wrapper">
               <label htmlFor="password" className="login-label">
@@ -106,7 +107,8 @@ export default function LoginPage() {
                 onChange={handleChange}
                 required
                 className="login-input border border-secondary rounded-3"
-                placeholder="Masukkan Password yang Sesuai" />
+                placeholder="Masukkan Password yang Sesuai"
+              />
             </div>
             <button type="submit" className="login-button ">
               Log in
@@ -116,17 +118,16 @@ export default function LoginPage() {
             <Link href="#" className="login-link">
               Forgot password?
             </Link>
-            <span className="login-divider">  </span>
+            <span className="login-divider"> </span>
             <Link href="/register" className="login-link">
               Not have an account yet? Sign Up
             </Link>
           </div>
           <div>
-            <Link href="https://ik.imagekit.io/b8ugipzgo/FrontEnd/joystick.png?updatedAt=1681635187372" className="joystick">
-            </Link>
+            <Link href={joystickImage} className="joystick"></Link>
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 }
