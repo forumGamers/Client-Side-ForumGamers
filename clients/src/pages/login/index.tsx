@@ -8,6 +8,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
 import Link from "next/link";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 const joystickImage =
   "https://ik.imagekit.io/b8ugipzgo/FrontEnd/joystick.png?updatedAt=1681635187372";
 
@@ -35,12 +36,10 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-  const [errorMsg, setErrorMsg] = useState("");
 
   const [login, { loading }] = useMutation(LOGIN, {
     onError: (error) => {
-      setErrorMsg(error.message);
-      swalError(errorMsg);
+      swalError(error.message);
     },
     async onCompleted(data, clientOptions) {
       await signIn("credentials", {
@@ -73,8 +72,6 @@ export default function LoginPage() {
   };
 
   if (loading) return <Loading />;
-
-  if (errorMsg) swalError(errorMsg);
 
   return (
     <div className="container d-flex justify-content-center align-items-center">
@@ -124,7 +121,12 @@ export default function LoginPage() {
             </Link>
           </div>
           <div>
-            <Link href={joystickImage} className="joystick"></Link>
+            <LazyLoadImage
+              src={joystickImage}
+              className="joystick"
+              placeholderSrc={joystickImage}
+              alt="joystick"
+            />
           </div>
         </div>
       </div>
