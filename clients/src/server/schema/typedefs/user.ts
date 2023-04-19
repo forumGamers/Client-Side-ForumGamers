@@ -88,7 +88,7 @@ export const userTypeDefs = gql`
 
   type Query {
     getUserData(access_token: String!): user
-    getUserAchievement(access_token: String!, gameId: String!): [achievement]
+    getUserAchievement(access_token: String!): [achievement]
   }
 
   type Mutation {

@@ -40,14 +40,11 @@ export const userResolver = {
         errorHandling(err);
       }
     },
-    getUserAchievement: async (
-      _: never,
-      args: { access_token: string; gameId: string }
-    ) => {
+    getUserAchievement: async (_: never, args: { access_token: string }) => {
       try {
-        const { access_token, gameId } = args;
+        const { access_token } = args;
 
-        const { data: userAchievement } = await axios({
+        const { data } = await axios({
           method: "GET",
           url: `${userUrl}/achievement/`,
           headers: {
@@ -56,13 +53,7 @@ export const userResolver = {
           },
         });
 
-        const { data: achievementData } = await axios({
-          method: "GET",
-          url: `${tourUrl}/achievement/${gameId}`,
-          headers: {
-            Origin: process.env.ORIGIN,
-          },
-        });
+        return data;
       } catch (err) {
         errorHandling(err);
       }

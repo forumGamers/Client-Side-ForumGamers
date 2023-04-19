@@ -1,27 +1,35 @@
-import { tourUrl } from "@/server/constants";
-import axios from "axios";
-import { useSession } from "next-auth/react";
+import { client } from "@/lib/apolloClient";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import CardAchievement from "@/components/cardAchievement";
+import { getDataFromTree } from "@apollo/client/react/ssr";
+import ErrorNotification from "@/components/errorNotification";
+import { GetServerSidePropsContext } from "next";
+import { GETUSERACHIEVEMENT } from "@/queries/user";
 
-interface Props {
-  props: {
-    data: any;
-    error?: {
-      message: string;
-    };
-  };
-}
-
-export async function getServerSideProps(): Promise<Props> {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<any> {
   try {
-    const { data } = await axios({
-      method: "GET",
-      url: `${tourUrl}/game`,
-      headers: {
-        Origin: process.env.ORIGIN,
+    const session = (await getSession(context)) as any;
+    console.log(session, "<><>");
+
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/login",
+        },
+      };
+    }
+
+    const { data } = await client.query({
+      query: GETUSERACHIEVEMENT,
+      variables: {
+        access_token: session?.user.access_token,
       },
     });
+    console.log(data, "<<<<");
 
     return {
       props: {
@@ -40,25 +48,40 @@ export async function getServerSideProps(): Promise<Props> {
   }
 }
 
-export default function AchievementPage({ data, error }: any): JSX.Element {
+export default function AchievementPage({
+  data,
+  error,
+}: {
+  data: any;
+  error: Error;
+}): JSX.Element {
   const router = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.replace("/login");
-    },
+  const [notification, setNotification] = useState({
+    message: "",
+    show: false,
   });
   const [achievements, setAchievements] = useState([]);
 
-  useEffect(() => {}, [status]);
+  if (error) setNotification({ message: error.message, show: true });
 
-  if (error) return <div>{error.message}</div>;
-
-  return data.map((el: any) => {
-    return (
-      <section>
-        <h1>{el.name}</h1>
-      </section>
+  {
+    notification.show && (
+      <ErrorNotification
+        message={notification.message}
+        onClose={() => setNotification({ message: "", show: false })}
+      />
     );
-  });
+  }
+
+  return (
+    <>
+      {achievements.length > 0 ? (
+        achievements.forEach((achievement) => {
+          <CardAchievement achievement={achievement} />;
+        })
+      ) : (
+        <div>empty</div>
+      )}
+    </>
+  );
 }

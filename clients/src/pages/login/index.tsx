@@ -4,7 +4,7 @@ import Loading from "@/components/loading";
 import { swalError } from "@/helper/swal";
 import { useRouter } from "next/router";
 import { getSession, signIn } from "next-auth/react";
-import { NextApiRequest, NextApiResponse } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
 import Link from "next/link";
@@ -12,10 +12,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 const joystickImage =
   "https://ik.imagekit.io/b8ugipzgo/FrontEnd/joystick.png?updatedAt=1681635187372";
 
-export async function getServerSideProps(context: {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = (await getSession(context)) || null;
 
   if (session)
@@ -30,7 +27,7 @@ export async function getServerSideProps(context: {
   };
 }
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
   const router = useRouter();
   const [formData, setData] = useState({
     email: "",
