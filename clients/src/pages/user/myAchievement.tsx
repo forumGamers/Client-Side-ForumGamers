@@ -1,8 +1,6 @@
 import { client } from "@/lib/apolloClient";
 import { getSession } from "next-auth/react";
-import { useState } from "react";
-import CardAchievement from "@/components/cardAchievement";
-import ErrorNotification from "@/components/errorNotification";
+import CardAchievement, { achievement } from "@/components/cardAchievement";
 import { GetServerSidePropsContext } from "next";
 import { GETUSERACHIEVEMENT } from "@/queries/tour";
 
@@ -51,26 +49,10 @@ export default function AchievementPage({
   data: any[];
   error: Error;
 }): JSX.Element {
-  const [notification, setNotification] = useState({
-    message: "",
-    show: false,
-  });
-
-  // if (error) setNotification({ message: error.message, show: true });
-
-  {
-    notification.show && (
-      <ErrorNotification
-        message={notification.message}
-        onClose={() => setNotification({ message: "", show: false })}
-      />
-    );
-  }
-
   return (
     <>
-      {data.length ? (
-        data.map((el: any) => {
+      {data?.length ? (
+        data.map((el: achievement) => {
           return <CardAchievement achievement={el} key={el.id} />;
         })
       ) : (

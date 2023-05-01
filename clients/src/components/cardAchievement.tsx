@@ -1,13 +1,14 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "@/styles/components/cardAchievement.css";
 
-interface achievement {
+export interface achievement {
   id: number;
   name: string;
   image: string;
   Game: game;
 }
 
-interface game {
+export interface game {
   id: number;
   name: string;
   image: string;
@@ -21,23 +22,25 @@ export default function CardAchievement({
 }): JSX.Element {
   return (
     <>
-      <div className="card">
-        <div className="card-header">
-          <h3 className="card-title">{achievement.name}</h3>
-          <LazyLoadImage
-            src={achievement.image}
-            alt="achievement img"
-            className="card-image"
-          />
-        </div>
-        <div className="card-body">
-          <p className="card-description">{achievement.Game.description}</p>
-          <LazyLoadImage
-            src={achievement.Game.image}
-            alt="game img"
-            className="card-game-image"
-          />
-          <h4 className="card-subtitle">{achievement.Game.name}</h4>
+      <div className="container">
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title">{achievement.name}</h3>
+            <LazyLoadImage
+              src={achievement.image}
+              alt="achievement img"
+              className="card-image"
+            />
+          </div>
+          <div className="card-body">
+            <p className="card-description">{achievement.Game.description}</p>
+            <LazyLoadImage
+              src={achievement.Game.image}
+              alt="game img"
+              className="card-game-image"
+            />
+            <h4 className="card-subtitle">{achievement.Game.name}</h4>
+          </div>
         </div>
       </div>
     </>
