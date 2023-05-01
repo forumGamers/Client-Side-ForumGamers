@@ -4,16 +4,13 @@ interface achievement {
   id: number;
   name: string;
   image: string;
-  imageId: string;
-  GameId: string;
-  game: game;
+  Game: game;
 }
 
 interface game {
   id: number;
   name: string;
   image: string;
-  imageId: string;
   description: string;
 }
 
@@ -34,13 +31,13 @@ export default function CardAchievement({
           />
         </div>
         <div className="card-body">
-          <p className="card-description">{achievement.game.description}</p>
+          <p className="card-description">{achievement.Game.description}</p>
           <LazyLoadImage
-            src={achievement.game.image}
+            src={achievement.Game.image}
             alt="game img"
             className="card-game-image"
           />
-          <h4 className="card-subtitle">{achievement.game.name}</h4>
+          <h4 className="card-subtitle">{achievement.Game.name}</h4>
         </div>
       </div>
     </>
