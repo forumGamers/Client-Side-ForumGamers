@@ -30,7 +30,6 @@ export default function MyApp({
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        <script src="../../node_modules/flowbite/dist/flowbite"></script>
       </Head>
       <ApolloProvider client={client}>
         <SessionProvider session={pageProps.session}>
