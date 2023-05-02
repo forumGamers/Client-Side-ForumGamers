@@ -2,12 +2,10 @@ import { swalError } from "@/helper/swal";
 import { VERIFYUSER } from "@/queries/user";
 import "@/styles/pages/user/verify.css";
 import { useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Verify() {
-  const router = useRouter();
-
   const [token] = useMutation(VERIFYUSER, {
     onError(error, clientOptions) {
       swalError(error.message);
@@ -35,7 +33,7 @@ export default function Verify() {
       <h1>Congratulations, Your account has been actived</h1>
       <p>Thanks for using our service</p>
       <p>
-        <a onClick={() => router.push("/")}>To HomePage</a>
+        <Link href="/">To HomePage</Link>
       </p>
     </div>
   );

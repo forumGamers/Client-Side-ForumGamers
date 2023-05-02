@@ -16,26 +16,9 @@ export default NextAuth({
       },
       async authorize(credentials) {
         try {
-          const payload = verifyToken(credentials?.access_token);
+          const payload = verifyToken(credentials?.access_token) as any
 
-          const {
-            id,
-            email,
-            username,
-            fullName,
-            isVerified,
-            phoneNumber,
-          } = payload;
-
-          if (
-            !id ||
-            !email ||
-            !username ||
-            !fullName ||
-            isVerified === null ||
-            !phoneNumber
-          )
-            throw { message: "invalid token" };
+          const { id, email, username } = payload;
 
           const user = {
             id,
@@ -46,6 +29,7 @@ export default NextAuth({
 
           return user;
         } catch (err) {
+          console.log(err, "err");
           return null;
         }
       },

@@ -1,31 +1,33 @@
-import { tourUrl } from "@/server/constants";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { client } from "@/lib/apolloClient";
+import { getSession } from "next-auth/react";
+import CardAchievement, { achievement } from "@/components/cardAchievement";
+import { GetServerSidePropsContext } from "next";
+import { GETUSERACHIEVEMENT } from "@/queries/tour";
 
-interface Props {
-  props: {
-    data: any;
-    error?: {
-      message: string;
-    };
-  };
-}
-
-export async function getServerSideProps(): Promise<Props> {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<any> {
   try {
-    const { data } = await axios({
-      method: "GET",
-      url: `${tourUrl}/game`,
-      headers: {
-        Origin: process.env.ORIGIN,
+    const session = (await getSession(context)) as any;
+
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/login",
+        },
+      };
+    }
+
+    const { data } = await client.query({
+      query: GETUSERACHIEVEMENT,
+      variables: {
+        accessToken: session?.user.access_token,
       },
     });
 
     return {
       props: {
-        data,
+        data: data.getUserAchievement,
       },
     };
   } catch (err) {
@@ -40,25 +42,22 @@ export async function getServerSideProps(): Promise<Props> {
   }
 }
 
-export default function AchievementPage({ data, error }: any): JSX.Element {
-  const router = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.replace("/login");
-    },
-  });
-  const [achievements, setAchievements] = useState([]);
-
-  useEffect(() => {}, [status]);
-
-  if (error) return <div>{error.message}</div>;
-
-  return data.map((el: any) => {
-    return (
-      <section>
-        <h1>{el.name}</h1>
-      </section>
-    );
-  });
+export default function AchievementPage({
+  data,
+  error,
+}: {
+  data: any[];
+  error: Error;
+}): JSX.Element {
+  return (
+    <>
+      {data?.length ? (
+        data.map((el: achievement) => {
+          return <CardAchievement achievement={el} key={el.id} />;
+        })
+      ) : (
+        <div>empty</div>
+      )}
+    </>
+  );
 }
