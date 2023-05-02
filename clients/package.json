@@ -31,6 +31,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "flowbite": "^1.6.5",
     "graphql": "^16.6.0",
     "ioredis": "^5.3.1",
     "jsonwebtoken": "^9.0.0",

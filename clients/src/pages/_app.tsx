@@ -3,6 +3,7 @@ import { useApollo } from "@/lib/apolloClient";
 import { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
+import "../../public/style.css";
 
 export default function MyApp({
   Component,
@@ -29,6 +30,7 @@ export default function MyApp({
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        <script src="../../node_modules/flowbite/dist/flowbite"></script>
       </Head>
       <ApolloProvider client={client}>
         <SessionProvider session={pageProps.session}>
