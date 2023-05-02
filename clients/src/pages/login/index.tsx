@@ -117,7 +117,7 @@ export default function LoginPage() {
             </Link>
               </div>
             </div>
-            <button type="submit" className="btn btn-active">Log in</button>
+            <button type="submit" className="login-button btn btn-active">Log in</button>
           </form>
           <div className="login-links-wrapper">
             <span className="login-divider"> </span>
