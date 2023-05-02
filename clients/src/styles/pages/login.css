@@ -1,14 +1,11 @@
+
 *,
 html,
 body {
   padding: 0;
   margin: 0;
-<<<<<<< HEAD
-  font-family: 'Silkscreen', cursive;
-=======
-  font-family: "Silkscreen", cursive;
->>>>>>> 960c46b39ab4a7fcc4245644300fb0e3c54a278b
 }
+
 
 :root {
   --main-background: #fff;
@@ -17,31 +14,37 @@ body {
   --txt-secondary: #222;
 }
 
+.navbar{
+  width: 1536px;
+  position: absolute;
+  left: 55%;
+  top: 5%;
+  transform: translate(-45.7%,-50%);
+}
+
+.link a{
+  position: absolute;
+  left: 75%;
+  color: var(--txt-secondary);
+  background-color: var(--main-background);
+  padding: 8px 15px;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  font-family: "Silkscreen", cursive;
+}
 .joystick {
   position: absolute;
-  width: 100%;
-  height: 70vh;
+  left: 61%;
+  top: 12%;
+  transform: translate(-50%,-90%);
+  transform: rotate(30deg);
+  width: 100px;
+  height: 100px;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
-  pointer-events: none;
-}
-
-.joystick .set {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-
-.joystick .set div{
-  position: absolute;
-  display: block;
 }
 
 .image-wrapper {
@@ -56,54 +59,29 @@ body {
   color: #fff;
 }
 
-@keyframes animateImage {
-  0% {
-    transform: translateX(calc(100% + 100vw));
-  }
-  50% {
-    transform: translateX(calc(-100% - 100vw));
-  }
-  50.01% {
-    transform: translateX(calc(-100% - 100vw)) rotateY(100deg);
-  }
-  100% {
-    transform: translateX(calc(100% + 100vw)) rotateY(100deg);
-  }
-}
 
-.container {
-  width: 100%;
+.body{
   height: auto;
   min-height: 100vh;
-  position: relative;
   background-image: url("https://ik.imagekit.io/b8ugipzgo/FrontEnd/bg-login.jpg?updatedAt=1681700343737");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.img-bg-wp {
-  min-width: 100%;
-  height: 100vh;
-  position: absolute;
-  background-image: url("https://ik.imagekit.io/b8ugipzgo/FrontEnd/g.png?updatedAt=1681700368076");
-  background-position: center;
-  background-size: 580px 560px;
-  background-repeat: no-repeat;
-}
 
 .login-wrapper {
   position: absolute;
   left: 50%;
   top: 25%;
   transform: translate(-50%,-10%);
-  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   border: 1px solid #fff;
-  backdrop-filter: blur(5px);
-  width: 360px;
-  padding: 45px;
+  backdrop-filter: blur(8px);
+  height: 60vh;
+  width: 440px;
+  padding: 50px;
   background-color: rgba(141, 60, 150, 0.25);
   border-radius: 15px;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
@@ -114,26 +92,28 @@ body {
   font-weight: 600;
   color: var(--txt-primary);
   text-align: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Silkscreen", cursive;
   margin-bottom: 32px;
 }
 
 .login-input-wrapper {
   margin-bottom: 16px;
+  background-color: tomato;
 }
 
 .login-label {
   display: block;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
   margin-bottom: 10px;
   color: var(--main-background);
+  font-family: "Silkscreen", cursive;
 }
 
 .login-input {
   display: flex;
-  width: 94%;
-  padding: 15px 10px;
+  width: 100%;
+  padding: 12px 8px;
   border: 3px solid rgba(141, 60, 150, 1);
   border-radius: 2dvb;
   font-size: 12px;
@@ -150,40 +130,58 @@ body {
   display: block;
   border-radius: 2dvb;
   width: 100%;
-  padding: 16px;
-  background-color: rgba(141, 60, 150, 1);
-  color: #fff;
+  padding: 10px;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 10px;
+  font-family: "Silkscreen", cursive;
 }
 
-.login-button:hover {
-  background-color: var(--main-background);
-  color: var(--sec-background);
-  transform: scale(0.97);
+.link :hover {
+  background-color: var(--sec-background);
+  color: var(--txt-primary);
+  transform: scale(0.98);
   transition: 0.3s ease-in-out;
 }
 
 .login-link {
   display: flex;
-  justify-content: space-between;
-  font-size: 14px;
   color: #fff;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Silkscreen", cursive;
   font-weight: 500;
+  justify-content: space-around;
 }
+
+.lupa-pass{
+  font-size: 12px;
+  padding: 8px;
+  padding-bottom: 5px;
+}
+
+
+.login-links-wrapper {
+  font-size: 12px;
+}
+
+
 
 @media screen and (max-width: 476px) {
   .login-wrapper {
-    width: 250px;
+    width: 360px;
   }
 
   .login-input {
-    width: 90%;
+    width: 100%;
   }
 
   .img-bg-wp {
     background-size: 470px 510px;
   }
+
+  .joystick{
+    left: 78%;
+    top: 12%;
+  }
 }
+
+

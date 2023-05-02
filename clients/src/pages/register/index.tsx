@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import "@/styles/pages/register.css";
+import "/dist/output.css";
 import { useMutation } from "@apollo/client";
 import { REGISTER } from "@/queries/user";
 import Loading from "@/components/loading";
@@ -59,8 +60,8 @@ export default function RegisterPage(): JSX.Element {
 
   if (page === 1) {
     return (
-      <div className="body">
-        <div className="container">
+      <div className="body mx-auto px-4 lg:px-8 py-20 w-full">
+        <div className="wrapper">
           <h2>Register your account</h2>
           <label>
             {errorMsg ? (
@@ -82,7 +83,7 @@ export default function RegisterPage(): JSX.Element {
     );
   } else if (page === 2) {
     return (
-      <div className="container">
+      <div className="body mx-auto px-4 lg:px-8 py-20">
         <label>
           {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           email
@@ -120,7 +121,7 @@ export default function RegisterPage(): JSX.Element {
             required
           />
         </label>
-        <button onClick={nextPage}>next</button>
+        <button className="btn btn-active" onClick={nextPage}>next</button>
         <button onClick={previousPage}>previous</button>
       </div>
     );
@@ -143,7 +144,7 @@ export default function RegisterPage(): JSX.Element {
     );
   } else {
     return (
-      <div className="container">
+      <div className="wrapper">
         <form onSubmit={handleSubmit}>
           <label>
             {errorMsg ? (

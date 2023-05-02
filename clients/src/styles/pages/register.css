@@ -1,9 +1,13 @@
 .body {
-  background-color: rgba(91, 112, 131, 0.4);
+  background-color: tomato;
+  height: 100vh;
 }
 
-.container {
-  margin: 10% auto;
+.wrapper {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%,-10%);
   width: 400px;
   padding: 40px;
   border: 1px solid #e6ecf0;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "@/styles/pages/login.css";
+import "/dist/output.css";
 import Loading from "@/components/loading";
 import { swalError } from "@/helper/swal";
 import { useRouter } from "next/router";
@@ -74,12 +75,16 @@ export default function LoginPage() {
   if (loading) return <Loading />;
 
   return (
-    <div className="container d-flex justify-content-center align-items-center">
-      <div className="img-bg-wp d-flex justify-content-center align-items-center">
+    <div className="body mx-auto px-4 lg:px-8 py-20">
+        <nav className="navbar">
+            <div className="link font-bold">
+            <a role="button" className="btn" href="/register">SIGN UP</a>
+            </div>
+        </nav>
         <div className="login-wrapper">
-          <h2 className="login-title">LOGIN</h2>
+          <h2 className="login-title text-3xl font-bold">SIGN IN</h2>
           <form onSubmit={handleSubmit}>
-            <div className="login-input-wrapper">
+            <div className="login-input-wrappercol-md-4">
               <label htmlFor="email" className="login-label">
                 Email
               </label>
@@ -93,7 +98,7 @@ export default function LoginPage() {
                 placeholder="Masukkan Email Anda"
               />
             </div>
-            <div className="login-input-wrapper">
+            <div className="login-input-wrappercol-md-4">
               <label htmlFor="password" className="login-label">
                 Password
               </label>
@@ -103,29 +108,24 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="login-input border border-secondary rounded-3"
+                className="login-input border border-primary rounded-3"
                 placeholder="Masukkan Password yang Sesuai"
               />
-            </div>
-            <button type="submit" className="login-button ">
-              Log in
-            </button>
-          </form>
-          <div className="login-links-wrapper">
-            <Link href="#" className="login-link">
+              <div className="lupa-pass">
+              <Link href="#" className="login-link">
               Forgot password?
             </Link>
+              </div>
+            </div>
+            <button type="submit" className="btn btn-active">Log in</button>
+          </form>
+          <div className="login-links-wrapper">
             <span className="login-divider"> </span>
             <Link href="/register" className="login-link">
               Not have an account yet? Sign Up
             </Link>
           </div>
-<<<<<<< HEAD
-          <div className="joystick">
-            <div className="set">
-              <div><Link href={joystickImage}></Link></div>
-            </div>
-=======
+          </div>
           <div>
             <LazyLoadImage
               src={joystickImage}
@@ -133,13 +133,8 @@ export default function LoginPage() {
               placeholderSrc={joystickImage}
               alt="joystick"
             />
->>>>>>> 960c46b39ab4a7fcc4245644300fb0e3c54a278b
-          </div>
-        </div>
-        <div className="image-wrapper">
-        <h2>apakabar</h2>
-        </div>
-      </div>
     </div>
+    </div>
+
   );
 }

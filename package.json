@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "daisyui": "^2.51.6",
+    "mini-svg-data-uri": "^1.4.4"
+  }
+}
