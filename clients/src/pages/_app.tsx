@@ -3,7 +3,7 @@ import { useApollo } from "@/lib/apolloClient";
 import { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
-import "daisyui/dist/daisyui.css";
+import "daisyui/dist/full.css";
 
 export default function MyApp({
   Component,
