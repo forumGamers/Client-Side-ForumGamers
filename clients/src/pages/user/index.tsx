@@ -13,6 +13,8 @@ import { client } from "@/lib/apolloClient";
 import { blackStoreImage, blankBackground, blankProfile } from "@/constants";
 import ErrorNotification from "@/components/errorNotification";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Loading from "@/components/loading";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
@@ -37,7 +39,6 @@ export async function getServerSideProps(
           permanent: false,
         },
       };
-    console.log(session);
 
     const { data } = await client.query({
       query: GETUSERDATA,
@@ -84,7 +85,10 @@ export default function UserProfile({
     signOut();
   };
 
+  const router = useRouter();
   const [notification, setNotification] = useState(false);
+
+  if (router.isFallback) return <Loading />;
 
   function handleReload() {
     setNotification(false);

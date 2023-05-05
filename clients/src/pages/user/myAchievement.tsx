@@ -11,6 +11,8 @@ import { CustomSession } from "@/interfaces/tour";
 import ErrorNotification from "@/components/errorNotification";
 import EmptyData from "@/components/emptyData";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Loading from "@/components/loading";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
@@ -75,6 +77,9 @@ export default function AchievementPage({
   };
 }): JSX.Element {
   const [notification, setNotification] = useState(false);
+  const router = useRouter();
+
+  if (router.isFallback) return <Loading />;
 
   function handleError() {
     setNotification(false);
