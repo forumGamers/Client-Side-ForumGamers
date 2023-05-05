@@ -28,14 +28,13 @@ export async function getServerSideProps(
   try {
     const session: CustomSession | null = await getSession(context);
 
-    if (!session || !session.user) {
+    if (!session || !session?.user)
       return {
         redirect: {
           destination: "/login",
           permanent: false,
         },
       };
-    }
 
     const { data } = await client.query({
       query: GETUSERACHIEVEMENT,
