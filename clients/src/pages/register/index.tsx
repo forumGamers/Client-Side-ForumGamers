@@ -1,46 +1,129 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "@/styles/pages/register.css";
 import { useMutation } from "@apollo/client";
 import { REGISTER } from "@/queries/user";
 import Loading from "@/components/loading";
 import { swalError } from "@/helper/swal";
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  Redirect,
+} from "next";
+import { CustomSession } from "@/interfaces/tour";
+import { getSession } from "next-auth/react";
+import ErrorNotification from "@/components/errorNotification";
 
-export default function RegisterPage(): JSX.Element {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<
+  GetServerSidePropsResult<{
+    redirect?: Redirect;
+    error?: {
+      name: string;
+      message: string;
+      isError: boolean;
+    };
+  }>
+> {
+  try {
+    const session: CustomSession | null = await getSession(context);
+
+    if (!session || !session?.user)
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    return {
+      props: {},
+    };
+  } catch (err) {
+    const error = new Error(err as string);
+    return {
+      props: {
+        error: {
+          isError: true,
+          message: error.message || "something went wrong",
+          name: error.name || "internal server error",
+        },
+      },
+    };
+  }
+}
+
+export default function RegisterPage({
+  error,
+}: {
+  error: {
+    isError: boolean;
+    message: string;
+    name: string;
+  };
+}): JSX.Element {
+  const handleError = () => {
+    window.location.reload();
+  };
+
+  if (error && error?.isError)
+    return (
+      <ErrorNotification
+        name={error.name}
+        message={error.message}
+        onClose={handleError}
+      />
+    );
+
   const router = useRouter();
-  const [fullName, setFullName] = useState("");
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [input, setInput] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+  });
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [page, setPage] = useState(1);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  useEffect(() => {
-    const user = localStorage.getItem("access_token") || null;
-
-    if (user) router.replace("/");
-  }, [router]);
 
   const [register, { loading }] = useMutation(REGISTER, {
     onError: (error) => {
-      setErrorMsg(error.message);
-      swalError(errorMsg);
+      swalError(error.message);
       setPage(1);
     },
-    onCompleted(data, clientOptions) {
+    onCompleted: (data, clientOptions) => {
       router.push("/login");
     },
   });
 
-  const nextPage = () => (page <= 5 ? setPage(page + 1) : setErrorMsg("Limit"));
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const nextPage = () => (page <= 5 ? setPage(page + 1) : swalError("Limit"));
 
   const previousPage = () =>
-    page > 1 ? setPage(page - 1) : setErrorMsg("Limit");
+    page > 1 ? setPage(page - 1) : swalError("Limit");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const { fullName, username, email, password, phoneNumber } = input;
+
+    if (!fullName || !username || !email || !password || !phoneNumber) {
+      swalError("Please fill all input");
+      return;
+    }
+
+    if (!termsAccepted) {
+      swalError("Please accept term and sheet");
+      return;
+    }
 
     await register({
       variables: {
@@ -63,16 +146,11 @@ export default function RegisterPage(): JSX.Element {
         <div className="container">
           <h2>Register your account</h2>
           <label>
-            {errorMsg ? (
-              <div className="errorMsg">{errorMsg}</div>
-            ) : (
-              <div></div>
-            )}
             FullName
             <input
               type="text"
-              value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
+              value={input.fullName}
+              onChange={onChangeHandler}
               required
             />
           </label>
@@ -84,22 +162,20 @@ export default function RegisterPage(): JSX.Element {
     return (
       <div className="container">
         <label>
-          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           email
           <input
             type="text"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            value={input.email}
+            onChange={onChangeHandler}
             required
           />
         </label>
         <label>
-          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           Password
           <input
             type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={input.password}
+            onChange={onChangeHandler}
             required
           />
         </label>
@@ -111,12 +187,11 @@ export default function RegisterPage(): JSX.Element {
     return (
       <div className="container">
         <label>
-          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           username
           <input
             type="text"
-            value={username}
-            onChange={(event) => setUserName(event.target.value)}
+            value={input.username}
+            onChange={onChangeHandler}
             required
           />
         </label>
@@ -128,12 +203,11 @@ export default function RegisterPage(): JSX.Element {
     return (
       <div className="container">
         <label>
-          {errorMsg ? <div className="errorMsg">{errorMsg}</div> : <div></div>}
           PhoneNumber
           <input
             type="text"
-            value={phoneNumber}
-            onChange={(event) => setPhoneNumber(event.target.value)}
+            value={input.phoneNumber}
+            onChange={onChangeHandler}
             required
           />
         </label>
@@ -146,11 +220,6 @@ export default function RegisterPage(): JSX.Element {
       <div className="container">
         <form onSubmit={handleSubmit}>
           <label>
-            {errorMsg ? (
-              <div className="errorMsg">{errorMsg}</div>
-            ) : (
-              <div></div>
-            )}
             Term and sheet
             <input
               type="checkbox"

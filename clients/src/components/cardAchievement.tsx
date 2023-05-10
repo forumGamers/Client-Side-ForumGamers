@@ -30,6 +30,7 @@ export default function CardAchievement({
               src={achievement.image}
               alt="achievement img"
               className="card-image"
+              placeholderSrc={achievement.image}
             />
           </div>
           <div className="card-body">
@@ -38,6 +39,7 @@ export default function CardAchievement({
               src={achievement.Game.image}
               alt="game img"
               className="card-game-image"
+              placeholderSrc={achievement.Game.image}
             />
             <h4 className="card-subtitle">{achievement.Game.name}</h4>
           </div>

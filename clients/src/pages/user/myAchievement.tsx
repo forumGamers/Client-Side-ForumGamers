@@ -1,28 +1,49 @@
 import { client } from "@/lib/apolloClient";
 import { getSession } from "next-auth/react";
 import CardAchievement, { achievement } from "@/components/cardAchievement";
-import { GetServerSidePropsContext } from "next";
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  Redirect,
+} from "next";
 import { GETUSERACHIEVEMENT } from "@/queries/tour";
+import { CustomSession } from "@/interfaces/tour";
+import ErrorNotification from "@/components/errorNotification";
+import EmptyData from "@/components/emptyData";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import Loading from "@/components/loading";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
-): Promise<any> {
+): Promise<
+  GetServerSidePropsResult<{
+    data: achievement[] | null;
+    error?: {
+      name: string;
+      message?: string;
+      isError?: boolean;
+    };
+    redirect?: Redirect;
+  }>
+> {
   try {
-    const session = (await getSession(context)) as any;
+    const session: CustomSession | null = await getSession(context);
 
-    if (!session) {
+    if (!session || !session?.user)
       return {
         redirect: {
           destination: "/login",
+          permanent: false,
         },
       };
-    }
 
     const { data } = await client.query({
       query: GETUSERACHIEVEMENT,
       variables: {
-        accessToken: session?.user.access_token,
+        accessToken: session?.user?.access_token,
       },
+      fetchPolicy: "cache-first",
     });
 
     return {
@@ -36,6 +57,8 @@ export async function getServerSideProps(
         data: null,
         error: {
           message: "Failed to fetch",
+          name: "Failed to fetch",
+          isError: true,
         },
       },
     };
@@ -46,17 +69,36 @@ export default function AchievementPage({
   data,
   error,
 }: {
-  data: any[];
-  error: Error;
+  data: achievement[];
+  error: {
+    name: string;
+    message: string;
+    isError?: boolean;
+  };
 }): JSX.Element {
+  const [notification, setNotification] = useState(false);
+  const router = useRouter();
+
+  if (router.isFallback) return <Loading />;
+
+  function handleError() {
+    setNotification(false);
+    window.location.reload();
+  }
+
+  if (notification)
+    return <ErrorNotification message={error.message} onClose={handleError} />;
+
+  if (error?.isError) setNotification(true);
+
   return (
     <>
       {data?.length ? (
-        data.map((el: achievement) => {
-          return <CardAchievement achievement={el} key={el.id} />;
-        })
+        data.map((el: achievement) => (
+          <CardAchievement achievement={el} key={el.id} />
+        ))
       ) : (
-        <div>empty</div>
+        <EmptyData message="You have not achievement yet" />
       )}
     </>
   );
