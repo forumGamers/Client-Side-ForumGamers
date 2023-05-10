@@ -20,22 +20,7 @@ body {
   animation: animateImage 20s linear Infinite;
 }
 
-@keyframes animateImage {
-  0% {
-    transform: translateX(calc(100% + 100vw));
-  }
-  50% {
-    transform: translateX(calc(-100% - 100vw));
-  }
-  50.01% {
-    transform: translateX(calc(-100% - 100vw)) rotateY(100deg);
-  }
-  100% {
-    transform: translateX(calc(100% + 100vw)) rotateY(100deg);
-  }
-}
-
-.container {
+.body {
   width: 100%;
   height: auto;
   min-height: 100vh;

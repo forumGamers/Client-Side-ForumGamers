@@ -71,7 +71,7 @@ export default function LoginPage(): JSX.Element {
   if (loading) return <Loading />;
 
   return (
-    <div className="container d-flex justify-content-center align-items-center">
+    <div className="body d-flex justify-content-center align-items-center">
       <div className="img-bg-wp d-flex justify-content-center align-items-center">
         <div className="login-wrapper">
           <h2 className="login-title">LOGIN</h2>
@@ -104,7 +104,7 @@ export default function LoginPage(): JSX.Element {
                 placeholder="Masukkan Password yang Sesuai"
               />
             </div>
-            <button type="submit" className="login-button ">
+            <button type="submit" className="btn btn-active ">
               Log in
             </button>
           </form>
@@ -118,12 +118,6 @@ export default function LoginPage(): JSX.Element {
             </Link>
           </div>
           <div>
-            <LazyLoadImage
-              src={joystickImage}
-              className="joystick"
-              placeholderSrc={joystickImage}
-              alt="joystick"
-            />
           </div>
         </div>
       </div>
