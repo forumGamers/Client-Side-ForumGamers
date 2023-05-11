@@ -105,7 +105,7 @@ export default function UserProfile({
     window.location.reload();
   }
 
-  // if (error?.isError) setNotification(true);
+  if (error && error?.isError) setNotification(true);
 
   if (notification)
     return (
