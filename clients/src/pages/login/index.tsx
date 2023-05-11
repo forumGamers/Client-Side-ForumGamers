@@ -74,37 +74,39 @@ export default function LoginPage(): JSX.Element {
     <div className="body d-flex justify-content-center align-items-center">
       <div className="img-bg-wp d-flex justify-content-center align-items-center">
         <div className="login-wrapper">
-          <h2 className="login-title">LOGIN</h2>
+        <div className="card border-sm border-2 border-white">
+          <h2 className="text-4xl text-white text-center mb-6">LOGIN</h2>
           <form onSubmit={handleSubmit}>
+
             <div className="login-input-wrapper">
-              <label htmlFor="email" className="login-label">
-                Email
+              <div className="form-control w-full">
+              
+              <label htmlFor="email" className="label">
+                <span className="label-text text-lg text-white">Email</span>
               </label>
-              <input
+                <input className="input input-bordered rounded-xl w-full bg-white"
                 type="text"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="login-input border border-secondary rounded-3"
                 placeholder="Masukkan Email Anda"
-              />
-            </div>
-            <div className="login-input-wrapper">
-              <label htmlFor="password" className="login-label">
-                Password
+                />
+
+              <label htmlFor="email" className="label">
+                <span className="label-text text-lg text-white">Password</span>
               </label>
-              <input
+              <input className="input input-bordered rounded-xl w-full bg-white mb-3"
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="login-input border border-secondary rounded-3"
                 placeholder="Masukkan Password yang Sesuai"
               />
+              </div>
             </div>
-            <button type="submit" className="btn btn-active ">
+            <button type="submit" className="btn btn-active w-full text-white bg-[#8d3c96] p-4 mb-5">
               Log in
             </button>
           </form>
@@ -119,6 +121,7 @@ export default function LoginPage(): JSX.Element {
           </div>
           <div>
           </div>
+        </div>
         </div>
       </div>
     </div>
