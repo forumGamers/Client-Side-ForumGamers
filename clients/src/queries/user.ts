@@ -52,6 +52,7 @@ export const GETUSERDATA = gql`
       point
       role
       username
+      backgroundImage
     }
   }
 `;
