@@ -1,5 +1,5 @@
 import { GETUSERDATA } from "@/queries/user";
-import { signOut, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import "@/styles/pages/user/index.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { UserData } from "@/interfaces/user";
@@ -15,6 +15,22 @@ import ErrorNotification from "@/components/errorNotification";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Loading from "@/components/loading";
+import Navbar, { DropDown } from "@/components/navbar";
+
+const dropdown: DropDown[] = [
+  {
+    href: "/",
+    name: "Homepage",
+  },
+  {
+    href: "/user/my-store",
+    name: "store",
+  },
+  {
+    href: "/user/myAchievement",
+    name: "achievement",
+  },
+];
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
@@ -79,12 +95,6 @@ export default function UserProfile({
     isError?: boolean;
   };
 }): JSX.Element {
-  const s = (e: any) => {
-    e.preventDefault();
-
-    signOut();
-  };
-
   const router = useRouter();
   const [notification, setNotification] = useState(false);
 
@@ -95,7 +105,7 @@ export default function UserProfile({
     window.location.reload();
   }
 
-  if (error?.isError) setNotification(true);
+  // if (error?.isError) setNotification(true);
 
   if (notification)
     return (
@@ -107,8 +117,12 @@ export default function UserProfile({
 
   return (
     <section className="container">
+      <Navbar isLoggedUser={true} dropdown={dropdown} />
       <div className="coverImage">
-        <LazyLoadImage src={blankBackground} alt="cover" />
+        <LazyLoadImage
+          src={user?.backgroundImage || blankBackground}
+          alt="cover"
+        />
       </div>
       <div className="avatar">
         <LazyLoadImage src={user?.imageUrl || blankProfile} alt="avatar" />
@@ -156,7 +170,6 @@ export default function UserProfile({
         </div>
         <div className="bio">testing aja</div>
       </div>
-      <button onClick={s}>sign out</button>
     </section>
   );
 }

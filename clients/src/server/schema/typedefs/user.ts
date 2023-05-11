@@ -42,6 +42,7 @@ export const userTypeDefs = gql`
     isVerified: Boolean
     balance: Int
     imageUrl: String
+    backgroundImage: String
     phoneNumber: String
     StoreId: Int
     role: String

@@ -30,6 +30,7 @@ export type UserData = {
   point: number;
   isVerified: boolean;
   imageUrl?: string;
+  backgroundImage?: string;
   fullName: string;
   exp: number;
   email: string;
