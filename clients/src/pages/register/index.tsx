@@ -191,22 +191,29 @@ export default function RegisterPage({
     switch (page) {
       case 1:
         return (
-          <div className="body">
-            <div className="container artboard artboard-horizontal phone-1">
-              <h2>Register your account</h2>
-              <label>
-                FullName
-                <input
-                  className="input input-bordered input-accent w-full max-w-xs"
-                  type="text"
-                  value={input.fullName}
-                  onChange={onChangeHandler}
-                  name="fullName"
-                  required
-                />
-              </label>
+          <div className="bg-cover bg-no-repeat bg-white_A700 flex flex-col font-inter h-[1024px] items-center justify-start mx-auto pb-[171px] w-full">
+            <div className="container bg-pink_900_4c border-[3px] border-solid border-white_A700 flex flex-col justify-start max-w-[868px] mx-auto p-[70px] md:px-5 rounded-[50px] w-full">
+              <div className="bg-pink_900_4c border-[3px] border-solid border-white_A700 flex flex-col justify-start max-w-[868px] mx-auto p-[70px] md:px-5 rounded-[50px] w-full">
+                <h1 className="md:ml-[0] ml-[147px] text-center text-white_A700 w-auto">
+                  Register your account
+                </h1>
+                <label className="md:ml-[0] ml-[21px] mt-[159px] text-center text-white_A700 w-auto">
+                  FullName
+                  <input
+                    className="bg-white_A700 border-[3px] border-pink_900 border-solid h-[94px] rounded-[20px] w-full"
+                    type="text"
+                    value={input.fullName}
+                    onChange={onChangeHandler}
+                    name="fullName"
+                    required
+                  />
+                </label>
+              </div>
               <div className="btn-group grid grid-cols-2">
-                <button onClick={nextPage} className="btn btn-outline">
+                <button
+                  onClick={nextPage}
+                  className="bg-pink_900 h-20 rounded-[30px] w-full"
+                >
                   Next
                 </button>
               </div>
@@ -330,7 +337,7 @@ export default function RegisterPage({
           {handleSteps(page)}
         </div>
         <div className="divider lg:divider-horizontal">----------------</div>
-        <main className="grid flex-grow h-32 card bg-base-300 rounded-box place-items-center">
+        <main className="body grid flex-grow h-32 card bg-base-300 rounded-box place-items-center">
           {handlePage(page)}
         </main>
       </div>
