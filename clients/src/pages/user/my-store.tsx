@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { redis } from "@/lib/redis";
 
 type Store = {
   name: string;
