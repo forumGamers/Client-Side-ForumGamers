@@ -78,7 +78,7 @@ function handleSteps(page: number): JSX.Element {
 export default function RegisterPage({
   error,
 }: {
-  error: {
+  error?: {
     isError: boolean;
     message: string;
     name: string;

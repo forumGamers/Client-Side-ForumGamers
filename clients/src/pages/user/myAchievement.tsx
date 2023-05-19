@@ -13,7 +13,6 @@ import EmptyData from "@/components/emptyData";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Loading from "@/components/loading";
-import { redis } from "@/lib/redis";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
@@ -39,15 +38,6 @@ export async function getServerSideProps(
         },
       };
 
-    const cache = await redis.get(`user-achievement:${session.user.id}`);
-
-    if (cache)
-      return {
-        props: {
-          data: JSON.parse(cache),
-        },
-      };
-
     const { data } = await client.query({
       query: GETUSERACHIEVEMENT,
       variables: {
@@ -55,11 +45,6 @@ export async function getServerSideProps(
       },
       fetchPolicy: "cache-first",
     });
-
-    await redis.set(
-      `user-achievement:${session.user.id}`,
-      JSON.stringify(data)
-    );
 
     return {
       props: {

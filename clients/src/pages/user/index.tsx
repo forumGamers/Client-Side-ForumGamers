@@ -16,7 +16,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Loading from "@/components/loading";
 import Navbar, { DropDown } from "@/components/navbar";
-import { redis } from "@/lib/redis";
 
 const dropdown: DropDown[] = [
   {
@@ -57,15 +56,6 @@ export async function getServerSideProps(
         },
       };
 
-    const cache = await redis.get(`user-data:${session.user.id}`);
-
-    if (cache)
-      return {
-        props: {
-          data: JSON.parse(cache),
-        },
-      };
-
     const { data } = await client.query({
       query: GETUSERDATA,
       variables: {
@@ -73,8 +63,6 @@ export async function getServerSideProps(
       },
       fetchPolicy: "cache-first",
     });
-
-    await redis.set(`user-data:${session.user.id}`, JSON.stringify(data));
 
     return {
       props: {
