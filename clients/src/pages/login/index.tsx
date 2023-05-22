@@ -4,27 +4,37 @@ import Loading from "@/components/loading";
 import { swalError } from "@/helper/swal";
 import { useRouter } from "next/router";
 import { getSession, signIn } from "next-auth/react";
-import { GetServerSidePropsContext } from "next";
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  Redirect,
+} from "next";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
 import Link from "next/link";
+import Encryption from "@/helper/encryption";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<{ keys: string; redirect?: Redirect }>> {
   const session = (await getSession(context)) || null;
 
   if (session)
     return {
       redirect: {
         destination: "/",
+        permanent: false,
       },
     };
 
+  const keys = process.env.ENCRYPTION_KEY as string;
+
   return {
-    props: {},
+    props: { keys },
   };
 }
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage({ keys }: { keys: string }): JSX.Element {
   const router = useRouter();
   const [formData, setData] = useState({
     email: "",
@@ -50,8 +60,8 @@ export default function LoginPage(): JSX.Element {
     await login({
       variables: {
         login: {
-          email: formData.email,
-          password: formData.password,
+          email: Encryption.encrypt(formData.email, keys),
+          password: Encryption.encrypt(formData.password, keys),
         },
       },
     });

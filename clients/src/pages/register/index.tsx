@@ -13,11 +13,13 @@ import {
 import { CustomSession } from "@/interfaces/tour";
 import { getSession } from "next-auth/react";
 import ErrorNotification from "@/components/errorNotification";
+import Encryption from "@/helper/encryption";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
 ): Promise<
   GetServerSidePropsResult<{
+    keys?: string;
     redirect?: Redirect;
     error?: {
       name: string;
@@ -36,8 +38,9 @@ export async function getServerSideProps(
           permanent: false,
         },
       };
+    const keys = process.env.ENCRYPTION_KEY as string;
     return {
-      props: {},
+      props: { keys },
     };
   } catch (err) {
     const error = new Error(err as string);
@@ -77,12 +80,14 @@ function handleSteps(page: number): JSX.Element {
 
 export default function RegisterPage({
   error,
+  keys,
 }: {
   error?: {
     isError: boolean;
     message: string;
     name: string;
   };
+  keys: string;
 }): JSX.Element {
   const handleError = () => {
     window.location.reload();
@@ -175,11 +180,11 @@ export default function RegisterPage({
     await register({
       variables: {
         register: {
-          fullName,
-          username,
-          email,
-          password,
-          phoneNumber,
+          fullName: Encryption.encrypt(fullName, keys),
+          username: Encryption.encrypt(username, keys),
+          email: Encryption.encrypt(email, keys),
+          password: Encryption.encrypt(password, keys),
+          phoneNumber: Encryption.encrypt(phoneNumber, keys),
         },
       },
     });
