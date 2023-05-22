@@ -6,11 +6,11 @@ export type UserPayload = {
   StoreId: number | null;
 };
 
-type followings = {
+export type followings = {
   StoreId: number;
 };
 
-type store = {
+export type store = {
   background: string;
   description: string;
   id: number;
@@ -18,7 +18,7 @@ type store = {
   name: string;
 };
 
-type topUp = {
+export type topUp = {
   amount: number;
   status: string;
 };

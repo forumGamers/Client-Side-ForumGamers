@@ -25,8 +25,8 @@ export const VERIFYUSER = gql`
 `;
 
 export const GETUSERDATA = gql`
-  query GetUserData($accessToken: String!) {
-    getUserData(access_token: $accessToken) {
+  query GetUserData {
+    getUserData {
       Followings {
         StoreId
       }

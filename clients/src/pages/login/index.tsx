@@ -8,9 +8,6 @@ import { GetServerSidePropsContext } from "next";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@/queries/user";
 import Link from "next/link";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-const joystickImage =
-  "https://ik.imagekit.io/b8ugipzgo/FrontEnd/joystick.png?updatedAt=1681635187372";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = (await getSession(context)) || null;
@@ -117,8 +114,7 @@ export default function LoginPage(): JSX.Element {
               Not have an account yet? Sign Up
             </Link>
           </div>
-          <div>
-          </div>
+          <div></div>
         </div>
       </div>
     </div>

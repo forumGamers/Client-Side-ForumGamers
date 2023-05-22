@@ -59,7 +59,7 @@ function handleSteps(page: number): JSX.Element {
     "Input Username",
     "Input PhoneNumber",
     "Input Email",
-    "Input Password",
+    "Submit",
   ];
   return (
     <ul className="steps">
