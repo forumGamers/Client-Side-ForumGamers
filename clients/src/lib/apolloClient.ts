@@ -4,10 +4,8 @@ import {
   NormalizedCacheObject,
   HttpLink,
 } from "@apollo/client";
-import { SchemaLink } from "@apollo/client/link/schema";
 import { useMemo } from "react";
-const uri = process.env.URL || "http://localhost:3000/api/graphql";
-import { schema } from "@/server/schema";
+const uri = process.env.URL || "http://localhost:5000";
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   uri,
@@ -15,8 +13,6 @@ export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 function createIsoMorphLink() {
-  if (typeof window === "undefined") return new SchemaLink({ schema });
-
   return new HttpLink({
     uri,
     credentials: "same-origin",

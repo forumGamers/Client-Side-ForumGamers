@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GETUSERACHIEVEMENT = gql`
-  query GetUserAchievement($accessToken: String!) {
-    getUserAchievement(access_token: $accessToken) {
+  query GetUserAchievement {
+    getUserAchievement {
       Game {
         description
         id

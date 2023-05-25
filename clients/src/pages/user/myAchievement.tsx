@@ -40,8 +40,8 @@ export async function getServerSideProps(
 
     const { data } = await client.query({
       query: GETUSERACHIEVEMENT,
-      variables: {
-        accessToken: session?.user?.access_token,
+      context: {
+        access_token: session.user.access_token,
       },
       fetchPolicy: "cache-first",
     });
@@ -89,7 +89,7 @@ export default function AchievementPage({
   if (notification)
     return <ErrorNotification message={error.message} onClose={handleError} />;
 
-  if (error?.isError) setNotification(true);
+  if (error && error?.isError) setNotification(true);
 
   return (
     <>

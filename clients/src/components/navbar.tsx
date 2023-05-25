@@ -26,16 +26,16 @@ function dropDownHandler(
     >
       {dropDown.map((el: DropDown) => {
         return (
-          <li>
+          <li className="hover-bordered">
             <Link href={el.href}>{el.name}</Link>
           </li>
         );
       })}
-      <li>
+      <li className="hover-bordered">
         {isLoggedIn ? (
           <a onClick={handleSignOut}>Sign out</a>
         ) : (
-          <Link href="/login">Login</Link>
+          <Link href="/login">Sign Up</Link>
         )}
       </li>
     </ul>

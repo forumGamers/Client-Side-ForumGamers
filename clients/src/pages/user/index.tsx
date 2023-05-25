@@ -10,7 +10,7 @@ import {
 } from "next";
 import { CustomSession } from "@/interfaces/tour";
 import { client } from "@/lib/apolloClient";
-import { blackStoreImage, blankBackground, blankProfile } from "@/constants";
+import { blankStoreImage, blankBackground, blankProfile } from "@/constants";
 import ErrorNotification from "@/components/errorNotification";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -105,7 +105,7 @@ export default function UserProfile({
     window.location.reload();
   }
 
-  // if (error?.isError) setNotification(true);
+  if (error && error?.isError) setNotification(true);
 
   if (notification)
     return (
@@ -137,7 +137,7 @@ export default function UserProfile({
             />
           ) : (
             <LazyLoadImage
-              src={blackStoreImage}
+              src={blankStoreImage}
               alt="store img"
               className="store-img"
             />
