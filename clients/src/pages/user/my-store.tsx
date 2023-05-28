@@ -1,8 +1,7 @@
 import ErrorNotification from "@/components/errorNotification";
 import Loading from "@/components/loading";
-import Navbar from "@/components/navbar";
 import { DropDown } from "@/components/navbar";
-import { blankStoreImage } from "@/constants";
+import StorePage from "@/components/views/store";
 import { store } from "@/interfaces/store";
 import { CustomSession } from "@/interfaces/tour";
 import { client } from "@/lib/apolloClient";
@@ -15,13 +14,12 @@ import {
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
 ): Promise<
   GetServerSidePropsResult<{
-    data: store | null | undefined;
+    store: store | null | undefined;
     redirect?: Redirect;
     error?: { name: string; message: string; isError?: boolean };
   }>
@@ -40,23 +38,27 @@ export async function getServerSideProps(
     const { data } = await client.query({
       query: GETUSERSTORE,
       context: {
-        access_token: session.user.access_token,
+        headers: {
+          access_token: session.user.access_token,
+        },
       },
       fetchPolicy: "cache-first",
     });
+
     return {
       props: {
-        data,
+        store: data.getUserStore,
       },
     };
   } catch (err) {
+    const error = new Error(err as string);
     return {
       props: {
-        data: null,
+        store: null,
         error: {
-          message: "Failed to fetch",
-          name: "Failed to fetch",
           isError: true,
+          message: error.message,
+          name: error.name,
         },
       },
     };
@@ -65,8 +67,16 @@ export async function getServerSideProps(
 
 const dropDown: DropDown[] = [
   {
-    name: "s",
-    href: "/s",
+    name: "Homepage",
+    href: "/",
+  },
+  {
+    name: "profile",
+    href: "/user",
+  },
+  {
+    name: "achievement",
+    href: "/user/myAchievement",
   },
 ];
 
@@ -86,7 +96,7 @@ export default function MyStore({
 
   if (router.isFallback) return <Loading />;
 
-  // if (error && error.isError) setNotification(true);
+  if (error && error.isError) setNotification(true);
 
   function handleError() {
     setNotification(false);
@@ -94,19 +104,12 @@ export default function MyStore({
   }
 
   if (notification)
-    return <ErrorNotification message={error.message} onClose={handleError} />;
-  return (
-    <>
-      <Navbar isLoggedUser={true} dropdown={dropDown} />
-      <div className="card card-side bg-base-100 shadow-xl">
-        <figure>
-          <LazyLoadImage src={store?.image || blankStoreImage} alt="Store" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{store?.name}</h2>
-          <p>{store?.description || ""}</p>
-        </div>
-      </div>
-    </>
-  );
+    return (
+      <ErrorNotification
+        name={error.name}
+        message={error.message}
+        onClose={handleError}
+      />
+    );
+  return <StorePage dropDown={dropDown} store={store} />;
 }

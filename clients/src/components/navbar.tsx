@@ -24,9 +24,9 @@ function dropDownHandler(
       tabIndex={0}
       className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
     >
-      {dropDown.map((el: DropDown) => {
+      {dropDown.map((el: DropDown, idx: number) => {
         return (
-          <li className="hover-bordered">
+          <li className="hover-bordered" key={idx}>
             <Link href={el.href}>{el.name}</Link>
           </li>
         );

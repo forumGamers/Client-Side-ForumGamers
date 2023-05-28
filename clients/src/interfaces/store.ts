@@ -1,5 +1,5 @@
 export type store = {
-  id: number;
+  ID: number;
   name: string;
   image: string;
   background: string;
@@ -11,10 +11,12 @@ export type store = {
   avg_rating: number;
   rating_count: number;
   StoreStatus: StoreStatus;
+  followers: number;
+  CreatedAt: string;
 };
 
 export type item = {
-  id: number;
+  ID: number;
   name: string;
   image: string;
   status: string;
