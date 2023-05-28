@@ -8,8 +8,6 @@ const nextConfig = {
     ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
     SECRET: process.env.SECRET,
     KEY: process.env.KEY,
-    REDIS_HOST: process.env.REDIS_HOST,
-    REDIS_PASS: process.env.REDIS_PASS,
     secret: process.env.secret,
   },
   typescript: {

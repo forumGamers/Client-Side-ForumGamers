@@ -30,6 +30,52 @@ export const GETUSERSTORE = gql`
       }
       avg_rating
       rating_count
+      followers
+      CreatedAt
+    }
+  }
+`;
+
+export const GETSTOREBYID = gql`
+  query GetStoreByID($getStoreByIdId: String!) {
+    getStoreByID(id: $getStoreByIdId) {
+      CreatedAt
+      ID
+      Items {
+        ID
+        active
+        description
+        discount
+        image
+        name
+        price
+        sold
+        slug
+        status
+        stock
+      }
+      StoreStatus {
+        ID
+        name
+      }
+      active
+      avg_rating
+      background
+      description
+      exp
+      followers
+      image
+      name
+      rating_count
+      status_id
+    }
+  }
+`;
+
+export const GETALLSTOREID = gql`
+  query GetAllStoreId {
+    getAllStoreId {
+      ID
     }
   }
 `;

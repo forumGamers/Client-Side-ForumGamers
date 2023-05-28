@@ -1,6 +1,8 @@
 import { client } from "@/lib/apolloClient";
 import { getSession } from "next-auth/react";
-import CardAchievement, { achievement } from "@/components/cardAchievement";
+import CardAchievement, {
+  achievement,
+} from "@/components/card/cardAchievement";
 import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
@@ -87,7 +89,13 @@ export default function AchievementPage({
   }
 
   if (notification)
-    return <ErrorNotification message={error.message} onClose={handleError} />;
+    return (
+      <ErrorNotification
+        name={error.name}
+        message={error.message}
+        onClose={handleError}
+      />
+    );
 
   if (error && error?.isError) setNotification(true);
 
