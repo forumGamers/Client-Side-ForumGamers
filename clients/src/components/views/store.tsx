@@ -17,8 +17,8 @@ export default function StorePage({
       <StoreProfile store={store} />
       <section>
         {store?.Items.length ? (
-          <div className="container">
-            <div className="flex gap-4">
+          <div className="container mx-auto">
+            <div className="flex flex-wrap -mx-4">
               {store.Items.map((item: item) => (
                 <ItemCard item={item} key={item.ID} />
               ))}

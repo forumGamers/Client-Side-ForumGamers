@@ -79,3 +79,38 @@ export const GETALLSTOREID = gql`
     }
   }
 `;
+
+export const GETALLSLUGBYSTOREID = gql`
+  query GetAllSlugByStoreId($getAllSlugByStoreIdId: String!) {
+    getAllSlugByStoreId(id: $getAllSlugByStoreIdId) {
+      Slug
+    }
+  }
+`;
+
+export const GETALLSLUG = gql`
+  query GetAllSlug {
+    getAllSlug {
+      ID
+      Slug
+    }
+  }
+`;
+
+export const GETITEMBYSLUG = gql`
+  query GetAllSlug($slug: String!) {
+    getItemBySlug(slug: $slug) {
+      ID
+      active
+      description
+      discount
+      image
+      name
+      price
+      slug
+      sold
+      status
+      stock
+    }
+  }
+`;
