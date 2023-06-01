@@ -86,7 +86,10 @@ export default function LoginForm(): JSX.Element {
               placeholder="Masukkan Password yang Sesuai"
             />
           </div>
-          <Link href="#" className="login-link d-flex flex-row-reverse">
+          <Link
+            href="/user/forget-password"
+            className="login-link d-flex flex-row-reverse"
+          >
             <p className="text-[#8648C1]  font-semibold font-sans text-sm">
               Forgot password?
             </p>
