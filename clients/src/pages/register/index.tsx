@@ -15,46 +15,46 @@ import { getSession } from "next-auth/react";
 import ErrorNotification from "@/components/errorNotification";
 import Encryption from "@/helper/encryption";
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): Promise<
-  GetServerSidePropsResult<{
-    keys?: string;
-    redirect?: Redirect;
-    error?: {
-      name: string;
-      message: string;
-      isError: boolean;
-    };
-  }>
-> {
-  try {
-    const session: CustomSession | null = await getSession(context);
+// export async function getServerSideProps(
+//   context: GetServerSidePropsContext
+// ): Promise<
+//   GetServerSidePropsResult<{
+//     keys?: string;
+//     redirect?: Redirect;
+//     error?: {
+//       name: string;
+//       message: string;
+//       isError: boolean;
+//     };
+//   }>
+// > {
+//   try {
+//     const session: CustomSession | null = await getSession(context);
 
-    if (!session || !session?.user)
-      return {
-        redirect: {
-          destination: "/login",
-          permanent: false,
-        },
-      };
-    const keys = process.env.ENCRYPTION_KEY as string;
-    return {
-      props: { keys },
-    };
-  } catch (err) {
-    const error = new Error(err as string);
-    return {
-      props: {
-        error: {
-          isError: true,
-          message: error.message || "something went wrong",
-          name: error.name || "internal server error",
-        },
-      },
-    };
-  }
-}
+//     if (!session || !session?.user)
+//       return {
+//         redirect: {
+//           destination: "/login",
+//           permanent: false,
+//         },
+//       };
+//     const keys = process.env.ENCRYPTION_KEY as string;
+//     return {
+//       props: { keys },
+//     };
+//   } catch (err) {
+//     const error = new Error(err as string);
+//     return {
+//       props: {
+//         error: {
+//           isError: true,
+//           message: error.message || "something went wrong",
+//           name: error.name || "internal server error",
+//         },
+//       },
+//     };
+//   }
+// }
 
 function handleSteps(page: number): JSX.Element {
   const data = [

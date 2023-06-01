@@ -87,7 +87,7 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
           <li><a className="font-sans text-white">About</a></li>
-          <li><a href="../register" className="font-sans text-white">Sign Up</a></li>
+          <li><a href="../register" className="font-sans text-white hover:bg-[#8648C1]">Sign Up</a></li>
           </ul>
         </div>
     </div>
