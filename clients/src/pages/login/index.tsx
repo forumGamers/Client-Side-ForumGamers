@@ -14,6 +14,7 @@ import { LOGIN } from "@/queries/user";
 import Link from "next/link";
 import Encryption from "@/helper/encryption";
 
+
 export async function getServerSideProps(
   context: GetServerSidePropsContext
 ): Promise<GetServerSidePropsResult<{ keys: string; redirect?: Redirect }>> {
@@ -79,17 +80,26 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
 
   return (
     <div className="body d-flex justify-content-center align-items-center">
-      <div className="img-bg-wp d-flex justify-content-center align-items-center">
-        <div className="login-wrapper">
-        <div className="card border-sm border-2 border-white">
-          <h2 className="text-4xl text-white text-center mb-6">LOGIN</h2>
+     <div className="navbar mt-3">
+        <div className="flex-1">
+          <a className="btn btn-ghost normal-case text-xl font-sans text-white">Forum Gamers</a>
+        </div>
+        <div className="flex-none">
+          <ul className="menu menu-horizontal px-1">
+          <li><a className="font-sans text-white">About</a></li>
+          <li><a href="../register" className="font-sans text-white">Sign Up</a></li>
+          </ul>
+        </div>
+    </div>
+        <div className="container">
+        <div className="card border-sm border-2 border-white p-12 w-[30%] h-[60vh]">
+          <h2 className="text-4xl text-[#8648C1] text-center mb-6">LOGIN</h2>
           <form onSubmit={handleSubmit}>
-
-            <div className="login-input-wrapper">
+            <div className="login-input-wrapper mb-4">
               <div className="form-control w-full">
               
               <label htmlFor="email" className="label">
-                <span className="label-text text-lg text-white">Email</span>
+                <span className="label-text text-sm font-semibold text-[#8648C1]">Email</span>
               </label>
                 <input className="input input-bordered rounded-xl w-full bg-white"
                 type="text"
@@ -101,9 +111,9 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
                 />
 
               <label htmlFor="email" className="label">
-                <span className="label-text text-lg text-white">Password</span>
+                <span className="label-text text-sm font-semibold text-[#8648C1]">Password</span>
               </label>
-              <input className="input input-bordered rounded-xl w-full bg-white mb-3"
+              <input className="input input-bordered rounded-xl w-full bg-white"
                 type="password"
                 name="password"
                 value={formData.password}
@@ -112,24 +122,20 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
                 placeholder="Masukkan Password yang Sesuai"
               />
               </div>
+              <Link href="#" className="login-link d-flex flex-row-reverse">
+              <p className="text-[#8648C1]  font-semibold font-sans text-sm">Forgot password?</p>
+            </Link>
             </div>
-            <button type="submit" className="btn btn-active w-full text-white bg-[#8d3c96] p-4 mb-5">
+            <button type="submit" className="btn w-full text-white bg-[#8648C1] mb-2">
               Log in
             </button>
           </form>
-          <div className="login-links-wrapper">
-            <Link href="#" className="login-link">
-              Forgot password?
+            <Link href="../register" className="login-link">
+              <p className="text-[#8648C1] font-semibold font-sans text-sm">Not have an account yet? Sign Up</p>
             </Link>
-            <span className="login-divider"> </span>
-            <Link href="/register" className="login-link">
-              Not have an account yet? Sign Up
-            </Link>
-          </div>
           <div></div>
         </div>
         </div>
       </div>
-    </div>
   );
 }
