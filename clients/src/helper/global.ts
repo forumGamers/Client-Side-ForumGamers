@@ -1,13 +1,15 @@
+import { CustomSession } from "@/interfaces/tour";
 import { NextPageContext } from "next";
-import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 export const fixDate = (date: string): string => date.slice(0, 10);
 
-export async function checkSession(ctx: NextPageContext, redirectUrl: string) {
+export async function checkSession(
+  ctx: NextPageContext,
+  callback: (session: CustomSession | null) => any
+) {
   "use server";
-  const session: Session | null = await getSession(ctx);
+  const session: CustomSession | null = await getSession(ctx);
 
-  if (session) redirect(redirectUrl);
+  callback(session);
 }

@@ -56,17 +56,9 @@ export async function getServerSideProps(
         },
       };
 
-    const { data } = await client.query({
-      query: GETUSERDATA,
-      variables: {
-        accessToken: session?.user?.access_token,
-      },
-      fetchPolicy: "cache-first",
-    });
-
     return {
       props: {
-        data: data.getUserData,
+        data: null,
       },
     };
   } catch (err) {
