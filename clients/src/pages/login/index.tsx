@@ -82,7 +82,7 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
     <div className="body d-flex justify-content-center align-items-center">
      <div className="navbar mt-3">
         <div className="flex-1">
-          <p className="text-xl font-sans text-white">Forum Gamers</p>
+          <p className="text-xl font-sans text-white px-1">Forum Gamers</p>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
