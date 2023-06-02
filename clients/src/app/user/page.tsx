@@ -1,18 +1,19 @@
 import ErrorNotification from "@/components/errorNotification";
+import { DropDown } from "@/components/navbar";
+import UserProfile from "@/components/views/user";
 import { checkSession } from "@/helper/global";
 import { CustomSession } from "@/interfaces/tour";
 import { UserData } from "@/interfaces/user";
 import { client } from "@/lib/apolloClient";
 import { GETUSERDATA } from "@/queries/user";
 import { NextPageContext } from "next";
-import { User } from "next-auth";
 import { redirect } from "next/navigation";
 
 async function getUserData(
   session: CustomSession
 ): Promise<{ user: UserData | null; error: Error | null }> {
   try {
-    const { data } = await client.query({
+    const { data } = await client.query<{ getUserData: UserData }>({
       query: GETUSERDATA,
       variables: {
         accessToken: session?.user?.access_token,
@@ -31,6 +32,21 @@ async function getUserData(
     };
   }
 }
+
+const dropdown: DropDown[] = [
+  {
+    href: "/",
+    name: "Homepage",
+  },
+  {
+    href: "/user/my-store",
+    name: "store",
+  },
+  {
+    href: "/user/myAchievement",
+    name: "achievement",
+  },
+];
 
 export default async function UserPage(
   ctx: NextPageContext
@@ -54,9 +70,5 @@ export default async function UserPage(
         onClose={onCloseHandler}
       />
     );
-  return (
-    <>
-      <div>ok</div>
-    </>
-  );
+  return <UserProfile user={user} dropdown={dropdown} />;
 }
