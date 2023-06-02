@@ -14,10 +14,18 @@ export default function UserProfile({
     <>
       <Navbar isLoggedUser={true} dropdown={dropdown} />
       <div className="coverImage">
-        <Image src={user?.backgroundImage || blankBackground} alt="cover" />
+        <Image
+          loading="lazy"
+          src={user?.backgroundImage || blankBackground}
+          alt="cover"
+        />
       </div>
       <div className="avatar">
-        <Image src={user?.imageUrl || blankProfile} alt="avatar" />
+        <Image
+          loading="lazy"
+          src={user?.imageUrl || blankProfile}
+          alt="avatar"
+        />
       </div>
       {user?.Store?.name ? (
         <div className="store">
@@ -26,12 +34,14 @@ export default function UserProfile({
               src={user?.Store?.image}
               alt="store img"
               className="store-img"
+              loading="lazy"
             />
           ) : (
             <Image
               src={blankStoreImage}
               alt="store img"
               className="store-img"
+              loading="lazy"
             />
           )}
           <p>{user?.Store?.name}</p>

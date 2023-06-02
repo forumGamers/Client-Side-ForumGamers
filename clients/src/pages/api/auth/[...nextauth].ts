@@ -16,7 +16,7 @@ export default NextAuth({
       },
       async authorize(credentials) {
         try {
-          const payload = verifyToken(credentials?.access_token) as any
+          const payload = verifyToken(credentials?.access_token) as any;
 
           const { id, email, username } = payload;
 
