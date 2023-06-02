@@ -91,7 +91,7 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
           </ul>
         </div>
     </div>
-        <div className="container">
+        <div className="wrapper-login">
         <div className="card border-sm border-2 border-white p-12 w-[30%] h-[60vh]">
           <h2 className="text-4xl text-[#8648C1] text-center mb-6">LOGIN</h2>
           <form onSubmit={handleSubmit}>
