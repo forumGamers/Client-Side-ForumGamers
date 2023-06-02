@@ -82,12 +82,16 @@ export default function LoginPage({ keys }: { keys: string }): JSX.Element {
     <div className="body d-flex justify-content-center align-items-center">
      <div className="navbar mt-3">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl font-sans text-white">Forum Gamers</a>
+          <p className="text-xl font-sans text-white">Forum Gamers</p>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
-          <li><a className="font-sans text-white">About</a></li>
-          <li><a href="../register" className="font-sans text-white hover:bg-[#8648C1]">Sign Up</a></li>
+          <li>
+            <Link className="font-sans text-white" href="#">About</Link>
+          </li>
+          <li>
+            <Link href="../register" className="font-sans text-white hover:bg-[#8648C1]">Sign Up</Link>
+          </li>
           </ul>
         </div>
     </div>
