@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 export default async function RegisterPage(): Promise<JSX.Element> {
   await checkServerSession((session) => {
-    if (session) redirect("/");
+    if (session !== null) redirect("/");
   });
   return <Wrapper />;
 }
