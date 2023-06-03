@@ -1,7 +1,7 @@
 import ErrorNotification from "@/components/errorNotification";
 import { DropDown } from "@/components/navbar";
 import UserProfile from "@/components/views/user";
-import { checkSession } from "@/helper/global";
+import { checkServerSession } from "@/helper/global";
 import { CustomSession } from "@/interfaces/tour";
 import { UserData } from "@/interfaces/user";
 import { client } from "@/lib/apolloClient";
@@ -52,23 +52,11 @@ export default async function UserPage(
   ctx: NextPageContext
 ): Promise<JSX.Element> {
   let userSession: CustomSession | unknown = null;
-  await checkSession(ctx, (session) => {
+  await checkServerSession((session) => {
     if (!session) redirect("/login");
     userSession = session;
   });
-  const { user, error } = await getUserData(userSession as CustomSession);
+  const { user } = await getUserData(userSession as CustomSession);
 
-  function onCloseHandler() {
-    window.location.reload();
-  }
-
-  if (!user)
-    return (
-      <ErrorNotification
-        name={error?.name}
-        message={error?.message as string}
-        onClose={onCloseHandler}
-      />
-    );
-  return <UserProfile user={user} dropdown={dropdown} />;
+  return <UserProfile user={user as UserData} dropdown={dropdown} />;
 }

@@ -10,7 +10,6 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
   Redirect,
-  NextPageContext
 } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";

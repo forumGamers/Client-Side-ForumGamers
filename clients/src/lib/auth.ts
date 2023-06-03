@@ -1,9 +1,12 @@
-import { customVerify, verifyToken, customToken } from "@/helper/jwt";
-import NextAuth, { Session, TokenSet } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import type { NextAuthOptions, Session, TokenSet } from "next-auth";
 import credentials from "next-auth/providers/credentials";
+import { customVerify, verifyToken, customToken } from "@/helper/jwt";
+import { JWT } from "next-auth/jwt";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
   providers: [
     credentials({
       name: "Credentials",
@@ -82,4 +85,4 @@ export default NextAuth({
       return token;
     },
   },
-});
+};
