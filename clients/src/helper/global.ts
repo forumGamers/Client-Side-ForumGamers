@@ -10,6 +10,7 @@ export async function checkSession(
   ctx: NextPageContext,
   callback: (session: CustomSession | null) => any
 ) {
+  "use server";
   const session: CustomSession | null = await getSession(ctx);
 
   callback(session);

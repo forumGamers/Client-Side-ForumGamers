@@ -1,14 +1,11 @@
 import "@/styles/pages/login.css";
 import Link from "next/link";
 import LoginForm from "./form";
-import { checkSession } from "@/helper/global";
-import { NextPageContext } from "next";
+import { checkServerSession } from "@/helper/global";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage(
-  ctx: NextPageContext
-): Promise<JSX.Element> {
-  await checkSession(ctx, (session) => {
+export default async function LoginPage(): Promise<JSX.Element> {
+  await checkServerSession((session) => {
     if (session) redirect("/");
   });
   return (

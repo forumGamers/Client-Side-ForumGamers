@@ -6,7 +6,6 @@ import { CustomSession } from "@/interfaces/tour";
 import { UserData } from "@/interfaces/user";
 import { client } from "@/lib/apolloClient";
 import { GETUSERDATA } from "@/queries/user";
-import { NextPageContext } from "next";
 import { redirect } from "next/navigation";
 
 async function getUserData(
@@ -48,15 +47,21 @@ const dropdown: DropDown[] = [
   },
 ];
 
-export default async function UserPage(
-  ctx: NextPageContext
-): Promise<JSX.Element> {
+export default async function UserPage(): Promise<JSX.Element> {
   let userSession: CustomSession | unknown = null;
   await checkServerSession((session) => {
     if (!session) redirect("/login");
     userSession = session;
   });
-  const { user } = await getUserData(userSession as CustomSession);
+  const { user, error } = await getUserData(userSession as CustomSession);
 
+  if (!user)
+    return (
+      <ErrorNotification
+        message={error?.message || "Something Went wrong"}
+        name={error?.name || "Internal Server Error"}
+        onClose={() => window.location.reload()}
+      />
+    );
   return <UserProfile user={user as UserData} dropdown={dropdown} />;
 }

@@ -1,13 +1,10 @@
 import "@/styles/pages/register.css";
 import Wrapper from "./wrapper";
-import { NextPageContext } from "next";
-import { checkSession } from "@/helper/global";
+import { checkServerSession } from "@/helper/global";
 import { redirect } from "next/navigation";
 
-export default async function RegisterPage(
-  ctx: NextPageContext
-): Promise<JSX.Element> {
-  await checkSession(ctx, (session) => {
+export default async function RegisterPage(): Promise<JSX.Element> {
+  await checkServerSession((session) => {
     if (session) redirect("/");
   });
   return <Wrapper />;
