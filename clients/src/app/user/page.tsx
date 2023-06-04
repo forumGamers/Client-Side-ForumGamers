@@ -1,18 +1,18 @@
 import ErrorNotification from "@/components/errorNotification";
-import { checkSession } from "@/helper/global";
+import { DropDown } from "@/components/navbar";
+import UserProfile from "@/components/views/user";
+import { checkServerSession } from "@/helper/global";
 import { CustomSession } from "@/interfaces/tour";
 import { UserData } from "@/interfaces/user";
 import { client } from "@/lib/apolloClient";
 import { GETUSERDATA } from "@/queries/user";
-import { NextPageContext } from "next";
-import { User } from "next-auth";
 import { redirect } from "next/navigation";
 
 async function getUserData(
   session: CustomSession
 ): Promise<{ user: UserData | null; error: Error | null }> {
   try {
-    const { data } = await client.query({
+    const { data } = await client.query<{ getUserData: UserData }>({
       query: GETUSERDATA,
       variables: {
         accessToken: session?.user?.access_token,
@@ -32,31 +32,36 @@ async function getUserData(
   }
 }
 
-export default async function UserPage(
-  ctx: NextPageContext
-): Promise<JSX.Element> {
+const dropdown: DropDown[] = [
+  {
+    href: "/",
+    name: "Homepage",
+  },
+  {
+    href: "/user/my-store",
+    name: "store",
+  },
+  {
+    href: "/user/myAchievement",
+    name: "achievement",
+  },
+];
+
+export default async function UserPage(): Promise<JSX.Element> {
   let userSession: CustomSession | unknown = null;
-  await checkSession(ctx, (session) => {
+  await checkServerSession((session) => {
     if (!session) redirect("/login");
     userSession = session;
   });
   const { user, error } = await getUserData(userSession as CustomSession);
 
-  function onCloseHandler() {
-    window.location.reload();
-  }
-
   if (!user)
     return (
       <ErrorNotification
-        name={error?.name}
-        message={error?.message as string}
-        onClose={onCloseHandler}
+        message={error?.message || "Something Went wrong"}
+        name={error?.name || "Internal Server Error"}
+        onClose={() => window.location.reload()}
       />
     );
-  return (
-    <>
-      <div>ok</div>
-    </>
-  );
+  return <UserProfile user={user as UserData} dropdown={dropdown} />;
 }
