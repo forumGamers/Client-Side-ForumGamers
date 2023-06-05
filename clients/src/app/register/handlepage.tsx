@@ -28,16 +28,19 @@ export default function HandlePage({
   switch (page) {
     case 1:
       return (
-        <div className="bg-cover bg-no-repeat bg-white_A700 flex flex-col font-inter h-[1024px] items-center justify-start mx-auto pb-[171px] w-full">
-          <div className="container bg-pink_900_4c border-[3px] border-solid border-white_A700 flex flex-col justify-start max-w-[868px] mx-auto p-[70px] md:px-5 rounded-[50px] w-full">
-            <div className="bg-pink_900_4c border-[3px] border-solid border-white_A700 flex flex-col justify-start max-w-[868px] mx-auto p-[70px] md:px-5 rounded-[50px] w-full">
-              <h1 className="md:ml-[0] ml-[147px] text-center text-white_A700 w-auto">
-                Register your account
-              </h1>
-              <label className="md:ml-[0] ml-[21px] mt-[159px] text-center text-white_A700 w-auto">
-                FullName
+        <div className="body d-flex justify-content-center align-items-center">
+          <div className="wrapper-register">
+            <div className="card border-2 border-white p-14 w-[35%] h-[50vh]">
+              <h2 className="text-3xl font-semibold text-white text-center mb-16">
+                Register Your Account
+              </h2>
+              <label className="mb-2">
+                <h2 className="text-white text-sm font-semibold mb-1">
+                  FullName
+                </h2>
                 <input
-                  className="bg-white_A700 border-[3px] border-pink_900 border-solid h-[94px] rounded-[20px] w-full"
+                  placeholder="Your Full Name"
+                  className="input input-primary input-bordered rounded-xl w-full bg-white"
                   type="text"
                   value={input.fullName}
                   onChange={onChangeHandler}
@@ -45,12 +48,10 @@ export default function HandlePage({
                   required
                 />
               </label>
-            </div>
-            <div className="btn-group grid grid-cols-2">
+
               <button
                 onClick={nextPage}
-                className="bg-pink_900 h-20 rounded-[30px] w-full"
-              >
+                className="btn w-full text-white bg-[#8648C1]">
                 Next
               </button>
             </div>
@@ -59,11 +60,19 @@ export default function HandlePage({
       );
     case 2:
       return (
-        <div className="container artboard artboard-horizontal phone-1">
-          <label>
-            username
+        <div className="body d-flex justify-content-center align-items-center">
+        <div className="wrapper-register">
+        <div className="card border-2 border-white p-14 w-[35%] h-[50vh]">
+            <h2 className="text-3xl font-semibold text-white text-center mb-16">
+              Register Your Account
+            </h2>
+          <label className="mb-2">
+            <h2 className="text-white text-sm font-semibold mb-1">
+              Username
+            </h2>
             <input
-              className="input input-bordered input-accent w-full max-w-xs"
+              placeholder="Create Your Username"
+              className="input input-primary input-bordered rounded-xl w-full bg-white"
               type="text"
               value={input.username}
               onChange={onChangeHandler}
@@ -71,58 +80,81 @@ export default function HandlePage({
               required
             />
           </label>
-          <div className="btn-group grid grid-cols-2">
-            <button onClick={previousPage} className="btn btn-outline">
+          <div className="btn-group grid grid-cols-2 gap-2">
+            <button onClick={previousPage} className="btn btn-outline border-white text-white">
               Previous
             </button>
-            <button onClick={nextPage} className="btn btn-outline">
+            <button onClick={nextPage} className="btn text-white bg-[#8648C1]">
               Next
             </button>
           </div>
         </div>
+      </div>
+      </div>
       );
     case 3:
       return (
-        <div className="container artboard artboard-horizontal phone-1">
-          <label>
-            PhoneNumber
-            <input
+        <div className="body d-flex justify-content-center align-items-center">
+          <div className="wrapper-register">
+            <div className="card border-2 border-white p-14 w-[35%] h-[50vh]">
+              <h2 className="text-3xl font-semibold text-white text-center mb-16">
+              Register Your Account
+              </h2>
+              <label className="mb-2">
+                <h2 className="text-white text-sm font-semibold mb-1">
+                  Phone Number
+                </h2>
+              <input
               type="text"
-              className="input input-bordered input-accent w-full max-w-xs"
+              placeholder="Your Phone Number"
+              className="input input-primary input-bordered rounded-xl w-full bg-white"
               value={input.phoneNumber}
               onChange={onChangeHandler}
               name="phoneNumber"
               required
-            />
-          </label>
-          <div className="btn-group grid grid-cols-2">
-            <button onClick={previousPage} className="btn btn-outline">
+               />
+            </label>
+            <div className="btn-group grid grid-cols-2 gap-2">
+              <button onClick={previousPage} className="btn btn-outline border-white text-white">
               Previous
-            </button>
-            <button onClick={nextPage} className="btn btn-outline">
+              </button>
+              <button onClick={nextPage} className="btn text-white bg-[#8648C1]">
               Next
-            </button>
+              </button>
+            </div>
           </div>
         </div>
+      </div>
       );
     case 4:
       return (
-        <div className="container artboard artboard-horizontal phone-1">
-          <label>
-            email
+        <div className="body d-flex justify-content-center align-items-center">
+        <div className="wrapper-register">
+          <div className="card border-2 border-white p-14 w-[35%] h-[50vh]">
+            <h2 className="text-3xl font-semibold text-white text-center mb-16">
+              Register Your Account
+            </h2>
+          <label className="mb-2">
+            <h2 className="text-white text-sm font-semibold mb-1">
+              Email
+            </h2>
             <input
+              placeholder="Input Your Email"
               type="text"
-              className="input input-bordered input-accent w-full max-w-xs"
+              className="input input-primary input-bordered w-full"
               value={input.email}
               onChange={onChangeHandler}
               name="email"
               required
             />
           </label>
-          <label>
-            Password
+          <label className="mb-2">
+            <h2 className="text-white text-sm font-semibold mb-1">
+             Password
+            </h2>
             <input
-              className="input input-bordered input-accent w-full max-w-xs"
+              placeholder="Create Your Password"
+              className="input input-primary input-bordered w-full"
               type="password"
               value={input.password}
               onChange={onChangeHandler}
@@ -130,38 +162,47 @@ export default function HandlePage({
               required
             />
           </label>
-          <div className="btn-group grid grid-cols-2">
-            <button onClick={previousPage} className="btn btn-outline">
+          <div className="btn-group grid grid-cols-2 gap-2">
+            <button onClick={previousPage} className="btn btn-outline border-white text-white">
               Previous
             </button>
-            <button onClick={nextPage} className="btn btn-outline">
+            <button onClick={nextPage} className="btn text-white bg-[#8648C1]">
               Next
             </button>
           </div>
+          </div>
         </div>
+      </div>
       );
     default:
       return (
-        <div className="container artboard artboard-horizontal phone-1">
-          <form onSubmit={handleSubmit}>
-            <label>
-              Term and sheet
+        <div className="body d-flex justify-content-center align-items-center">
+          <div className="wrapper-register">
+            <div className="card border-2 border-white p-14 w-[35%] h-[40vh]">
+            <h2 className="text-3xl font-semibold text-white text-center mb-10">
+              Register Your Account
+            </h2>
+              <form onSubmit={handleSubmit}>
+              <label className="cursor-pointer label text-white">
+                  Term and Condition
               <input
                 type="checkbox"
-                className="checkbox checkbox-accent"
+                className="checkbox checkbox-success"
                 checked={termsAccepted}
                 onChange={termSheetHandler}
               />
-            </label>
-            <div className="btn-group grid grid-cols-2">
-              <button type="submit" className="btn btn-outline">
-                Sign Up
-              </button>
-              <button onClick={previousPage} className="btn btn-outline">
-                previous
-              </button>
+              </label>
+                <div className="btn-group grid grid-cols-2 gap-2 mt-2">
+                  <button onClick={previousPage} className="btn btn-outline border-white text-white">
+                  Previous
+                  </button>
+                  <button type="submit" className="btn text-white bg-[#8648C1]">
+                  Sign Up
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       );
   }
