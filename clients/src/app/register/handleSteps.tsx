@@ -1,3 +1,5 @@
+"use client";
+
 export default function HandleSteps({ page }: { page: number }): JSX.Element {
   const data = [
     "Input Fullname",

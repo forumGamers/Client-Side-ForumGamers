@@ -1,4 +1,4 @@
-import { item, store } from "@/interfaces/store";
+import { item, storeData } from "@/interfaces/store";
 import Navbar, { DropDown } from "../navbar";
 import StoreProfile from "../card/storeProfileCard";
 import ItemCard from "../card/cardItem";
@@ -8,7 +8,7 @@ export default function StorePage({
   store,
   dropDown,
 }: {
-  store: store;
+  store: storeData;
   dropDown: DropDown[];
 }): JSX.Element {
   return (

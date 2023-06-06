@@ -13,7 +13,7 @@ export default function UserProfile({
   dropdown: DropDown[];
 }): JSX.Element {
   return (
-    <>
+    <main className="container">
       <Navbar isLoggedUser={true} dropdown={dropdown} />
       <Suspense fallback={<Loading />}>
         <div className="coverImage">
@@ -84,6 +84,6 @@ export default function UserProfile({
           <div className="bio">testing aja</div>
         </div>
       </Suspense>
-    </>
+    </main>
   );
 }

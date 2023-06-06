@@ -6,7 +6,6 @@ import "@/styles/pages/user/verify.css";
 import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 export default function Verify() {
   const [token] = useMutation(VERIFYUSER, {
@@ -20,8 +19,6 @@ export default function Verify() {
       const query = window.location.search;
       const urlParams = new URLSearchParams(query);
       const tokenParams = urlParams.get("token");
-      const session = useSession();
-      console.log(session);
 
       await token({
         variables: {

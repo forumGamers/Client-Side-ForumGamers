@@ -2,7 +2,7 @@ import ErrorNotification from "@/components/errorNotification";
 import Loading from "@/components/loading";
 import { DropDown } from "@/components/navbar";
 import StorePage from "@/components/views/store";
-import { store } from "@/interfaces/store";
+import { storeData } from "@/interfaces/store";
 import { CustomSession } from "@/interfaces/tour";
 import { client } from "@/lib/apolloClient";
 import { GETUSERSTORE } from "@/queries/store";
@@ -19,7 +19,7 @@ export async function getServerSideProps(
   context: GetServerSidePropsContext
 ): Promise<
   GetServerSidePropsResult<{
-    store: store | null | undefined;
+    store: storeData | null | undefined;
     redirect?: Redirect;
     error?: { name: string; message: string; isError?: boolean };
   }>
@@ -84,7 +84,7 @@ export default function MyStore({
   store,
   error,
 }: {
-  store: store;
+  store: storeData;
   error: {
     message: string;
     name: string;

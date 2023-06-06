@@ -1,5 +1,7 @@
 "use client";
 
+import ErrorPage from "@/components/views/errorPage";
+
 export default function Error({
   error,
   reset,
@@ -7,13 +9,5 @@ export default function Error({
   error: Error;
   reset: () => void;
 }) {
-  return (
-    <html>
-      <body>
-        <h2>Something went wrong!</h2>
-        <h6>{error.message}</h6>
-        <button onClick={() => reset()}>Try again</button>
-      </body>
-    </html>
-  );
+  return <ErrorPage error={error} reset={reset} />;
 }
