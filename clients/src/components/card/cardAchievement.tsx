@@ -1,5 +1,7 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
+"use client";
+
 import "@/styles/components/cardAchievement.css";
+import Image from "next/image";
 
 export interface achievement {
   id: number;
@@ -26,20 +28,22 @@ export default function CardAchievement({
         <div className="card">
           <div className="card-header">
             <h3 className="card-title">{achievement.name}</h3>
-            <LazyLoadImage
+            <Image
               src={achievement.image}
               alt="achievement img"
               className="card-image"
-              placeholderSrc={achievement.image}
+              width={100}
+              height={24}
             />
           </div>
           <div className="card-body">
             <p className="card-description">{achievement.Game.description}</p>
-            <LazyLoadImage
+            <Image
               src={achievement.Game.image}
               alt="game img"
               className="card-game-image"
-              placeholderSrc={achievement.Game.image}
+              width={100}
+              height={24}
             />
             <h4 className="card-subtitle">{achievement.Game.name}</h4>
           </div>

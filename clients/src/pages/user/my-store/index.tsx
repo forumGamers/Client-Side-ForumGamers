@@ -1,4 +1,3 @@
-import ErrorNotification from "@/components/errorNotification";
 import Loading from "@/components/loading";
 import { DropDown } from "@/components/navbar";
 import StorePage from "@/components/views/store";
@@ -98,18 +97,5 @@ export default function MyStore({
 
   if (error && error.isError) setNotification(true);
 
-  function handleError() {
-    setNotification(false);
-    window.location.reload();
-  }
-
-  if (notification)
-    return (
-      <ErrorNotification
-        name={error.name}
-        message={error.message}
-        onClose={handleError}
-      />
-    );
   return <StorePage dropDown={dropDown} store={store} />;
 }

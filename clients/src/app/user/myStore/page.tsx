@@ -1,4 +1,3 @@
-import ErrorNotification from "@/components/errorNotification";
 import StorePage from "@/components/views/store";
 import { checkServerSession } from "@/helper/global";
 import { storeData } from "@/interfaces/store";
@@ -30,10 +29,7 @@ async function getStoreData(
     };
   } catch (err) {
     const fetchError = new Error(err as string);
-    return {
-      store: null,
-      error: fetchError,
-    };
+    throw fetchError;
   }
 }
 
@@ -45,13 +41,5 @@ export default async function UserStore(): Promise<JSX.Element> {
   });
   const { store, error } = await getStoreData(userSession as CustomSession);
 
-  if (!store)
-    return (
-      <ErrorNotification
-        message={error?.message || "Something Went wrong"}
-        name={error?.name || "Internal Server Error"}
-        onClose={() => window.location.reload()}
-      />
-    );
   return <StorePage store={store as storeData} dropDown={[]} />;
 }

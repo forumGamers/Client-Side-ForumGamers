@@ -1,4 +1,3 @@
-import ErrorNotification from "@/components/errorNotification";
 import { DropDown } from "@/components/navbar";
 import UserProfile from "@/components/views/user";
 import { checkServerSession } from "@/helper/global";
@@ -25,10 +24,7 @@ async function getUserData(
     };
   } catch (err) {
     const fetchError = new Error(err as string);
-    return {
-      user: null,
-      error: fetchError,
-    };
+    throw fetchError;
   }
 }
 
@@ -53,15 +49,7 @@ export default async function UserPage(): Promise<JSX.Element> {
     if (!session) redirect("/login");
     userSession = session;
   });
-  const { user, error } = await getUserData(userSession as CustomSession);
+  const { user } = await getUserData(userSession as CustomSession);
 
-  if (!user)
-    return (
-      <ErrorNotification
-        message={error?.message || "Something Went wrong"}
-        name={error?.name || "Internal Server Error"}
-        onClose={() => window.location.reload()}
-      />
-    );
   return <UserProfile user={user as UserData} dropdown={dropdown} />;
 }
