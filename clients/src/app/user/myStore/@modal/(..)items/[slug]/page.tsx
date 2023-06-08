@@ -32,7 +32,7 @@ export default async function ItemModal({
   const { item } = await getData(params.slug);
   return (
     <>
-      <Modal>
+      <Modal backUrl="/user/myStore">
         <ItemPage item={item as item} />
       </Modal>
     </>

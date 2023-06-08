@@ -9,12 +9,12 @@ export interface DropDown {
 
 interface navbarProps {
   dropdown: DropDown[];
-  isLoggedUser: boolean;
+  isLoggedUser?: boolean;
 }
 
 function dropDownHandler(
   dropDown: DropDown[],
-  isLoggedIn: boolean
+  isLoggedIn?: boolean
 ): JSX.Element {
   const handleSignOut = (e: React.FormEvent) => {
     e.preventDefault();

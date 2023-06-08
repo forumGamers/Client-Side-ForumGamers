@@ -1,7 +1,13 @@
+"use client";
+
+import Link from "next/link";
+
 export default function Modal({
   children,
+  backUrl,
 }: {
   children: React.ReactNode;
+  backUrl: string;
 }): JSX.Element {
   return (
     <>
@@ -9,7 +15,7 @@ export default function Modal({
       <div className="modal">
         <div className="modal-box">{children}</div>
         <label className="modal-backdrop" htmlFor="my_modal_7">
-          Close
+          <Link href={backUrl}>Close</Link>
         </label>
       </div>
     </>
