@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 *,
 html,
@@ -12,11 +12,10 @@ body {
 
 :root {
   --main-background: #fff;
-  --sec-background: #8648C1;
+  --sec-background: #8648c1;
   --txt-primary: #f7f7f7;
   --txt-secondary: #222;
 }
-
 
 .body {
   width: 100%;
@@ -29,14 +28,14 @@ body {
   background-repeat: no-repeat;
 }
 
-.navbar{
+.navbar {
   position: sticky;
   top: 0;
 }
 
-.container{
+.wrapper-login {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,8 +48,7 @@ body {
   background-color: rgba(255, 255, 255, 0.7);
 }
 
-
-.input{
+.input {
   border: 2px solid var(--sec-background);
   font-size: 14px;
   color: #1c1e21;
@@ -62,7 +60,6 @@ body {
   box-shadow: #fff;
   outline: none;
 }
-
 
 .btn:hover {
   background-color: var(--main-background);
