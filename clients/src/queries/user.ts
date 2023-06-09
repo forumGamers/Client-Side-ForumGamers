@@ -33,7 +33,7 @@ export const GETUSERDATA = gql`
       Store {
         background
         description
-        id
+        ID
         image
         name
       }

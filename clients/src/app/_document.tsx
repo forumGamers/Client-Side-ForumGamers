@@ -1,5 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import "./globals.css";
+import "daisyui/dist/full.css";
 
 export default function Document() {
   return (

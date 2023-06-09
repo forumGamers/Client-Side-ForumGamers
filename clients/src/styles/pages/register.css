@@ -1,16 +1,46 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Silkscreen", cursive;
+}
+
+:root {
+  --main-background: #fff;
+  --sec-background: #8648c1;
+  --txt-primary: #f7f7f7;
+  --txt-secondary: #222;
+}
+
 .body {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  position: absolute;
   background-image: url("https://ik.imagekit.io/b8ugipzgo/FrontEnd/bg-login.jpg?updatedAt=1681700343737");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-.container {
-  margin: 10% auto;
-  width: 400px;
-  padding: 40px;
-  border: 1px solid #e6ecf0;
-  border-radius: 4px;
+.wrapper-register {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper-register .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(134, 72, 193, 0.5);
 }
 
 .errorMsg {
@@ -18,30 +48,15 @@
   color: white;
 }
 
-h2 {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 24px;
-  color: #1da1f2;
-}
-
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: white;
-}
 
 input[type="text"],
 input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #e6ecf0;
-  margin-bottom: 16px;
   background-color: #fff;
   color: #1c1e21;
+  font-size: 14px;
+  transition: 0.1s ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
+  border: 2px solid var(--sec-background);
 }
 
 input[type="checkbox"] {
@@ -49,19 +64,15 @@ input[type="checkbox"] {
 }
 
 button {
-  display: inline-block;
-  background-color: #1da1f2;
   color: #fff;
-  padding: 10px 16px;
-  border-radius: 9999px;
   font-weight: bold;
-  border: none;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
-button:hover {
-  background-color: #0c8de4;
+.btn:hover {
+  background-color: var(--main-background);
+  color: var(--sec-background);
 }
 
 button:disabled {
