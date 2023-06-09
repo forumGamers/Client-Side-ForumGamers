@@ -26,9 +26,9 @@ export async function checkServerSession(
   callback(session);
 }
 
-export function encryptDataSend(
+export async function encryptDataSend(
   data: Record<string, string>
-): Record<string, string> {
+): Promise<Record<string, string>> {
   "use server";
   const result: any = {};
   for (const key in data) {
