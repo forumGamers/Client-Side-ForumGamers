@@ -1,7 +1,22 @@
+import Navbar from "@/components/navbar";
+
 export default function StoreLayout({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  return <>{children}</>;
+  return (
+    <>
+      <Navbar
+        isLoggedUser={true}
+        dropdown={[
+          {
+            href: "/",
+            name: "HomePage",
+          },
+        ]}
+      />
+      {children}
+    </>
+  );
 }

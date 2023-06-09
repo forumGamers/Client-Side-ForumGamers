@@ -1,20 +1,12 @@
 import { UserData } from "@/interfaces/user";
-import Navbar, { DropDown } from "../navbar";
 import Image from "next/image";
 import { blankBackground, blankProfile, blankStoreImage } from "@/constants";
 import { Suspense } from "react";
 import Loading from "../loading";
 
-export default function UserProfile({
-  user,
-  dropdown,
-}: {
-  user: UserData;
-  dropdown: DropDown[];
-}): JSX.Element {
+export default function UserProfile({ user }: { user: UserData }): JSX.Element {
   return (
     <main className="container">
-      <Navbar isLoggedUser={true} dropdown={dropdown} />
       <Suspense fallback={<Loading />}>
         <div className="coverImage">
           <Image

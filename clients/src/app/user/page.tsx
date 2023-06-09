@@ -1,4 +1,3 @@
-import { DropDown } from "@/components/navbar";
 import UserProfile from "@/components/views/user";
 import { checkServerSession } from "@/helper/global";
 import { CustomSession } from "@/interfaces/tour";
@@ -28,21 +27,6 @@ async function getUserData(
   }
 }
 
-const dropdown: DropDown[] = [
-  {
-    href: "/",
-    name: "Homepage",
-  },
-  {
-    href: "/user/my-store",
-    name: "store",
-  },
-  {
-    href: "/user/myAchievement",
-    name: "achievement",
-  },
-];
-
 export default async function UserPage(): Promise<JSX.Element> {
   let userSession: CustomSession | unknown = null;
   await checkServerSession((session) => {
@@ -51,5 +35,5 @@ export default async function UserPage(): Promise<JSX.Element> {
   });
   const { user } = await getUserData(userSession as CustomSession);
 
-  return <UserProfile user={user as UserData} dropdown={dropdown} />;
+  return <UserProfile user={user as UserData} />;
 }

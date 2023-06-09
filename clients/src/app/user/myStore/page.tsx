@@ -41,5 +41,5 @@ export default async function UserStore(): Promise<JSX.Element> {
   });
   const { store, error } = await getStoreData(userSession as CustomSession);
 
-  return <StorePage store={store as storeData} dropDown={[]} />;
+  return <StorePage store={store as storeData} />;
 }
