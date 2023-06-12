@@ -18,8 +18,9 @@ export default function Wrapper(): JSX.Element {
     password: "",
     phoneNumber: "",
   });
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [page, setPage] = useState(1);
+  const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [visiblePass, setVisiblePass] = useState<boolean>(false);
   const router = useRouter();
   const [register, { loading }] = useMutation(REGISTER, {
     onError: (error) => {
@@ -38,6 +39,12 @@ export default function Wrapper(): JSX.Element {
       ...input,
       [name]: value,
     });
+  };
+
+  const setVisiblePassHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setVisiblePass(e.target.checked);
   };
 
   if (loading) return <Loading />;
@@ -113,12 +120,14 @@ export default function Wrapper(): JSX.Element {
           <HandlePage
             page={page}
             input={input}
+            visiblePass={visiblePass}
             termsAccepted={termsAccepted}
             onChangeHandler={onChangeHandler}
             termSheetHandler={termSheetHandler}
             nextPage={nextPage}
             previousPage={previousPage}
             handleSubmit={handleSubmit}
+            setVisiblePass={setVisiblePassHandler}
           />
         </main>
       </div>

@@ -56,3 +56,19 @@ export const GETUSERDATA = gql`
     }
   }
 `;
+
+export const USERRESETPASSWORD = gql`
+  mutation Mutation($email: String!) {
+    resetPassword(email: $email) {
+      message
+    }
+  }
+`;
+
+export const USERCHANGEFORGETPASS = gql`
+  mutation Mutation($payload: forgetPass!) {
+    changeForgetPassword(payload: $payload) {
+      message
+    }
+  }
+`;

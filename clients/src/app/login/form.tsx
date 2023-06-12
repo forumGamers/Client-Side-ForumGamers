@@ -15,6 +15,7 @@ export default function LoginForm(): JSX.Element {
     email: "",
     password: "",
   });
+  const [visiblePass, setVisiblePass] = useState<boolean>(false);
 
   const [login, { loading }] = useMutation(LOGIN, {
     onError: (error) => {
@@ -71,23 +72,35 @@ export default function LoginForm(): JSX.Element {
               placeholder="Masukkan Email Anda"
             />
 
-            <label htmlFor="email" className="label">
+            <label htmlFor="password" className="label">
               <span className="label-text text-sm font-semibold text-[#8648C1]">
                 Password
               </span>
             </label>
             <input
               className="input input-bordered rounded-xl w-full bg-white"
-              type="password"
+              type={visiblePass ? "text" : "password"}
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
               placeholder="Masukkan Password yang Sesuai"
             />
+            <label className="label">
+              <span className="label-text text-sm font-semibold text-[#8648C1]">
+                See Password
+              </span>
+            </label>
+            <input
+              type="checkbox"
+              checked={visiblePass}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+                setVisiblePass(e.target.checked);
+              }}
+            />
           </div>
           <Link
-            href="/user/forget-password"
+            href="/forget-password"
             className="login-link d-flex flex-row-reverse"
           >
             <p className="text-[#8648C1]  font-semibold font-sans text-sm">

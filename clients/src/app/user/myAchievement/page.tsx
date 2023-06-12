@@ -15,7 +15,9 @@ async function getData(
     const { data } = await client.query<{ getUserAchievement: achievement[] }>({
       query: GETUSERACHIEVEMENT,
       context: {
-        access_token: session?.user?.access_token,
+        headers: {
+          access_token: session?.user?.access_token,
+        },
       },
       fetchPolicy: "cache-first",
     });

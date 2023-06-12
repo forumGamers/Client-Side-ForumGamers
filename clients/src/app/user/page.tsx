@@ -12,8 +12,10 @@ async function getUserData(
   try {
     const { data } = await client.query<{ getUserData: UserData }>({
       query: GETUSERDATA,
-      variables: {
-        accessToken: session?.user?.access_token,
+      context: {
+        headers: {
+          access_token: session?.user?.access_token,
+        },
       },
       fetchPolicy: "cache-first",
     });

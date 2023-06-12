@@ -6,6 +6,7 @@ import "@/styles/pages/user/verify.css";
 import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import Link from "next/link";
+import Encryption from "@/helper/encryption";
 
 export default function Verify() {
   const [token] = useMutation(VERIFYUSER, {
@@ -23,7 +24,7 @@ export default function Verify() {
       await token({
         variables: {
           token: {
-            token: tokenParams,
+            token: Encryption.encrypt(tokenParams as string),
           },
         },
       });
