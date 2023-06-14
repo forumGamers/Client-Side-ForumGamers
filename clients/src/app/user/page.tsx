@@ -1,3 +1,4 @@
+import NavigationBar from "@/components/navigationBar";
 import UserProfile from "@/components/views/user";
 import { checkServerSession } from "@/helper/global";
 import { CustomSession } from "@/interfaces/tour";
@@ -37,5 +38,10 @@ export default async function UserPage(): Promise<JSX.Element> {
   });
   const { user } = await getUserData(userSession as CustomSession);
 
-  return <UserProfile user={user as UserData} />;
+  return (
+    <>
+      <NavigationBar session={userSession as CustomSession} />
+      <UserProfile user={user as UserData} />;
+    </>
+  );
 }

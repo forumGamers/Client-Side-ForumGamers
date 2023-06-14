@@ -21,18 +21,18 @@ export const authOptions: NextAuthOptions = {
         try {
           const payload = verifyToken(credentials?.access_token) as any;
 
-          const { id, email, username } = payload;
+          const { id, email, username, imageUrl: image } = payload;
 
           const user = {
             id,
             name: username,
             email,
             access_token: credentials?.access_token,
+            image,
           };
 
           return user;
         } catch (err) {
-          console.log(err, "err");
           return null;
         }
       },

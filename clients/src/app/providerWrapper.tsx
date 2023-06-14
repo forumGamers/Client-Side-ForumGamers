@@ -3,6 +3,7 @@
 import { ApolloProvider } from "@apollo/client";
 import { useApollo, initializeApollo } from "@/lib/apolloClient";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/material-tailwind";
 
 export default function ProviderWrapper({
   children,
@@ -13,7 +14,9 @@ export default function ProviderWrapper({
   return (
     <>
       <ApolloProvider client={client}>
-        <SessionProvider>{children}</SessionProvider>
+        <ThemeProvider>
+          <SessionProvider>{children}</SessionProvider>
+        </ThemeProvider>
       </ApolloProvider>
     </>
   );
