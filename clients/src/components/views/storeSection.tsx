@@ -5,27 +5,10 @@ import EmptyData from "../emptyData";
 import StoreCard from "../card/cardStore";
 import { useEffect, useState } from "react";
 import FormModal from "../modal/formModal";
-import { client } from "@/lib/apolloClient";
 import { GETSTOREDATAFORSTOREPAGE } from "@/queries/store";
 import Pagination from "../pagination";
 import Loading from "../loading";
-
-async function fetchData(
-  query: StorePageQuery
-): Promise<{ store: storeData[] }> {
-  try {
-    const { data } = await client.query<{ getAllStore: storeData[] }>({
-      query: GETSTOREDATAFORSTOREPAGE,
-      variables: {
-        query,
-      },
-    });
-
-    return { store: data.getAllStore as storeData[] };
-  } catch (err) {
-    return { store: [] };
-  }
-}
+import { useLazyQuery } from "@apollo/client";
 
 export default function StoreSection({
   stores,
@@ -35,7 +18,16 @@ export default function StoreSection({
   const [query, setQuery] = useState<StorePageQuery>({});
   const [modal, setModal] = useState<boolean>(false);
   const [data, setData] = useState<storeData[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [execute, { loading, data: store }] = useLazyQuery<{
+    getAllStore: storeData[];
+  }>(GETSTOREDATAFORSTOREPAGE, {
+    variables: {
+      query,
+    },
+    onError() {
+      setData([]);
+    },
+  });
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,39 +43,33 @@ export default function StoreSection({
   }, []);
 
   const next = async (): Promise<void> => {
-    setLoading(true);
     setQuery({
       ...query,
       page: String(parseInt(query.page as string) + 1),
     });
 
-    const { store } = await fetchData(query);
+    await execute();
 
-    setData(store);
-    setLoading(false);
+    setData(store?.getAllStore as storeData[]);
   };
 
   const previous = async (): Promise<void> => {
-    setLoading(true);
     setQuery({
       ...query,
       page: String(parseInt(query.page as string) - 1),
     });
 
-    const { store } = await fetchData(query);
+    await execute();
 
-    setData(store);
-    setLoading(false);
+    setData(store?.getAllStore as storeData[]);
   };
 
   const submit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    setLoading(true);
 
-    const { store } = await fetchData(query);
+    await execute();
 
-    setData(store);
-    setLoading(false);
+    setData(store?.getAllStore as storeData[]);
   };
   return (
     <>
