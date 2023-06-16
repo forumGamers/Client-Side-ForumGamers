@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import Loading from "@/components/loading3";
 
 export default function HandlePage({
   page,
@@ -29,6 +31,16 @@ export default function HandlePage({
   handleSubmit: (event: React.FormEvent) => void;
   setVisiblePass: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }): JSX.Element {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleNextPage = () => {
+    setIsLoading(true); // Mengubah state isLoading menjadi true saat tombol diklik
+
+    // Simulasikan proses loading selama beberapa waktu
+    setTimeout(() => {
+      setIsLoading(false); // Setelah proses loading selesai, mengubah state isLoading menjadi false
+      nextPage(); // Lanjut ke halaman berikutnya atau lakukan tindakan lainnya
+    }, 2000); // Contoh: Waktu simulasi loading selama 2 detik
+  };
   switch (page) {
     case 1:
       return (
@@ -54,10 +66,9 @@ export default function HandlePage({
               </label>
 
               <button
-                onClick={nextPage}
+                onClick={handleNextPage}
                 className="btn w-full text-white bg-[#8648C1]"
-              >
-                Next
+              >{isLoading ? <Loading /> : "Next"}
               </button>
             </div>
           </div>
@@ -178,12 +189,11 @@ export default function HandlePage({
                 />
               </label>
               <label className="cursor-pointer label label-text text-sm font-semibold text-white">
-                <span className="font-sans">
-                  See Password
-                </span>
+                <span className="font-sans">See Password</span>
                 <input
                 type="checkbox"
                 checked={visiblePass}
+                style={{ display: 'none' }}
                 onChange={setVisiblePass}
               />
               </label>

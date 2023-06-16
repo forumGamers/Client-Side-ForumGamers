@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { swalError } from "@/helper/swal";
-import Loading from "@/components/loading";
+import Loading from "@/components/loading1";
 
 
 export default function LoginForm(): JSX.Element {

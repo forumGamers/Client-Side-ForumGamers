@@ -2,7 +2,7 @@ import { UserData } from "@/interfaces/user";
 import Image from "next/image";
 import { blankBackground, blankProfile, blankStoreImage } from "@/constants";
 import { Suspense } from "react";
-import Loading from "../loading";
+import Loading from "../loading1";
 
 export default function UserProfile({ user }: { user: UserData }): JSX.Element {
   return (
