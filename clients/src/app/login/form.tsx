@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { swalError } from "@/helper/swal";
-import Loading from "@/components/loading1";
-
+import Loading from "@/components/loader";
 
 export default function LoginForm(): JSX.Element {
   const router = useRouter();
@@ -88,20 +87,20 @@ export default function LoginForm(): JSX.Element {
               placeholder="Masukkan Password yang Sesuai"
             />
             <label className="cursor-pointer label text-sm font-semibold text-[#8648C1]">
-              <span className="font-sans"
+              <span
+                className="font-sans"
                 onClick={() => {
-                setVisiblePass(!visiblePass);
+                  setVisiblePass(!visiblePass);
                 }}
-              >See Password
+              >
+                See Password
               </span>
               <input
-              type="checkbox"
-              checked={visiblePass}
-              style={{ display: 'none' }}
-              onChange={() => {
-               }}
+                type="checkbox"
+                checked={visiblePass}
+                style={{ display: "none" }}
               />
-          </label>
+            </label>
           </div>
           <Link
             href="/forget-password"

@@ -1,4 +1,3 @@
-import { DropDown } from "@/components/navbar";
 import StorePage from "@/components/views/store";
 import Encryption from "@/helper/encryption";
 import { storeData } from "@/interfaces/store";
@@ -28,18 +27,11 @@ async function getData(
   }
 }
 
-const dropDown: DropDown[] = [
-  {
-    name: "homePage",
-    href: "/",
-  },
-];
-
 export default async function Page({
   params,
 }: {
   params: { id: string };
 }): Promise<JSX.Element> {
   const { store } = await getData(params.id);
-  return <StorePage store={store as storeData} dropDown={dropDown} />;
+  return <StorePage store={store as storeData} />;
 }

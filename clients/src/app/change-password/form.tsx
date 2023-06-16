@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/loader";
 import Encryption from "@/helper/encryption";
 import { swalError } from "@/helper/swal";
 import { USERCHANGEFORGETPASS } from "@/queries/user";
@@ -28,11 +29,13 @@ export default function FormSection(): JSX.Element {
     setToken(tokenParams as string);
   }, []);
 
-  const [send] = useMutation(USERCHANGEFORGETPASS, {
+  const [send, { loading }] = useMutation(USERCHANGEFORGETPASS, {
     onError(error, clientOptions) {
       swalError(error);
     },
   });
+
+  if (loading) return <Loading type="ball" />;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

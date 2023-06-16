@@ -1,4 +1,4 @@
-import Loading from "@/components/loading1";
+import Loading from "@/components/loader";
 
 export default function LoadingHandler(): JSX.Element {
   return <Loading />;

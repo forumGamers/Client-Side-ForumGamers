@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-import Loading from "@/components/loading2";
 
 export default function HandlePage({
   page,
@@ -58,8 +56,7 @@ export default function HandlePage({
               <button
                 onClick={nextPage}
                 className="btn w-full text-white bg-[#8648C1]"
-              >
-              </button>
+              ></button>
             </div>
           </div>
         </div>
@@ -181,11 +178,11 @@ export default function HandlePage({
               <label className="cursor-pointer label label-text text-sm font-semibold text-white">
                 <span className="font-sans">See Password</span>
                 <input
-                type="checkbox"
-                checked={visiblePass}
-                style={{ display: 'none' }}
-                onChange={setVisiblePass}
-              />
+                  type="checkbox"
+                  checked={visiblePass}
+                  style={{ display: "none" }}
+                  onChange={setVisiblePass}
+                />
               </label>
               <div className="btn-group grid grid-cols-2 gap-2">
                 <button
