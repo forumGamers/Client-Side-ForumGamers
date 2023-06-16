@@ -7,13 +7,16 @@ import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import Link from "next/link";
 import Encryption from "@/helper/encryption";
+import Loading from "@/components/loader";
 
 export default function Verify() {
-  const [token] = useMutation(VERIFYUSER, {
+  const [token, { loading }] = useMutation(VERIFYUSER, {
     onError(error, clientOptions) {
       swalError(error.message);
     },
   });
+
+  if (loading) return <Loading />;
 
   useEffect(() => {
     (async () => {

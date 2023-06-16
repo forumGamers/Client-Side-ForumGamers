@@ -56,9 +56,7 @@ export default function HandlePage({
               <button
                 onClick={nextPage}
                 className="btn w-full text-white bg-[#8648C1]"
-              >
-                Next
-              </button>
+              ></button>
             </div>
           </div>
         </div>
@@ -147,8 +145,8 @@ export default function HandlePage({
       return (
         <div className="body d-flex justify-content-center align-items-center">
           <div className="wrapper-register">
-            <div className="card border-2 border-white p-14 w-[35%] h-[50vh]">
-              <h2 className="text-3xl font-semibold text-white text-center mb-16">
+            <div className="card border-2 border-white p-14 w-[35%] h-[60vh]">
+              <h2 className="text-3xl font-semibold text-white text-center mb-5">
                 Register Your Account
               </h2>
               <label className="mb-2">
@@ -170,23 +168,22 @@ export default function HandlePage({
                 <input
                   placeholder="Create Your Password"
                   className="input input-primary input-bordered w-full"
-                  type="password"
+                  type={visiblePass ? "text" : "password"}
                   value={input.password}
                   onChange={onChangeHandler}
                   name="password"
                   required
                 />
               </label>
-              <label className="label">
-                <span className="label-text text-sm font-semibold text-[#8648C1]">
-                  See Password
-                </span>
+              <label className="cursor-pointer label label-text text-sm font-semibold text-white">
+                <span className="font-sans">See Password</span>
+                <input
+                  type="checkbox"
+                  checked={visiblePass}
+                  style={{ display: "none" }}
+                  onChange={setVisiblePass}
+                />
               </label>
-              <input
-                type="checkbox"
-                checked={visiblePass}
-                onChange={setVisiblePass}
-              />
               <div className="btn-group grid grid-cols-2 gap-2">
                 <button
                   onClick={previousPage}

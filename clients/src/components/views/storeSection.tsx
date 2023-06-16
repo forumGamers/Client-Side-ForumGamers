@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import FormModal from "../modal/formModal";
 import { GETSTOREDATAFORSTOREPAGE } from "@/queries/store";
 import Pagination from "../pagination";
-import Loading from "../loading";
+import Loading from "../loader";
 import { useLazyQuery } from "@apollo/client";
 
 export default function StoreSection({

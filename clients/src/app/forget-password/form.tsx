@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/loader";
 import Encryption from "@/helper/encryption";
 import { swalError } from "@/helper/swal";
 import { USERRESETPASSWORD } from "@/queries/user";
@@ -8,11 +9,13 @@ import { useState } from "react";
 
 export default function FormSection(): JSX.Element {
   const [email, setEmail] = useState<string>("");
-  const [send] = useMutation(USERRESETPASSWORD, {
+  const [send, { loading }] = useMutation(USERRESETPASSWORD, {
     onError(error, clientOptions) {
       swalError(error);
     },
   });
+
+  if (loading) return <Loading type="ball" />;
 
   const onSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();

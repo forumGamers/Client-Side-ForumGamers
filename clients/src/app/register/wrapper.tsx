@@ -7,7 +7,7 @@ import { swalError } from "@/helper/swal";
 import { useState } from "react";
 import Encryption from "@/helper/encryption";
 import HandlePage from "./handlepage";
-import Loading from "@/components/loading";
+import Loading from "@/components/loader";
 import { useRouter } from "next/navigation";
 
 export default function Wrapper(): JSX.Element {
@@ -47,7 +47,7 @@ export default function Wrapper(): JSX.Element {
     setVisiblePass(e.target.checked);
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading type="ball" />;
 
   const termSheetHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     setTermsAccepted(event.target.checked);
