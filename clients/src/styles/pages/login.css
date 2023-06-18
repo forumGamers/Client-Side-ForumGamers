@@ -85,3 +85,7 @@ body {
     background-size: 470px 510px;
   }
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
