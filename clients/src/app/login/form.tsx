@@ -31,6 +31,11 @@ export default function LoginForm(): JSX.Element {
 
   const [login, { loading }] = useMutation(LOGIN, {
     onError: (error) => {
+      setData((prev: state) => ({
+        ...prev,
+        recaptchaValid: false,
+        tokenCaptcha: "",
+      }));
       swalError(error.message);
     },
     async onCompleted(data, clientOptions) {
@@ -56,6 +61,11 @@ export default function LoginForm(): JSX.Element {
           password: Encryption.encrypt(formData.password),
         },
       },
+      context: {
+        headers: {
+          access_token: formData.tokenCaptcha,
+        },
+      },
     });
   };
 
@@ -67,75 +77,78 @@ export default function LoginForm(): JSX.Element {
     }));
   };
 
-  if (loading) return <Loading />;
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="login-input-wrapper mb-4">
-          <div className="form-control w-full">
-            <label htmlFor="email" className="label">
-              <span className="label-text text-sm font-semibold text-[#8648C1]">
-                Email
-              </span>
-            </label>
-            <input
-              className="input input-bordered rounded-xl w-full bg-white"
-              type="text"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              placeholder="Masukkan Email Anda"
-            />
-            <label htmlFor="password" className="label">
-              <span className="label-text text-sm font-semibold text-[#8648C1]">
-                Password
-              </span>
-            </label>
-            <input
-              className="input input-bordered rounded-xl w-full bg-white"
-              type={visiblePass ? "text" : "password"}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              placeholder="Masukkan Password yang Sesuai"
-            />
-            <label className="cursor-pointer label text-sm font-semibold text-[#8648C1]">
-              <span
-                className="font-sans"
-                onClick={() => {
-                  setVisiblePass(!visiblePass);
-                }}
-              >
-                See Password
-              </span>
-            </label>
-            {load && (
-              <ReCAPTCHA
-                sitekey="6LfV1KomAAAAACDWJoD_5v_IWsITa665j6NGMmXl"
-                onChange={(token: string | null) => {
-                  if (token)
-                    setData((prev: state) => ({
-                      ...prev,
-                      recaptchaValid: true,
-                      tokenCaptcha: token,
-                    }));
-                }}
-                theme="dark"
+        {loading ? (
+          <Loading type="ball" />
+        ) : (
+          <div className="login-input-wrapper mb-4">
+            <div className="form-control w-full">
+              <label htmlFor="email" className="label">
+                <span className="label-text text-sm font-semibold text-[#8648C1]">
+                  Email
+                </span>
+              </label>
+              <input
+                className="input input-bordered rounded-xl w-full bg-white"
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="Masukkan Email Anda"
               />
-            )}
-            ,
+              <label htmlFor="password" className="label">
+                <span className="label-text text-sm font-semibold text-[#8648C1]">
+                  Password
+                </span>
+              </label>
+              <input
+                className="input input-bordered rounded-xl w-full bg-white"
+                type={visiblePass ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                placeholder="Masukkan Password yang Sesuai"
+              />
+              <label className="cursor-pointer label text-sm font-semibold text-[#8648C1]">
+                <span
+                  className="font-sans"
+                  onClick={() => {
+                    setVisiblePass(!visiblePass);
+                  }}
+                >
+                  See Password
+                </span>
+              </label>
+              {load && (
+                <ReCAPTCHA
+                  sitekey="6LfV1KomAAAAACDWJoD_5v_IWsITa665j6NGMmXl"
+                  onChange={(token: string | null) => {
+                    if (token)
+                      setData((prev: state) => ({
+                        ...prev,
+                        recaptchaValid: true,
+                        tokenCaptcha: token,
+                      }));
+                  }}
+                  theme="dark"
+                />
+              )}
+              ,
+            </div>
+            <Link
+              href="/forget-password"
+              className="login-link d-flex flex-row-reverse"
+            >
+              <p className="text-[#8648C1]  font-semibold font-sans text-sm">
+                Forgot password?
+              </p>
+            </Link>
           </div>
-          <Link
-            href="/forget-password"
-            className="login-link d-flex flex-row-reverse"
-          >
-            <p className="text-[#8648C1]  font-semibold font-sans text-sm">
-              Forgot password?
-            </p>
-          </Link>
-        </div>
+        )}
         <button
           type="submit"
           className="btn w-full text-white bg-[#8648C1] mb-2"
