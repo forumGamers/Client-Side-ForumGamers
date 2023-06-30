@@ -72,3 +72,11 @@ export const USERCHANGEFORGETPASS = gql`
     }
   }
 `;
+
+export const GOOGLELOGIN = gql`
+  mutation GoogleLogin {
+    googleLogin {
+      access_token
+    }
+  }
+`;

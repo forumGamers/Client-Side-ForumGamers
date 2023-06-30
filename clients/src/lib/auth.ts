@@ -1,7 +1,9 @@
-import type { NextAuthOptions, Session, TokenSet } from "next-auth";
+import type { NextAuthOptions, Session, TokenSet, User } from "next-auth";
 import credentials from "next-auth/providers/credentials";
+import googleCredentials from "next-auth/providers/google";
 import { customVerify, verifyToken, customToken } from "@/helper/jwt";
 import { JWT } from "next-auth/jwt";
+import { CustomSession } from "@/interfaces/tour";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -37,6 +39,10 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+    googleCredentials({
+      clientId: process.env.GOOGLE_OAUTH_CLIENTID as string,
+      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET as string,
+    }),
   ],
   pages: {
     signIn: "/login",
@@ -55,8 +61,8 @@ export const authOptions: NextAuthOptions = {
       user,
       token,
     }: {
-      session: Session | any;
-      user: any;
+      session: Session | CustomSession | any;
+      user: User;
       token: TokenSet;
     }) {
       session.user.id = token.id;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@apollo/client";
-import { LOGIN } from "@/queries/user";
+import { GOOGLELOGIN, LOGIN } from "@/queries/user";
 import Link from "next/link";
 import Encryption from "@/helper/encryption";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import { signIn } from "next-auth/react";
 import { swalError } from "@/helper/swal";
 import Loading from "@/components/loader";
 import ReCAPTCHA from "react-google-recaptcha";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 
 type state = {
   email: string;
@@ -27,6 +28,7 @@ export default function LoginForm(): JSX.Element {
     recaptchaValid: false,
     tokenCaptcha: "",
   });
+  const [googleResponse, setGoogleResponse] = useState<string>("");
   const [visiblePass, setVisiblePass] = useState<boolean>(false);
 
   const [login, { loading }] = useMutation(LOGIN, {
@@ -47,9 +49,30 @@ export default function LoginForm(): JSX.Element {
     },
   });
 
+  const [googleLogin, { loading: googleLoading }] = useMutation(GOOGLELOGIN, {
+    onError(error) {
+      swalError("Failed sign in with google");
+    },
+    async onCompleted(data, clientOptions) {
+      await signIn("google");
+    },
+  });
+
   useEffect(() => {
     setLoad(true);
   }, []);
+
+  const googleSubmit = async (response: CredentialResponse) => {
+    setGoogleResponse(response.credential as string);
+
+    await googleLogin({
+      context: {
+        headers: {
+          access_token: googleResponse,
+        },
+      },
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +103,7 @@ export default function LoginForm(): JSX.Element {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        {loading ? (
+        {loading || googleLoading ? (
           <Loading type="ball" />
         ) : (
           <div className="login-input-wrapper mb-4">
@@ -161,6 +184,18 @@ export default function LoginForm(): JSX.Element {
           Log in
         </button>
       </form>
+      <div>
+        {load && (
+          <GoogleLogin
+            useOneTap
+            onSuccess={googleSubmit}
+            onError={() => {
+              swalError("Failed sign in with google");
+            }}
+            text="signin_with"
+          />
+        )}
+      </div>
     </>
   );
 }
