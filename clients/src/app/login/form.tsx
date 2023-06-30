@@ -54,7 +54,11 @@ export default function LoginForm(): JSX.Element {
       swalError("Failed sign in with google");
     },
     async onCompleted(data, clientOptions) {
-      await signIn("google");
+      await signIn("credentials", {
+        access_token: data.googleLogin.access_token,
+        redirect: false,
+      });
+      router.push("/");
     },
   });
 
