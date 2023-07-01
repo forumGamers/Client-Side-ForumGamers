@@ -188,7 +188,7 @@ export default function LoginForm(): JSX.Element {
           Log in
         </button>
       </form>
-      <div>
+      <div className="container mt-2 cursor-pointer align-middle">
         {load && (
           <GoogleLogin
             useOneTap
@@ -197,6 +197,9 @@ export default function LoginForm(): JSX.Element {
               swalError("Failed sign in with google");
             }}
             text="signin_with"
+            shape="circle"
+            size="medium"
+            cancel_on_tap_outside={true}
           />
         )}
       </div>
