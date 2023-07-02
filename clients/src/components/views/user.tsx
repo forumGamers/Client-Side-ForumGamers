@@ -1,15 +1,15 @@
 import { UserData } from "@/interfaces/user";
-import Image from "next/image";
 import { blankBackground, blankProfile, blankStoreImage } from "@/constants";
 import { Suspense } from "react";
-import Loading from "../loading1";
+import Loading from "../loader";
+import { LazyLoadImage } from "@/components/global";
 
 export default function UserProfile({ user }: { user: UserData }): JSX.Element {
   return (
     <main className="container">
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading type="bar" />}>
         <div className="coverImage">
-          <Image
+          <LazyLoadImage
             loading="lazy"
             src={user?.backgroundImage || blankBackground}
             alt="cover"
@@ -18,33 +18,30 @@ export default function UserProfile({ user }: { user: UserData }): JSX.Element {
           />
         </div>
         <div className="avatar">
-          <Image
+          <LazyLoadImage
             loading="lazy"
             src={user?.imageUrl || blankProfile}
             alt="avatar"
-            width={100}
-            height={24}
+            placeholder={<Loading type="bar" />}
           />
         </div>
         {user?.Store?.name ? (
           <div className="store">
             {user?.Store?.image ? (
-              <Image
+              <LazyLoadImage
                 src={user?.Store?.image}
                 alt="store img"
                 className="store-img"
                 loading="lazy"
-                width={100}
-                height={24}
+                placeholder={<Loading type="bar" />}
               />
             ) : (
-              <Image
+              <LazyLoadImage
                 src={blankStoreImage}
                 alt="store img"
                 className="store-img"
                 loading="lazy"
-                width={100}
-                height={24}
+                placeholder={<Loading type="bar" />}
               />
             )}
             <p>{user?.Store?.name}</p>
