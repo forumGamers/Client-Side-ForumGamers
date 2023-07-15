@@ -12,8 +12,10 @@ import {
   PowerIcon,
   RocketLaunchIcon,
   Bars2Icon,
-  ArrowLeftOnRectangleIcon
+  ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
+
+import { StarIcon } from "@heroicons/react/24/solid";
 
 export {
   CubeTransparentIcon,
@@ -27,5 +29,6 @@ export {
   PowerIcon,
   RocketLaunchIcon,
   Bars2Icon,
-  ArrowLeftOnRectangleIcon
+  ArrowLeftOnRectangleIcon,
+  StarIcon,
 };

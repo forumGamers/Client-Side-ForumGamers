@@ -3,7 +3,7 @@ import credentials from "next-auth/providers/credentials";
 import googleCredentials from "next-auth/providers/google";
 import { customVerify, verifyToken, customToken } from "@/helper/jwt";
 import { JWT } from "next-auth/jwt";
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 
 export const authOptions: NextAuthOptions = {
   session: {

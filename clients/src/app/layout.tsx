@@ -4,15 +4,17 @@ import ProviderWrapper from "./providerWrapper";
 
 export default function RootLayout({
   children,
+  store,
+  games,
+  post,
 }: {
   children: React.ReactNode;
+  store: React.ReactNode;
+  games: React.ReactNode;
+  post: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head>
         <title>Forum Gamers</title>
         <meta content="width=device-width, initial-scale=1" name="viewport" />

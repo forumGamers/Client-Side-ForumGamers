@@ -3,7 +3,7 @@ import CardAchievement, {
 } from "@/components/card/cardAchievement";
 import EmptyData from "@/components/emptyData";
 import { checkServerSession } from "@/helper/global";
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 import { client } from "@/lib/apolloClient";
 import { GETUSERACHIEVEMENT } from "@/queries/tour";
 import { redirect } from "next/navigation";

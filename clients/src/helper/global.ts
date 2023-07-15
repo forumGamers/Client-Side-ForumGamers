@@ -1,4 +1,4 @@
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";

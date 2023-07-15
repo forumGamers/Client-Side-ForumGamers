@@ -1,4 +1,4 @@
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 import {
   ApolloClient,
   InMemoryCache,

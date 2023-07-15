@@ -1,7 +1,7 @@
 import NavigationBar from "@/components/navigationBar";
 import UserProfile from "@/components/views/user";
 import { checkServerSession } from "@/helper/global";
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 import { UserData } from "@/interfaces/user";
 import { client } from "@/lib/apolloClient";
 import { GETUSERDATA } from "@/queries/user";
@@ -25,8 +25,7 @@ async function getUserData(
       error: null,
     };
   } catch (err) {
-    const fetchError = new Error(err as string);
-    throw fetchError;
+    throw new Error(err as string);
   }
 }
 

@@ -1,11 +1,7 @@
-import { Session } from "next-auth";
-
-export interface CustomSession extends Session {
-  user?: {
-    id?: number;
-    name?: string | null;
-    email?: string | null;
-    access_token?: string | null;
-    image?: string | null;
-  };
+export interface game {
+  _id: string;
+  name: string;
+  type: string;
+  image: string;
+  description: string;
 }

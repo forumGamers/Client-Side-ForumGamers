@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 import { useState, createElement, useEffect } from "react";
 import {
   Navbar,
