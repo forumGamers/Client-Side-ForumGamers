@@ -16,3 +16,15 @@ export const GETUSERACHIEVEMENT = gql`
     }
   }
 `;
+
+export const GETGAMELIST = gql`
+  query Query {
+    getGameList {
+      description
+      id
+      image
+      name
+      type
+    }
+  }
+`;

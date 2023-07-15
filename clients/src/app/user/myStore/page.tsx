@@ -1,7 +1,7 @@
 import StorePage from "@/components/views/store";
 import { checkServerSession } from "@/helper/global";
 import { storeData } from "@/interfaces/store";
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 import { client } from "@/lib/apolloClient";
 import { GETUSERSTORE } from "@/queries/store";
 import { redirect } from "next/navigation";

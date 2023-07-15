@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar";
 import { checkServerSession } from "@/helper/global";
-import { CustomSession } from "@/interfaces/tour";
+import { CustomSession } from "@/interfaces/global";
 
 export default async function StoreLayout({
   children,

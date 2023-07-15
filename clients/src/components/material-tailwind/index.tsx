@@ -13,6 +13,9 @@ import {
   Avatar,
   Card,
   IconButton,
+  CardHeader,
+  CardFooter,
+  CardBody,
 } from "@material-tailwind/react";
 
 export {
@@ -28,4 +31,7 @@ export {
   Avatar,
   Card,
   IconButton,
+  CardHeader,
+  CardBody,
+  CardFooter,
 };
