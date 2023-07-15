@@ -1,16 +1,22 @@
 import { blankStoreImage } from "@/constants";
 import { fixDate } from "@/helper/global";
-import { store } from "@/interfaces/store";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import { storeData } from "@/interfaces/store";
+import Image from "next/image";
 
-export default function StoreProfile({ store }: { store: store }): JSX.Element {
+export default function StoreProfile({
+  store,
+}: {
+  store: storeData;
+}): JSX.Element {
   return (
     <div className="card card-side bg-base-100 shadow-xl">
       <figure>
-        <LazyLoadImage
+        <Image
           className="w-10/100"
           src={store?.image || blankStoreImage}
           alt="Store"
+          width={100}
+          height={24}
         />
       </figure>
       <div className="card-body">

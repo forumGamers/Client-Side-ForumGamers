@@ -33,7 +33,7 @@ export const GETUSERDATA = gql`
       Store {
         background
         description
-        id
+        ID
         image
         name
       }
@@ -53,6 +53,30 @@ export const GETUSERDATA = gql`
       role
       username
       backgroundImage
+    }
+  }
+`;
+
+export const USERRESETPASSWORD = gql`
+  mutation Mutation($email: String!) {
+    resetPassword(email: $email) {
+      message
+    }
+  }
+`;
+
+export const USERCHANGEFORGETPASS = gql`
+  mutation Mutation($payload: forgetPass!) {
+    changeForgetPassword(payload: $payload) {
+      message
+    }
+  }
+`;
+
+export const GOOGLELOGIN = gql`
+  mutation GoogleLogin {
+    googleLogin {
+      access_token
     }
   }
 `;

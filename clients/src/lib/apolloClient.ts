@@ -1,8 +1,10 @@
+import { CustomSession } from "@/interfaces/tour";
 import {
   ApolloClient,
   InMemoryCache,
   NormalizedCacheObject,
   HttpLink,
+  DocumentNode,
 } from "@apollo/client";
 import { useMemo } from "react";
 const uri = process.env.URL || "http://localhost:5000";

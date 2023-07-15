@@ -114,3 +114,20 @@ export const GETITEMBYSLUG = gql`
     }
   }
 `;
+
+export const GETSTOREDATAFORSTOREPAGE = gql`
+  query GetAllStore($query: queryStore) {
+    getAllStore(query: $query) {
+      CreatedAt
+      ID
+      StoreStatus {
+        name
+      }
+      active
+      avg_rating
+      image
+      name
+      rating_count
+    }
+  }
+`;

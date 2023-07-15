@@ -1,19 +1,15 @@
-import { item, store } from "@/interfaces/store";
-import Navbar, { DropDown } from "../navbar";
+import { item, storeData } from "@/interfaces/store";
 import StoreProfile from "../card/storeProfileCard";
 import ItemCard from "../card/cardItem";
 import EmptyData from "../emptyData";
 
 export default function StorePage({
   store,
-  dropDown,
 }: {
-  store: store;
-  dropDown: DropDown[];
+  store: storeData;
 }): JSX.Element {
   return (
     <>
-      <Navbar isLoggedUser={true} dropdown={dropDown} />
       <StoreProfile store={store} />
       <section>
         {store?.Items.length ? (
