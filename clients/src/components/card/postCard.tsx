@@ -8,6 +8,7 @@ import {
 } from "@/components/material-tailwind";
 import { StarIcon } from "@/components/icon";
 import { blankProfile } from "@/constants";
+import { LazyLoadImage } from "@/components/global";
 
 export default function PostCard({
   timeLine,
@@ -39,6 +40,13 @@ export default function PostCard({
         </CardHeader>
         <CardBody className="mb-6 p-0">
           <Typography>{timeLine.text}</Typography>
+          {timeLine.imageUrl && (
+            <LazyLoadImage
+              className="w-10/100"
+              alt="timeline image"
+              src={timeLine.imageUrl}
+            />
+          )}
         </CardBody>
       </Card>
     </>

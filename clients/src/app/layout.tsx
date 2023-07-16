@@ -4,13 +4,13 @@ import ProviderWrapper from "./providerWrapper";
 
 export default function RootLayout({
   children,
-  store,
-  games,
+  // store,
+  // games,
   post,
 }: {
   children: React.ReactNode;
-  store: React.ReactNode;
-  games: React.ReactNode;
+  // store: React.ReactNode;
+  // games: React.ReactNode;
   post: React.ReactNode;
 }) {
   return (
@@ -40,7 +40,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ProviderWrapper>{children}</ProviderWrapper>
+        <ProviderWrapper>
+          {post}
+          {children}
+        </ProviderWrapper>
       </body>
     </html>
   );
