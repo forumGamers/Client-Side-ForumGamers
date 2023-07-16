@@ -5,12 +5,12 @@ export const GETUSERACHIEVEMENT = gql`
     getUserAchievement {
       Game {
         description
-        id
+        _id
         image
         name
         type
       }
-      id
+      _id
       image
       name
     }
@@ -21,7 +21,7 @@ export const GETGAMELIST = gql`
   query Query {
     getGameList {
       description
-      id
+      _id
       image
       name
       type
