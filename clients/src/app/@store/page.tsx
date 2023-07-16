@@ -32,12 +32,50 @@ async function getData(): Promise<storeData[]> {
 }
 
 export default async function StoreSection(): Promise<JSX.Element> {
-  const data = await getData();
+  // const data = await getData();
+  const data = [
+    {
+      CreatedAt: "2023-03-30T14:08:57.710477+07:00",
+      ID: "3",
+      StoreStatus: {
+        name: "Basic",
+      },
+      active: true,
+      avg_rating: 5,
+      image: "",
+      name: "testing store",
+      rating_count: 2,
+    },
+    {
+      CreatedAt: "2023-03-30T14:08:57.710477+07:00",
+      ID: "3",
+      StoreStatus: {
+        name: "Basic",
+      },
+      active: true,
+      avg_rating: 5,
+      image: "",
+      name: "apa aja",
+      rating_count: 2,
+    },
+    {
+      CreatedAt: "2023-03-30T14:08:57.710477+07:00",
+      ID: "3",
+      StoreStatus: {
+        name: "Basic",
+      },
+      active: true,
+      avg_rating: 5,
+      image: "",
+      name: "tes123 store",
+      rating_count: 2,
+    },
+  ];
 
   return (
     <>
       {data.length ? (
-        data.map((store: storeData) => (
+        data.map((store: any) => (
           <Card className="w-96">
             <CardHeader shadow={false} floated={false} className="h-96">
               <LazyLoadImage
