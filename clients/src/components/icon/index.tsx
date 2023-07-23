@@ -13,9 +13,20 @@ import {
   RocketLaunchIcon,
   Bars2Icon,
   ArrowLeftOnRectangleIcon,
+  HeartIcon,
+  ChatBubbleLeftIcon,
+  PaperAirplaneIcon,
+  ShareIcon,
+  EllipsisVerticalIcon
 } from "@heroicons/react/24/outline";
 
-import { StarIcon } from "@heroicons/react/24/solid";
+import { 
+  StarIcon,
+  PhotoIcon,
+  VideoCameraIcon,
+  CalendarDaysIcon,
+  NewspaperIcon
+} from "@heroicons/react/24/solid";
 
 export {
   CubeTransparentIcon,
@@ -31,4 +42,13 @@ export {
   Bars2Icon,
   ArrowLeftOnRectangleIcon,
   StarIcon,
+  HeartIcon,
+  ChatBubbleLeftIcon,
+  PaperAirplaneIcon,
+  ShareIcon,
+  EllipsisVerticalIcon,
+  PhotoIcon,
+  VideoCameraIcon,
+  CalendarDaysIcon,
+  NewspaperIcon
 };

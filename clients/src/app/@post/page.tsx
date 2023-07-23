@@ -1,4 +1,5 @@
 import PostCard from "@/components/card/postCard";
+import CreatePostCard from "@/components/card/postCard";
 import { timeLine } from "@/interfaces/post";
 import { client } from "@/lib/apolloClient";
 import { GETTIMELINE } from "@/queries/post";
@@ -29,7 +30,7 @@ export default async function PostSection(): Promise<JSX.Element> {
         UUID: "",
         id: 6,
         imageUrl: "",
-        username: "aaaaa",
+        username: "User1",
       },
       _id: "64bbdcfb5d8f1305dd6945e8",
       allowComment: false,
@@ -109,9 +110,9 @@ export default async function PostSection(): Promise<JSX.Element> {
       userId: 6,
     },
     {
-      CountComment: 0,
-      CountLike: 1,
-      CountShare: 0,
+      CountComment: 12,
+      CountLike: 12345,
+      CountShare: 5,
       CreatedAt: "2023-05-10T06:02:54.342Z",
       UpdatedAt: "2023-05-10T06:02:54.342Z",
       User: {
@@ -140,7 +141,7 @@ export default async function PostSection(): Promise<JSX.Element> {
         UUID: "",
         id: 6,
         imageUrl: "",
-        username: "aaaaa",
+        username: "User2",
       },
       _id: "645a2cd034a07b6a9a920b4c",
       allowComment: false,
@@ -155,7 +156,7 @@ export default async function PostSection(): Promise<JSX.Element> {
   ];
   return (
     <>
-      <section className="container d-flex justify-content-center align-items-center">
+      <section style={{display: 'flex', flexDirection: 'column' ,alignItems: 'center'}}>
         {data.length ? (
           data.map((timeline: timeLine) => (
             <PostCard timeLine={timeline} key={timeline._id} />
