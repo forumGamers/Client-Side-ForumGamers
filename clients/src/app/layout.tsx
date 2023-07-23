@@ -39,7 +39,7 @@ export default function RootLayout({
           referrerPolicy="no-referrer"
         />
       </head>
-      <body>
+      <body style={{backgroundColor: '#252525'}}>
         <ProviderWrapper>
           {/* layouting per sectionnya disini,hrs di dalam providerWrapper */}
           {post}

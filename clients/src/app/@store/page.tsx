@@ -77,7 +77,7 @@ export default async function StoreSection(): Promise<JSX.Element> {
       <div>
       {data.length ? (
         data.map((store: any) => (
-          <Card className="w-96">
+          <Card className="w-450">
             <CardHeader shadow={false} floated={false} className="h-96">
               <LazyLoadImage
                 src={store.image}

@@ -1,4 +1,5 @@
 import PostCard from "@/components/card/postCard";
+import CreatePostCard from "@/components/card/postCard";
 import { timeLine } from "@/interfaces/post";
 import { client } from "@/lib/apolloClient";
 import { GETTIMELINE } from "@/queries/post";
@@ -20,9 +21,9 @@ export default async function PostSection(): Promise<JSX.Element> {
   // const data = await getData();
   const data = [
     {
-      CountComment: 0,
-      CountLike: 1,
-      CountShare: 0,
+      CountComment: 8,
+      CountLike: 167,
+      CountShare: 7,
       CreatedAt: "2023-05-10T06:03:20.005Z",
       UpdatedAt: "2023-05-10T06:03:20.005Z",
       _id: "645b33a89a8bdc53cea7c82a",
@@ -35,13 +36,13 @@ export default async function PostSection(): Promise<JSX.Element> {
         UUID: "",
         id: 6,
         imageUrl: "",
-        username: "aaaaa",
+        username: "User1",
       },
     },
     {
-      CountComment: 0,
-      CountLike: 1,
-      CountShare: 0,
+      CountComment: 12,
+      CountLike: 12345,
+      CountShare: 5,
       CreatedAt: "2023-05-10T06:02:54.342Z",
       UpdatedAt: "2023-05-10T06:02:54.342Z",
       _id: "645b338e9a8bdc53cea7c824",
@@ -54,14 +55,13 @@ export default async function PostSection(): Promise<JSX.Element> {
         UUID: "",
         id: 6,
         imageUrl: "",
-        username: "aaaaa",
+        username: "User2",
       },
     },
   ];
   return (
     <>
-      <section style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <div className="wrapper" style={{ display: 'flex', flexDirection: 'column',alignItems: 'center', backgroundColor: 'white', color: 'white' , padding: '10px', margin: '10px'}}>
+      <section style={{display: 'flex', flexDirection: 'column' ,alignItems: 'center'}}>
         {data.length ? (
           data.map((timeline: timeLine) => (
             <PostCard timeLine={timeline} key={timeline._id} />
@@ -69,7 +69,6 @@ export default async function PostSection(): Promise<JSX.Element> {
         ) : (
           <EmptyData message="Data not found" />
         )}
-        </div>
       </section>
     </>
   );
