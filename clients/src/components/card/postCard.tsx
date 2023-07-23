@@ -40,7 +40,7 @@ export default function PostCard({
         </CardHeader>
         <CardBody className="mb-6 p-0">
           <Typography>{timeLine.text}</Typography>
-          {timeLine.Media.url && (
+          {timeLine.Media?.url && (
             <LazyLoadImage
               className="w-10/100"
               alt="timeline image"
