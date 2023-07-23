@@ -57,20 +57,20 @@ export default function PostCard({
         <CardBody className="mt-2 mb-2 p-0">
         <div className="flex flex-col items-start">
         <Typography>{timeLine.text}</Typography>
-        {timeLine.imageUrl && (
+        {timeLine.Media.url && (
         <LazyLoadImage
           className="w-10/100 my-2"
           alt="timeline image"
-          src={timeLine.imageUrl}
+          src={timeLine.Media.url}
         />
         )}
-        <div className="flex flex-row justify-between items-center w-full">
-        <Typography className="text-xs">{timeLine.CountLike} Menyukai</Typography>
-        <div className="flex flex-row justify-end items-center flex-grow">
-        <Typography className="text-xs">{timeLine.CountComment} Komentar</Typography>
-        <Typography className="text-xs ml-2">{timeLine.CountShare} Kali dibagikan</Typography>
-        </div>
-        </div>
+          <div className="flex flex-row justify-between items-center w-full">
+              <Typography className="text-xs">{timeLine.CountLike} Menyukai</Typography>
+            <div className="flex flex-row justify-end items-center flex-grow">
+              <Typography className="text-xs">{timeLine.CountComment} Komentar</Typography>
+              <Typography className="text-xs ml-2">{timeLine.CountShare} Kali dibagikan</Typography>
+            </div>
+          </div>
         </div>
           <hr className="mt-2 border-t border-gray-400" />
         </CardBody>
