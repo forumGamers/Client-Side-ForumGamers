@@ -6,8 +6,11 @@ export interface timeLine {
   UpdatedAt: string;
   _id: string;
   allowComment: boolean;
-  imageId: string;
-  imageUrl: string;
+  Media: {
+    id: string;
+    type: string;
+    url: string;
+  };
   text: string;
   userId: number;
   User: {
