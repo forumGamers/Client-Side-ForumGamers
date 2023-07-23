@@ -5,8 +5,15 @@ import {
   CardHeader,
   Typography,
   Avatar,
+  CardFooter,
 } from "@/components/material-tailwind";
-import { StarIcon } from "@/components/icon";
+import {
+  HeartIcon,
+  ChatBubbleLeftIcon,
+  PaperAirplaneIcon,
+  ShareIcon,
+  EllipsisVerticalIcon,
+} from "@/components/icon";
 import { blankProfile } from "@/constants";
 import { LazyLoadImage } from "@/components/global";
 
@@ -17,37 +24,101 @@ export default function PostCard({
 }): JSX.Element {
   return (
     <>
-      <Card color="transparent" shadow={false} className="w-full max-w-[26rem]">
+      <Card
+        color="transparent"
+        shadow={false}
+        className="w-full bg-white max-w-[42rem] p-5 m-3"
+      >
         <CardHeader
           color="transparent"
           floated={false}
           shadow={false}
-          className="mx-0 flex items-center gap-4 pt-0 pb-8"
+          className="relative mx-0 flex bg-red items-start gap-3 mt-2 mb-2"
         >
           <Avatar
-            size="lg"
+            size="md"
             variant="circular"
             src={timeLine.User.imageUrl || blankProfile}
             alt="profile-picture"
           />
           <div className="flex w-full flex-col gap-0.5">
-            <div className="flex items-center justify-between">
-              <Typography variant="h5" color="blue-gray">
-                {timeLine.User.username}
-              </Typography>
+            <div className="flex flex-row">
+              <div className="flex items-start flex-col">
+                <Typography className="text-base font-bold" color="blue-gray">
+                  {timeLine.User.username}
+                </Typography>
+                <Typography className="text-xs">{timeLine.User.id}</Typography>
+              </div>
+              <div className="flex justify-end items-center flex-grow bottom-full z-10">
+                <div className="dropdown dropdown-left">
+                  <button className="btn btn-ghost btn-circle m-1" tabIndex={0}>
+                    <EllipsisVerticalIcon className="h-6 w-6" />
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow-lg bg-ghost rounded-box w-52"
+                    >
+                      <li>
+                        <a>Edit</a>
+                      </li>
+                    </ul>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </CardHeader>
-        <CardBody className="mb-6 p-0">
-          <Typography>{timeLine.text}</Typography>
-          {timeLine.Media?.url && (
-            <LazyLoadImage
-              className="w-10/100"
-              alt="timeline image"
-              src={timeLine.Media.url}
-            />
-          )}
+        <CardBody className="mt-2 mb-2 p-0">
+          <div className="flex flex-col items-start">
+            <Typography>{timeLine.text}</Typography>
+            {timeLine.Media.url && (
+              <LazyLoadImage
+                className="w-10/100 my-2"
+                alt="timeline image"
+                src={timeLine.Media.url}
+              />
+            )}
+            <div className="flex flex-row justify-between items-center w-full">
+              <Typography className="text-xs">
+                {timeLine.CountLike}{" "}
+                {`like${timeLine.CountLike > 1 ? "s" : ""}`}
+              </Typography>
+              <div className="flex flex-row justify-end items-center flex-grow">
+                <Typography className="text-xs">
+                  {timeLine.CountComment}{" "}
+                  {`comment${timeLine.CountComment > 1 ? "s" : ""}`}
+                </Typography>
+                <Typography className="text-xs ml-2">
+                  {timeLine.CountShare} Kali dibagikan
+                </Typography>
+              </div>
+            </div>
+          </div>
+          <hr className="mt-2 border-t border-gray-400" />
         </CardBody>
+        <CardFooter className="flex flex-row justify-between p-0">
+          {/* Like button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <HeartIcon className="h-6 w-6" />
+            <span>Like</span>
+          </button>
+          {/* Comment button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <ChatBubbleLeftIcon className="h-6 w-6" />
+            <span>Comment</span>
+          </button>
+
+          {/* Send button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <PaperAirplaneIcon className="h-6 w-6" />
+            <span>Send</span>
+          </button>
+
+          {/* Share button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <ShareIcon className="h-6 w-6" />
+            <span>Share</span>
+          </button>
+        </CardFooter>
       </Card>
     </>
   );
