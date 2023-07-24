@@ -13,6 +13,10 @@ export interface timeLine {
   };
   text: string;
   userId: number;
+  isLiked: boolean;
+  isShared: boolean;
+  tags: string[];
+  privacy: string;
   User: {
     UUID: string;
     id: number;
@@ -20,4 +24,3 @@ export interface timeLine {
     username: string;
   };
 }
-

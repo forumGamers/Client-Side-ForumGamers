@@ -5,22 +5,19 @@ import {
   CardHeader,
   Typography,
   Avatar,
-  CardFooter,
 } from "@/components/material-tailwind";
-import {
-  HeartIcon,
-  ChatBubbleLeftIcon,
-  PaperAirplaneIcon,
-  ShareIcon,
-  EllipsisVerticalIcon,
-} from "@/components/icon";
+import { EllipsisVerticalIcon } from "@/components/icon";
 import { blankProfile } from "@/constants";
 import { LazyLoadImage } from "@/components/global";
+import PostCardFooter from "./postCardFotter";
+import { CustomSession } from "@/interfaces/global";
 
 export default function PostCard({
   timeLine,
+  session,
 }: {
   timeLine: timeLine;
+  session: CustomSession | null;
 }): JSX.Element {
   return (
     <>
@@ -88,37 +85,15 @@ export default function PostCard({
                   {`comment${timeLine.CountComment > 1 ? "s" : ""}`}
                 </Typography>
                 <Typography className="text-xs ml-2">
-                  {timeLine.CountShare} Kali dibagikan
+                  {timeLine.CountShare}{" "}
+                  {`share${timeLine.CountShare > 1 ? "s" : ""}`}
                 </Typography>
               </div>
             </div>
           </div>
           <hr className="mt-2 border-t border-gray-400" />
         </CardBody>
-        <CardFooter className="flex flex-row justify-between p-0">
-          {/* Like button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <HeartIcon className="h-6 w-6" />
-            <span>Like</span>
-          </button>
-          {/* Comment button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <ChatBubbleLeftIcon className="h-6 w-6" />
-            <span>Comment</span>
-          </button>
-
-          {/* Send button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <PaperAirplaneIcon className="h-6 w-6" />
-            <span>Send</span>
-          </button>
-
-          {/* Share button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <ShareIcon className="h-6 w-6" />
-            <span>Share</span>
-          </button>
-        </CardFooter>
+        <PostCardFooter timeLine={timeLine} session={session} />
       </Card>
     </>
   );
