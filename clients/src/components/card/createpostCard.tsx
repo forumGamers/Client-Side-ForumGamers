@@ -1,3 +1,4 @@
+import { timeLine } from "@/interfaces/post";
 import {
   Card,
   CardHeader,
@@ -5,7 +6,7 @@ import {
 } from "@/components/material-tailwind";
 import { PhotoIcon, VideoCameraIcon, CalendarDaysIcon, NewspaperIcon } from "@/components/icon";
 
-export default function CreatePostCard(
+export default function CreatePostCard({ timeLine }: { timeLine?: timeLine }
 ): JSX.Element {
   return (
     <>

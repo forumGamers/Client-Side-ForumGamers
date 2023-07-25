@@ -157,6 +157,7 @@ export default async function PostSection(): Promise<JSX.Element> {
   return (
     <>
       <section style={{display: 'flex', flexDirection: 'column' ,alignItems: 'center'}}>
+      <CreatePostCard />
         {data.length ? (
           data.map((timeline: timeLine) => (
             <PostCard timeLine={timeline} key={timeline._id} />
