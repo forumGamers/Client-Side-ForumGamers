@@ -13,56 +13,7 @@ import { useMutation } from "@apollo/client";
 import { LIKEAPOST, UNLIKEAPOST } from "@/queries/post";
 import { swalError } from "@/helper/swal";
 import { useRouter } from "next/navigation";
-
-async function likePost(
-  timeLine: timeLine,
-  session: CustomSession
-): Promise<void> {
-  const [like] = useMutation(LIKEAPOST, {
-    onError(error, clientOptions) {
-      swalError(error.message);
-    },
-    errorPolicy: "all",
-  });
-
-  await like({
-    context: {
-      headers: {
-        access_token: session.user?.access_token,
-      },
-    },
-    variables: {
-      id: timeLine._id,
-    },
-  });
-
-  timeLine.isLiked = true;
-}
-
-async function unLikePost(
-  timeLine: timeLine,
-  session: CustomSession
-): Promise<void> {
-  const [unLike] = useMutation(UNLIKEAPOST, {
-    onError(error, clientOptions) {
-      swalError(error.message);
-    },
-    errorPolicy: "all",
-  });
-
-  await unLike({
-    context: {
-      headers: {
-        access_token: session.user?.access_token,
-      },
-    },
-    variables: {
-      id: timeLine._id,
-    },
-  });
-
-  timeLine.isLiked = false;
-}
+import Encryption from "@/helper/encryption";
 
 async function sharePost(id: string): Promise<void> {}
 
@@ -74,19 +25,75 @@ export default function PostCardFooter({
   session: CustomSession | null;
 }): JSX.Element {
   const router = useRouter();
+
+  const [like] = useMutation(LIKEAPOST, {
+    onError(error, clientOptions) {
+      console.log(error);
+      swalError(error.message);
+      timeLine.isLiked = false;
+    },
+    errorPolicy: "all",
+  });
+
+  const [unLike] = useMutation(UNLIKEAPOST, {
+    onError(error, clientOptions) {
+      swalError(error.message);
+      timeLine.isLiked = true;
+    },
+    errorPolicy: "all",
+  });
+
+  async function likePost(
+    timeLine: timeLine,
+    session: CustomSession
+  ): Promise<void> {
+    console.log(Encryption.encrypt(timeLine._id));
+    timeLine.isLiked = true;
+
+    await like({
+      context: {
+        headers: {
+          access_token: session.user?.access_token,
+        },
+      },
+      variables: {
+        likeAPostId: Encryption.encrypt(timeLine._id),
+      },
+    });
+  }
+
+  async function unLikePost(
+    timeLine: timeLine,
+    session: CustomSession
+  ): Promise<void> {
+    console.log(2);
+    timeLine.isLiked = false;
+
+    await unLike({
+      context: {
+        headers: {
+          access_token: session.user?.access_token,
+        },
+      },
+      variables: {
+        unLikeAPostId: Encryption.encrypt(timeLine._id),
+      },
+    });
+  }
+
+  const handleLikeButton = async () => {
+    session?.user?.access_token
+      ? !timeLine.isLiked
+        ? await likePost(timeLine, session as CustomSession)
+        : await unLikePost(timeLine, session as CustomSession)
+      : router.push("/login");
+  };
   return (
     <>
       <CardFooter className="flex flex-row justify-between p-0">
         {/* Like button */}
         <button
-          disabled={!session}
-          onClick={() => {
-            session?.user?.access_token
-              ? !timeLine.isLiked
-                ? likePost(timeLine, session as CustomSession)
-                : unLikePost(timeLine, session as CustomSession)
-              : router.push("/login");
-          }}
+          onClick={handleLikeButton}
           className="btn btn-ghost gap-1 text-base"
         >
           <HeartIcon

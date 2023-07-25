@@ -59,7 +59,7 @@ export default async function TourSection(): Promise<JSX.Element> {
         {data.length ? (
           data.map((el: game) => (
             <>
-              <div className="carousel-item">
+              <div className="carousel-item" key={el._id}>
                 <LazyLoadImage src={el.image} className="rounded-box" />
               </div>
             </>
