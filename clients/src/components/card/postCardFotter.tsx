@@ -28,7 +28,6 @@ export default function PostCardFooter({
 
   const [like] = useMutation(LIKEAPOST, {
     onError(error, clientOptions) {
-      console.log(error);
       swalError(error.message);
       timeLine.isLiked = false;
     },
@@ -47,7 +46,6 @@ export default function PostCardFooter({
     timeLine: timeLine,
     session: CustomSession
   ): Promise<void> {
-    console.log(Encryption.encrypt(timeLine._id));
     timeLine.isLiked = true;
 
     await like({
@@ -66,7 +64,6 @@ export default function PostCardFooter({
     timeLine: timeLine,
     session: CustomSession
   ): Promise<void> {
-    console.log(2);
     timeLine.isLiked = false;
 
     await unLike({

@@ -1,7 +1,4 @@
-import Encryption from "@/helper/encryption";
 import { storeData } from "@/interfaces/store";
-import { client } from "@/lib/apolloClient";
-import { GETSTOREDATAFORSTOREPAGE } from "@/queries/store";
 import {
   Card,
   CardHeader,
@@ -14,69 +11,16 @@ import EmptyData from "@/components/emptyData";
 import { LazyLoadImage } from "@/components/global";
 import Link from "next/link";
 
-async function getData(): Promise<storeData[]> {
-  try {
-    const { data } = await client.query<{ getAllStore: storeData[] }>({
-      query: GETSTOREDATAFORSTOREPAGE,
-      variables: {
-        query: {
-          limit: Encryption.encrypt("6"),
-        },
-      },
-    });
-
-    return data.getAllStore;
-  } catch (err) {
-    return [];
-  }
-}
-
-export default async function StoreSection(): Promise<JSX.Element> {
-  // const data = await getData();
-  const data = [
-    {
-      CreatedAt: "2023-03-30T14:08:57.710477+07:00",
-      ID: "1",
-      StoreStatus: {
-        name: "Basic",
-      },
-      active: true,
-      avg_rating: 5,
-      image: "",
-      name: "testing store",
-      rating_count: 2,
-    },
-    {
-      CreatedAt: "2023-03-30T14:08:57.710477+07:00",
-      ID: "2",
-      StoreStatus: {
-        name: "Basic",
-      },
-      active: true,
-      avg_rating: 5,
-      image: "",
-      name: "apa aja",
-      rating_count: 2,
-    },
-    {
-      CreatedAt: "2023-03-30T14:08:57.710477+07:00",
-      ID: "3",
-      StoreStatus: {
-        name: "Basic",
-      },
-      active: true,
-      avg_rating: 5,
-      image: "",
-      name: "tes123 store",
-      rating_count: 2,
-    },
-  ];
-
+export default function StoreSection({
+  data,
+}: {
+  data: storeData[];
+}): JSX.Element {
   return (
     <>
       <div>
         {data.length ? (
-          data.map((store: any) => (
+          data.map((store: storeData) => (
             <Card className="w-450" key={store.ID}>
               <CardHeader shadow={false} floated={false} className="h-96">
                 <LazyLoadImage
