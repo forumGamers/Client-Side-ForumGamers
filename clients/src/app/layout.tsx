@@ -4,8 +4,12 @@ import ProviderWrapper from "./providerWrapper";
 
 export default function RootLayout({
   children,
+  store,
+  tour,
 }: {
   children: React.ReactNode;
+  store: React.ReactNode;
+  tour: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -34,7 +38,11 @@ export default function RootLayout({
         />
       </head>
       <body style={{ backgroundColor: "#252525" }}>
-        <ProviderWrapper>{children}</ProviderWrapper>
+        <ProviderWrapper>
+          {children}
+          {store}
+          {tour}
+        </ProviderWrapper>
       </body>
     </html>
   );
