@@ -4,14 +4,8 @@ import ProviderWrapper from "./providerWrapper";
 
 export default function RootLayout({
   children,
-  store,
-  games,
-  post,
 }: {
   children: React.ReactNode;
-  store: React.ReactNode;
-  games: React.ReactNode;
-  post: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -39,14 +33,8 @@ export default function RootLayout({
           referrerPolicy="no-referrer"
         />
       </head>
-      <body style={{backgroundColor: '#252525'}}>
-        <ProviderWrapper>
-          {/* layouting per sectionnya disini,hrs di dalam providerWrapper */}
-          {post}
-          {games}
-          {store}
-          {children}
-        </ProviderWrapper>
+      <body style={{ backgroundColor: "#252525" }}>
+        <ProviderWrapper>{children}</ProviderWrapper>
       </body>
     </html>
   );

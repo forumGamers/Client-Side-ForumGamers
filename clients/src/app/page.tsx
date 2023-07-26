@@ -1,91 +1,315 @@
-import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
+import dinamic from "next/dynamic";
+const StoreSection = dinamic(
+  () => import("@/components/carousel/storeCarousel"),
+  {
+    loading: () => <Loading />,
+  }
+);
+const TourSection = dinamic(
+  () => import("@/components/carousel/tourCarousel"),
+  {
+    loading: () => <Loading />,
+  }
+);
+const PostSection = dinamic(() => import("@/components/views/post"), {
+  loading: () => <Loading />,
+});
+import Loading from "@/components/loader";
+import { checkServerSession } from "@/helper/global";
+import { CustomSession } from "@/interfaces/global";
+import { client } from "@/lib/apolloClient";
+import { GETSTOREDATAFORSTOREPAGE } from "@/queries/store";
+import Encryption from "@/helper/encryption";
+import { storeData } from "@/interfaces/store";
+import { GETTIMELINE } from "@/queries/post";
+import { timeLine } from "@/interfaces/post";
+import { game } from "@/interfaces/tour";
+import { GETGAMELIST } from "@/queries/tour";
 
-const inter = Inter({ subsets: ["latin"] });
+async function getPostData(): Promise<timeLine[]> {
+  try {
+    // const { data } = await client.query<{ getTimeLine: timeLine[] }>({
+    //   query: GETTIMELINE,
+    // });
 
-export default function Home() {
+    // return data.getTimeLine;
+    return [
+      {
+        CountComment: 0,
+        CountLike: 3,
+        CountShare: 0,
+        CreatedAt: "2023-07-22T13:43:23.421Z",
+        Media: {
+          id: "64bbdcf906370748f278c5c7",
+          type: "video",
+          url:
+            "https://ik.imagekit.io/b8ugipzgo/postImage/Attack_on_Titan_Season_4_Part_4___Official_Trailer_sY0_PR8AL.mp4",
+        },
+        UpdatedAt: "2023-07-22T13:43:23.421Z",
+        User: {
+          UUID: "",
+          id: 6,
+          imageUrl: "",
+          username: "aaaaa",
+        },
+        _id: "64bbdcfb5d8f1305dd6945e8",
+        allowComment: false,
+        isLiked: true,
+        isShared: false,
+        privacy: "Public",
+        tags: [],
+        text: "",
+        userId: 6,
+      },
+      {
+        CountComment: 0,
+        CountLike: 1,
+        CountShare: 0,
+        CreatedAt: "2023-05-10T06:03:20.005Z",
+        Media: {
+          id: "",
+          type: "",
+          url: "",
+        },
+        UpdatedAt: "2023-05-10T06:03:20.005Z",
+        User: {
+          UUID: "",
+          id: 6,
+          imageUrl: "",
+          username: "aaaaa",
+        },
+        _id: "645b33a89a8bdc53cea7c82a",
+        allowComment: false,
+        isLiked: false,
+        isShared: false,
+        privacy: "Public",
+        tags: [],
+        text: "test terakhir",
+        userId: 6,
+      },
+      {
+        CountComment: 0,
+        CountLike: 1,
+        CountShare: 0,
+        CreatedAt: "2023-05-10T06:03:15.368Z",
+        Media: {
+          id: "",
+          type: "",
+          url: "",
+        },
+        UpdatedAt: "2023-05-10T06:03:15.368Z",
+        User: {
+          UUID: "",
+          id: 6,
+          imageUrl: "",
+          username: "aaaaa",
+        },
+        _id: "645b33a39a8bdc53cea7c828",
+        allowComment: false,
+        isLiked: false,
+        isShared: false,
+        privacy: "Public",
+        tags: [],
+        text: "test text lagi",
+        userId: 6,
+      },
+      {
+        CountComment: 0,
+        CountLike: 1,
+        CountShare: 0,
+        CreatedAt: "2023-05-10T06:02:54.342Z",
+        Media: {
+          id: "",
+          type: "",
+          url: "",
+        },
+        UpdatedAt: "2023-05-10T06:02:54.342Z",
+        User: {
+          UUID: "",
+          id: 6,
+          imageUrl: "",
+          username: "aaaaa",
+        },
+        _id: "645b338e9a8bdc53cea7c824",
+        allowComment: false,
+        isLiked: false,
+        isShared: false,
+        privacy: "Public",
+        tags: [],
+        text: "tes text yang agak panjang sekitar 1-20 kata",
+        userId: 6,
+      },
+      {
+        CountComment: 0,
+        CountLike: 0,
+        CountShare: 0,
+        CreatedAt: "2023-05-09T11:21:52.047Z",
+        Media: {
+          id: "",
+          type: "",
+          url: "",
+        },
+        UpdatedAt: "2023-05-09T11:21:52.047Z",
+        User: {
+          UUID: "",
+          id: 6,
+          imageUrl: "",
+          username: "aaaaa",
+        },
+        _id: "645a2cd034a07b6a9a920b4c",
+        allowComment: false,
+        isLiked: false,
+        isShared: false,
+        privacy: "Public",
+        tags: ["tes"],
+        text: "test 123",
+        userId: 6,
+      },
+    ];
+  } catch (err) {
+    return [];
+  }
+}
+
+async function getStoreData(): Promise<storeData[]> {
+  try {
+    // const { data } = await client.query<{ getAllStore: storeData[] }>({
+    //   query: GETSTOREDATAFORSTOREPAGE,
+    //   variables: {
+    //     query: {
+    //       limit: Encryption.encrypt("6"),
+    //     },
+    //   },
+    // });
+
+    // return data.getAllStore;
+    return [
+      {
+        CreatedAt: "2023-03-30T14:08:57.710477+07:00",
+        ID: 1,
+        StoreStatus: {
+          id: 1, //ini kurang
+          name: "Basic",
+        },
+        active: true,
+        avg_rating: 5,
+        image: "",
+        name: "testing store",
+        rating_count: 2,
+        description: "", //ini kurang
+        followers: 1, //ini
+        Items: [], //ini
+        background: "", //ini
+        exp: 0, //ini
+        status_id: 1, //ini
+      },
+      {
+        CreatedAt: "2023-03-30T14:08:57.710477+07:00",
+        ID: 2,
+        StoreStatus: {
+          id: 1,
+          name: "Basic",
+        },
+        active: true,
+        avg_rating: 5,
+        image: "",
+        name: "apa aja",
+        rating_count: 2,
+        description: "", //ini kurang
+        followers: 1, //ini
+        Items: [], //ini
+        background: "", //ini
+        exp: 0, //ini
+        status_id: 1, //ini
+      },
+      {
+        CreatedAt: "2023-03-30T14:08:57.710477+07:00",
+        ID: 3,
+        StoreStatus: {
+          name: "Basic",
+          id: 1,
+        },
+        active: true,
+        avg_rating: 5,
+        image: "",
+        name: "tes123 store",
+        rating_count: 2,
+        description: "", //ini kurang
+        followers: 1, //ini
+        Items: [], //ini
+        background: "", //ini
+        exp: 0, //ini
+        status_id: 1, //ini
+      },
+    ];
+  } catch (err) {
+    return [];
+  }
+}
+
+async function getTourGameData(): Promise<game[]> {
+  try {
+    // const { data } = await client.query<{ getGameList: game[] }>({
+    //   query: GETGAMELIST,
+    // });
+
+    // return data.getGameList;
+    return [
+      {
+        description: "ngetes",
+        _id: "642664603bc312e11423a98f",
+        image:
+          "https://ik.imagekit.io/b8ugipzgo/gameImage/Flappy_Bird_icon_tOdeVaMZ5v.png",
+        name: "flappy bird",
+        type: "Single Player",
+      },
+      {
+        description: "ngetes",
+        _id: "642675aefddc53d5e5cfe97b",
+        image:
+          "https://ik.imagekit.io/b8ugipzgo/gameImage/angry_birds_qHour1mAY.jpg",
+        name: "angry bird",
+        type: "Single Player",
+      },
+      {
+        description: "ngetes",
+        _id: "6426764ae878a6a7e07da2cf",
+        image:
+          "https://ik.imagekit.io/b8ugipzgo/gameImage/angry_birds_2_6O1VxF2d4.jpg",
+        name: "angry bird 2",
+        type: "Single Player",
+      },
+      {
+        description: "ngetes",
+        _id: "642676d429cb7697238dde68",
+        image:
+          "https://ik.imagekit.io/b8ugipzgo/gameImage/angry_birds_rio_DP-YEesvP.jpg",
+        name: "angry bird rio",
+        type: "Single Player",
+      },
+    ];
+  } catch (err) {
+    return [];
+  }
+}
+
+export default async function Home(): Promise<JSX.Element> {
+  let userSession: CustomSession | null = null;
+  await checkServerSession((session) => {
+    userSession = session;
+  });
+
+  const postData = await getPostData();
+  const storeData = await getStoreData();
+  const gameData = await getTourGameData();
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <>
+      <main className={styles.main}>
+        <PostSection session={userSession} data={postData} />
+        <StoreSection data={storeData} />
+        <TourSection data={gameData} />
+      </main>
+    </>
   );
 }

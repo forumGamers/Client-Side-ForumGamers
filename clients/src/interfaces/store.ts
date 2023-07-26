@@ -6,8 +6,8 @@ export type storeData = {
   description: string;
   status_id: number;
   exp: number;
-  Active: boolean;
-  Items: [item];
+  active: boolean;
+  Items: item[];
   avg_rating: number;
   rating_count: number;
   StoreStatus: StoreStatus;

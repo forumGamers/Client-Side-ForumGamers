@@ -2,11 +2,20 @@ import { timeLine } from "@/interfaces/post";
 import {
   Card,
   CardHeader,
-  CardFooter,
-} from "@/components/material-tailwind";
-import { PhotoIcon, VideoCameraIcon, CalendarDaysIcon, NewspaperIcon } from "@/components/icon";
+  Avatar,
+  } from "@/components/material-tailwind";
+import { blankProfile } from "@/constants";
+import CreatePostCardFooter from "./createpostCardFooter";
+import { CustomSession } from "@/interfaces/global";
+import { LazyLoadImage } from "@/components/global";
 
-export default function CreatePostCard({ timeLine }: { timeLine?: timeLine }
+export default function CreatePostCard({
+  timeLine,
+  session,
+}: {
+    timeLine: timeLine;
+    session: CustomSession | null;
+  }
 ): JSX.Element {
   return (
     <>
@@ -17,38 +26,21 @@ export default function CreatePostCard({ timeLine }: { timeLine?: timeLine }
           shadow={false}
           className="relative mx-0 flex bg-red items-start gap-3 mt-2 mb-2"
         >
+          <Avatar
+            size="md"
+            variant="circular"
+            src={timeLine.User.imageUrl ||blankProfile}
+            alt="profile-picture"
+          />
           <div className="flex w-full flex-col gap-0.5">
             <div className="flex flex-row">
-              <button className="btn btn-ghost gap-1 text-base">
+              <button className="btn btn-outline gap-1 text-base">
               <span>Buat Postingan</span>
               </button>
             </div>
           </div>
         </CardHeader>
-        <CardFooter className="flex flex-row justify-between p-0">
-            {/* Like button */}
-            <button className="btn btn-ghost gap-1 text-base">
-            <PhotoIcon className="h-6 w-6" />
-            <span>Foto</span>
-            </button>
-             {/* Comment button */}
-            <button className="btn btn-ghost gap-1 text-base">
-            <VideoCameraIcon className="h-6 w-6" />
-            <span>VIdeo</span>
-            </button>
-
-            {/* Share button */}
-            <button className="btn btn-ghost gap-1 text-base">
-            <CalendarDaysIcon className="h-6 w-6" />
-            <span>Acara</span>
-            </button>
-
-            {/* Send button */}
-            <button className="btn btn-ghost gap-1 text-base">
-            <NewspaperIcon className="h-6 w-6" />
-            <span>Artikel</span>
-            </button>
-        </CardFooter>
+        <CreatePostCardFooter timeLine={timeLine} session={session} />
       </Card>
     </>
   );

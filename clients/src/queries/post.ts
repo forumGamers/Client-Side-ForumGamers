@@ -7,6 +7,11 @@ export const GETTIMELINE = gql`
       CountLike
       CountShare
       CreatedAt
+      Media {
+        id
+        type
+        url
+      }
       UpdatedAt
       User {
         UUID
@@ -16,13 +21,28 @@ export const GETTIMELINE = gql`
       }
       _id
       allowComment
-      Media {
-        id
-        type
-        url
-      }
+      isLiked
+      isShared
+      privacy
+      tags
       text
       userId
+    }
+  }
+`;
+
+export const LIKEAPOST = gql`
+  mutation Mutation($likeAPostId: String!) {
+    likeAPost(id: $likeAPostId) {
+      message
+    }
+  }
+`;
+
+export const UNLIKEAPOST = gql`
+  mutation Mutation($unLikeAPostId: String!) {
+    unLikeAPost(id: $unLikeAPostId) {
+      message
     }
   }
 `;
