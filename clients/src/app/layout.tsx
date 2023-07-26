@@ -6,10 +6,12 @@ export default function RootLayout({
   children,
   store,
   tour,
+  post,
 }: {
   children: React.ReactNode;
   store: React.ReactNode;
   tour: React.ReactNode;
+  post: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -40,6 +42,7 @@ export default function RootLayout({
       <body style={{ backgroundColor: "#252525" }}>
         <ProviderWrapper>
           {children}
+          {post}
           {store}
           {tour}
         </ProviderWrapper>
