@@ -14,6 +14,7 @@ import { LIKEAPOST, UNLIKEAPOST } from "@/queries/post";
 import { swalError } from "@/helper/swal";
 import { useRouter } from "next/navigation";
 import Encryption from "@/helper/encryption";
+import Link from "next/link";
 
 async function sharePost(id: string): Promise<void> {}
 
@@ -103,10 +104,13 @@ export default function PostCardFooter({
           <span>Like</span>
         </button>
         {/* Comment button */}
-        <button className="btn btn-ghost gap-1 text-base">
+        <Link
+          className="btn btn-ghost gap-1 text-base"
+          href={`/comment/${timeLine._id}`}
+        >
           <ChatBubbleLeftIcon className="h-6 w-6" />
           <span>Comment</span>
-        </button>
+        </Link>
 
         {/* Send button */}
         <button className="btn btn-ghost gap-1 text-base">

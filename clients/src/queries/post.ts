@@ -46,3 +46,24 @@ export const UNLIKEAPOST = gql`
     }
   }
 `;
+
+export const GETPOSTCOMMENT = gql`
+  query GetPostComment($getPostCommentId: String!) {
+    getPostComment(id: $getPostCommentId) {
+      CreatedAt
+      Reply {
+        CreatedAt
+        UpdatedAt
+        _id
+        commentId
+        text
+        userId
+      }
+      UpdatedAt
+      _id
+      text
+      postId
+      userId
+    }
+  }
+`;
