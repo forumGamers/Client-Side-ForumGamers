@@ -8,7 +8,7 @@ import Encryption from "@/helper/encryption";
 import { comment } from "@/interfaces/post";
 import { client } from "@/lib/apolloClient";
 import { GETPOSTCOMMENT } from "@/queries/post";
-const Modal = dinamic(() => import("@/components/modal/modal"), {
+const Modal = dinamic(() => import("@/components/modal/longModal"), {
   loading: () => <Loading />,
 });
 

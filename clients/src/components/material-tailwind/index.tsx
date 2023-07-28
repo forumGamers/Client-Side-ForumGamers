@@ -16,6 +16,10 @@ import {
   CardHeader,
   CardFooter,
   CardBody,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
 
 export {
@@ -34,4 +38,8 @@ export {
   CardHeader,
   CardBody,
   CardFooter,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 };
