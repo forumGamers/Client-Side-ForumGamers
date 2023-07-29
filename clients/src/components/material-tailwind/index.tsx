@@ -20,6 +20,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Textarea,
 } from "@material-tailwind/react";
 
 export {
@@ -42,4 +43,5 @@ export {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Textarea,
 };

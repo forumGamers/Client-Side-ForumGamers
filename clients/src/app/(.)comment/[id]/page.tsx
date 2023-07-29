@@ -55,7 +55,7 @@ export default async function CommentSection({
   const data = await getCommentData(params.id);
   return (
     <>
-      <Modal>
+      <Modal title="Comment Section">
         {data.length ? (
           data.map((comment) => (
             <CommentCard comment={comment} key={comment._id} />

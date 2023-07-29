@@ -10,8 +10,10 @@ import {
 
 export default function Modal({
   children,
+  title,
 }: {
   children: React.ReactNode;
+  title: string;
 }): JSX.Element {
   const router = useRouter();
   const handleChange = (open: boolean) => {
@@ -20,8 +22,11 @@ export default function Modal({
   return (
     <>
       <Dialog open handler={handleChange}>
-        <DialogHeader>Comment Section</DialogHeader>
-        <DialogBody divider className="h-[40rem] overflow-scroll">
+        <DialogHeader>{title}</DialogHeader>
+        <DialogBody
+          divider
+          className="h-[40rem] overflow-scroll scrollbar-hide"
+        >
           {children}
         </DialogBody>
       </Dialog>
