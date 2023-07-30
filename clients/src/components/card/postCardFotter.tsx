@@ -9,12 +9,10 @@ import {
 } from "@/components/icon";
 import { timeLine } from "@/interfaces/post";
 import { CustomSession } from "@/interfaces/global";
-import { useMutation } from "@apollo/client";
-import { LIKEAPOST, UNLIKEAPOST } from "@/queries/post";
-import { swalError } from "@/helper/swal";
 import { useRouter } from "next/navigation";
-import Encryption from "@/helper/encryption";
 import Link from "next/link";
+import { LikeAPost, UnLikeAPost } from "@/actions/post";
+import { useTransition } from "react";
 
 async function sharePost(id: string): Promise<void> {}
 
@@ -27,71 +25,38 @@ export default function PostCardFooter({
 }): JSX.Element {
   const router = useRouter();
 
-  const [like] = useMutation(LIKEAPOST, {
-    onError(error, clientOptions) {
-      swalError(error.message);
-      timeLine.isLiked = false;
-    },
-    errorPolicy: "all",
-  });
-
-  const [unLike] = useMutation(UNLIKEAPOST, {
-    onError(error, clientOptions) {
-      swalError(error.message);
-      timeLine.isLiked = true;
-    },
-    errorPolicy: "all",
-  });
-
-  async function likePost(
-    timeLine: timeLine,
-    session: CustomSession
-  ): Promise<void> {
-    timeLine.isLiked = true;
-
-    await like({
-      context: {
-        headers: {
-          access_token: session.user?.access_token,
-        },
-      },
-      variables: {
-        likeAPostId: Encryption.encrypt(timeLine._id),
-      },
-    });
-  }
-
-  async function unLikePost(
-    timeLine: timeLine,
-    session: CustomSession
-  ): Promise<void> {
-    timeLine.isLiked = false;
-
-    await unLike({
-      context: {
-        headers: {
-          access_token: session.user?.access_token,
-        },
-      },
-      variables: {
-        unLikeAPostId: Encryption.encrypt(timeLine._id),
-      },
-    });
-  }
+  const [_, startTransition] = useTransition();
 
   const handleLikeButton = async () => {
-    session?.user?.access_token
-      ? !timeLine.isLiked
-        ? await likePost(timeLine, session as CustomSession)
-        : await unLikePost(timeLine, session as CustomSession)
-      : router.push("/login");
+    try {
+      timeLine.isLiked = !timeLine.isLiked;
+      session?.user?.access_token
+        ? timeLine.isLiked
+          ? await LikeAPost({
+              id: timeLine._id,
+              access_token: session.user.access_token as string,
+            }).catch(err => {
+              console.log({err})
+            })
+          : await UnLikeAPost({
+              id: timeLine._id,
+              access_token: session.user.access_token as string,
+            })
+        : router.push("/login");
+    } catch (err) {
+      timeLine.isLiked = !timeLine.isLiked;
+    }
   };
   return (
     <>
       <CardFooter className="flex flex-row justify-between p-0">
         {/* Like button */}
         <button
-          onClick={handleLikeButton}
+          onClick={() =>
+            startTransition(() => {
+              handleLikeButton();
+            })
+          }
           className="btn btn-ghost gap-1 text-base"
         >
           <HeartIcon
