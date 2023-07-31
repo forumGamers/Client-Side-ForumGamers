@@ -1,16 +1,18 @@
 "use client";
 
 import { useMutation } from "@apollo/client";
-import { GOOGLELOGIN, LOGIN } from "@/queries/user";
+import { GOOGLELOGIN } from "@/queries/user";
 import Link from "next/link";
 import Encryption from "@/helper/encryption";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import { swalError } from "@/helper/swal";
 import Loading from "@/components/loader";
 import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
+import { loginHandler } from "@/actions/user";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 type state = {
   email: string;
@@ -21,7 +23,12 @@ type state = {
 
 export default function LoginForm(): JSX.Element {
   const router = useRouter();
+
+  const form = useRef<HTMLFormElement>(null);
+  const { pending: loading } = useFormStatus();
+
   const [load, setLoad] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const [formData, setData] = useState<state>({
     email: "",
     password: "",
@@ -30,24 +37,6 @@ export default function LoginForm(): JSX.Element {
   });
   const [googleResponse, setGoogleResponse] = useState<string>("");
   const [visiblePass, setVisiblePass] = useState<boolean>(false);
-
-  const [login, { loading }] = useMutation(LOGIN, {
-    onError: (error) => {
-      setData((prev: state) => ({
-        ...prev,
-        recaptchaValid: false,
-        tokenCaptcha: "",
-      }));
-      swalError(error.message);
-    },
-    async onCompleted(data, clientOptions) {
-      await signIn("credentials", {
-        access_token: data.login.access_token,
-        redirect: false,
-      });
-      router.push("/");
-    },
-  });
 
   const [googleLogin, { loading: googleLoading }] = useMutation(GOOGLELOGIN, {
     onError(error) {
@@ -78,24 +67,6 @@ export default function LoginForm(): JSX.Element {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    await login({
-      variables: {
-        login: {
-          email: Encryption.encrypt(formData.email),
-          password: Encryption.encrypt(formData.password),
-        },
-      },
-      context: {
-        headers: {
-          access_token: formData.tokenCaptcha,
-        },
-      },
-    });
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData((prev: state) => ({
@@ -104,9 +75,43 @@ export default function LoginForm(): JSX.Element {
     }));
   };
 
+  if (error) {
+    swalError(error);
+    setError("");
+  }
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        action={async (formData) => {
+          const email = Encryption.encrypt(formData.get("email") as string);
+          const password = Encryption.encrypt(
+            formData.get("password") as string
+          );
+          const access_token = formData.get("tokenCaptcha") as string;
+
+          const { success, message, data } = await loginHandler({
+            email,
+            password,
+            access_token,
+          });
+
+          if (!success) {
+            setError(message as string);
+            return;
+          }
+
+          await signIn("credentials", {
+            access_token: data?.login.access_token,
+            redirect: false,
+          });
+
+          router.replace("/");
+          form.current?.reset();
+          return;
+        }}
+        ref={form}
+      >
         {loading || googleLoading ? (
           <Loading type="ball" />
         ) : (
