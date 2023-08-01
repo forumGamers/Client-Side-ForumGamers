@@ -36,7 +36,6 @@ export default function GoogleForm(): JSX.Element {
 
   const googleSubmit = async (response: CredentialResponse) => {
     setGoogleResponse(response.credential as string);
-    console.log({ response });
 
     await googleLogin({
       context: {
