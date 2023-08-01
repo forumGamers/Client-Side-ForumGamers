@@ -12,9 +12,7 @@ import { CustomSession } from "@/interfaces/global";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LikeAPost, UnLikeAPost } from "@/actions/post";
-import { useTransition } from "react";
-
-async function sharePost(id: string): Promise<void> {}
+import { experimental_useOptimistic as useOptimistic } from "react";
 
 export default function PostCardFooter({
   timeLine,
@@ -25,43 +23,48 @@ export default function PostCardFooter({
 }): JSX.Element {
   const router = useRouter();
 
-  const [_, startTransition] = useTransition();
+  const [optimisticTimeLine, optimisticMutation] = useOptimistic(
+    timeLine,
+    (state, updatedField: { isLiked: boolean; CountLike: number }) => ({
+      ...state,
+      isLiked: updatedField.isLiked,
+      CountLike: updatedField.CountLike,
+    })
+  );
 
-  const handleLikeButton = async () => {
-    try {
-      timeLine.isLiked = !timeLine.isLiked;
-      session?.user?.access_token
-        ? timeLine.isLiked
-          ? await LikeAPost({
-              id: timeLine._id,
-              access_token: session.user.access_token as string,
-            }).catch(err => {
-              console.log({err})
-            })
-          : await UnLikeAPost({
-              id: timeLine._id,
-              access_token: session.user.access_token as string,
-            })
-        : router.push("/login");
-    } catch (err) {
-      timeLine.isLiked = !timeLine.isLiked;
-    }
-  };
   return (
     <>
       <CardFooter className="flex flex-row justify-between p-0">
         {/* Like button */}
         <button
-          onClick={() =>
-            startTransition(() => {
-              handleLikeButton();
-            })
-          }
+          onClick={async () => {
+            optimisticMutation({
+              isLiked: !optimisticTimeLine.isLiked,
+              CountLike: !optimisticTimeLine.isLiked
+                ? optimisticTimeLine.CountLike + 1
+                : optimisticTimeLine.CountLike - 1,
+            });
+            session?.user?.access_token
+              ? !optimisticTimeLine.isLiked
+                ? LikeAPost(timeLine._id).catch((err) => {
+                    optimisticMutation({
+                      isLiked: false,
+                      CountLike: optimisticTimeLine.CountLike - 1,
+                    });
+                  })
+                : UnLikeAPost(timeLine._id).catch((err) => {
+                    optimisticMutation({
+                      isLiked: true,
+                      CountLike: optimisticTimeLine.CountLike + 1,
+                    });
+                  })
+              : router.push("/login");
+          }}
           className="btn btn-ghost gap-1 text-base"
         >
           <HeartIcon
             className={`h-6 w-6 text-pink-500 ${
-              timeLine.isLiked
+              optimisticTimeLine.isLiked
                 ? "text-pink-500"
                 : "text-transparent stroke-black"
             }`}
@@ -87,7 +90,7 @@ export default function PostCardFooter({
         <button
           disabled={!session}
           onClick={() => {
-            sharePost(timeLine._id);
+            console.log("ok");
           }}
           className="btn btn-ghost gap-1 text-base"
         >
