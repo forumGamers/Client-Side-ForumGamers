@@ -1,20 +1,25 @@
 "use client";
 
-import { comment } from "@/interfaces/post";
-import { useRouter } from "next/navigation";
 import { Typography, Button, Avatar } from "@/components/material-tailwind";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import CommentCollapse from "../collapse/commentCollapse";
 import { blankProfile } from "@/constants";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
+
+type CommentSection = {
+  text: string;
+  Reply: { text: string; _id: string }[];
+  _id: string;
+};
 
 export default function CommentCard({
   comment,
 }: {
-  comment: comment;
+  comment: CommentSection;
 }): JSX.Element {
-  const router = useRouter();
   const [collapse, setCollapse] = useState<boolean>(false);
   const [reply, setReply] = useState<boolean>(false);
+  const { pending } = useFormStatus();
 
   const replyHandler = () => {
     setReply(!reply);
@@ -56,7 +61,7 @@ export default function CommentCard({
       <br />
       {reply &&
         comment.Reply.map((el) => (
-          <>
+          <Fragment key={el._id}>
             <div className="flex items-center ml-8 pl-4">
               <Avatar
                 size="md"
@@ -70,15 +75,8 @@ export default function CommentCard({
               </Typography>
             </div>
             <br />
-          </>
+          </Fragment>
         ))}
-      <button
-        onClick={() => {
-          router.back();
-        }}
-      >
-        back
-      </button>
     </>
   );
 }

@@ -1,13 +1,8 @@
-import dinamic from "next/dynamic";
-import Loading from "@/components/loader";
-const CommentCard = dinamic(() => import("@/components/card/comment"), {
-  loading: () => <Loading />,
-});
-import EmptyData from "@/components/emptyData";
 import Encryption from "@/helper/encryption";
 import { comment } from "@/interfaces/post";
 import { client } from "@/lib/apolloClient";
 import { GETPOSTCOMMENT } from "@/queries/post";
+import Wrapper from "./wrapper";
 
 async function getCommentData(id: string): Promise<comment[]> {
   try {
@@ -53,13 +48,7 @@ export default async function CommentSection({
   return (
     <>
       <section>
-        {data.length ? (
-          data.map((comment) => (
-            <CommentCard comment={comment} key={comment._id} />
-          ))
-        ) : (
-          <EmptyData message="Data not found" />
-        )}
+        <Wrapper comment={data} />
       </section>
     </>
   );

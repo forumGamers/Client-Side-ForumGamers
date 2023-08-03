@@ -5,6 +5,7 @@ import {
   Card,
   CardBody,
   Textarea,
+  Button,
 } from "@/components/material-tailwind";
 import { useState } from "react";
 
@@ -17,6 +18,7 @@ export default function CommentCollapse({
   const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
+
   return (
     <Collapse open={open}>
       <Card className="my-4 mx-auto w-8/12">
@@ -30,6 +32,16 @@ export default function CommentCollapse({
               name="text"
               onChange={onChangeHandler}
             />
+            <Button
+              variant="text"
+              className="rounded-full"
+              type="submit"
+              onClick={() => {
+                console.log("ok");
+              }}
+            >
+              send
+            </Button>
           </form>
         </CardBody>
       </Card>

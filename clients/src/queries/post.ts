@@ -67,3 +67,12 @@ export const GETPOSTCOMMENT = gql`
     }
   }
 `;
+
+export const COMMENTAPOST = gql`
+  mutation Mutation($text: String!, $postId: String!) {
+    commentAPost(text: $text, postId: $postId) {
+      id
+      message
+    }
+  }
+`;
