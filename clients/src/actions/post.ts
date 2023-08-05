@@ -5,6 +5,12 @@ import { Mutate } from ".";
 import Encryption from "@/helper/encryption";
 import { checkServerSession } from "@/helper/global";
 
+type result = {
+  success: boolean;
+  data?: any;
+  message?: string;
+};
+
 export const LikeAPost = async (id: string) =>
   new Promise(async (resolve, reject) => {
     let access_token: string | null = null;
@@ -59,8 +65,8 @@ export const UnLikeAPost = async (id: string) =>
     resolve(data);
   });
 
-export const commentAPost = async (formData: FormData) =>
-  new Promise(async (resolve, reject) => {
+export const commentAPost = async (formData: FormData): Promise<result> =>
+  new Promise(async (resolve) => {
     let access_token: string | null = null;
     await checkServerSession((session) => {
       access_token = session?.user?.access_token as string;
@@ -71,7 +77,7 @@ export const commentAPost = async (formData: FormData) =>
 
     const text = Encryption.encrypt(formData.get(formName) as string);
 
-    const { data, errors } = await Mutate({
+    const { data, errors } = await Mutate<{ id: string }>({
       mutation: COMMENTAPOST,
       context: {
         headers: {
@@ -87,8 +93,8 @@ export const commentAPost = async (formData: FormData) =>
     if (!data && errors?.length) {
       const message = errors[0].message as string;
 
-      reject({ message });
+      resolve({ success: false, message });
     }
 
-    resolve(data);
+    resolve({ success: true, data });
   });

@@ -15,6 +15,9 @@ type CommentSection = {
   text: string;
   Reply: { text: string; _id: string }[];
   _id: string;
+  isError?: boolean;
+  isLoading?: boolean;
+  isSuccess?: boolean;
 };
 
 export default function Wrapper({
@@ -24,8 +27,35 @@ export default function Wrapper({
 }): JSX.Element {
   const [optimisticComment, commentMutation] = useOptimistic(
     comment,
-    (state, newComment: CommentSection) =>
-      state.length ? [newComment, ...state] : [newComment]
+    (
+      state,
+      newComment: {
+        data: CommentSection;
+        type: "success" | "error" | "loading";
+        id?: string;
+      }
+    ) => {
+      const isError = newComment.type === "error";
+      const isLoading = newComment.type === "loading";
+      const isSuccess = newComment.type === "success";
+
+      switch (true) {
+        case isError:
+          return [
+            {
+              ...newComment.data,
+              isError: true,
+            },
+            ...state,
+          ];
+        case isLoading:
+          return state.length ? [newComment.data, ...state] : [newComment.data];
+        case isSuccess:
+          return state.map((el) => (!el._id ? { ...el, _id: id } : el));
+        default:
+          return state;
+      }
+    }
   );
 
   const [text, setText] = useState("");
@@ -38,13 +68,56 @@ export default function Wrapper({
   return (
     <>
       {optimisticComment.length ? (
-        optimisticComment.map((comment) => (
-          <CommentCard comment={comment} key={comment._id} />
+        optimisticComment.map((comment, idx) => (
+          <CommentCard comment={comment} key={idx} />
         ))
       ) : (
-        <EmptyData message="Data not found" />
+        <EmptyData message="Theres no commentar yet,add comment" />
       )}
-      <form action={commentAPost}>
+      <form
+        action={async (formData) => {
+          const [formName] = Array.from<string>(formData.keys());
+
+          const text = formData.get(formName) as string;
+
+          commentMutation({
+            type: "loading",
+            data: {
+              text,
+              Reply: [],
+              _id: "",
+              isLoading: true,
+            },
+          });
+
+          commentAPost(formData).then(({ data, success }) => {
+            if (!success) {
+              commentMutation({
+                type: "error",
+                data: {
+                  text,
+                  Reply: [],
+                  _id: "",
+                  isError: true,
+                },
+              });
+              return;
+            }
+            commentMutation({
+              type: "success",
+              data: {
+                text,
+                Reply: [],
+                _id: id,
+                isSuccess: true,
+              },
+              id: data.id,
+            });
+          });
+        }}
+        className="sticky bottom-0 p-4"
+        style={{ width: "calc(100% - 2rem)" }}
+      >
         <Textarea
           placeholder="Your Comment"
           variant="outlined"
@@ -53,18 +126,7 @@ export default function Wrapper({
           name={`text-${id}`}
           onChange={onChangeHandler}
         />
-        <Button
-          variant="text"
-          className="rounded-full"
-          type="submit"
-          onClick={() => {
-            commentMutation({
-              _id: "",
-              text,
-              Reply: [],
-            });
-          }}
-        >
+        <Button variant="text" className="rounded-full" type="submit">
           send
         </Button>
       </form>
