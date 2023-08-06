@@ -1,17 +1,19 @@
-import { CustomSession } from "@/interfaces/global";
 import {
   ApolloClient,
   InMemoryCache,
   NormalizedCacheObject,
   HttpLink,
-  DocumentNode,
+  ApolloLink,
 } from "@apollo/client";
 import { useMemo } from "react";
 const uri = process.env.URL || "http://localhost:5000";
+import { createUploadLink } from "apollo-upload-client";
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   uri,
   cache: new InMemoryCache(),
+  ssrMode: typeof window === "undefined",
+  link: ApolloLink.from([createUploadLink({ uri })]),
 });
 
 function createIsoMorphLink() {

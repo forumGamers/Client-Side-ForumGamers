@@ -1,16 +1,11 @@
 "use client";
 
-import { useMutation } from "@apollo/client";
-import { GOOGLELOGIN, LOGIN } from "@/queries/user";
 import Link from "next/link";
-import Encryption from "@/helper/encryption";
-import { useRouter } from "next/navigation";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { useState, useEffect } from "react";
-import { signIn } from "next-auth/react";
 import { swalError } from "@/helper/swal";
-import Loading from "@/components/loader";
 import ReCAPTCHA from "react-google-recaptcha";
-import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
+import Loading from "@/components/loader";
 
 type state = {
   email: string;
@@ -20,81 +15,36 @@ type state = {
 };
 
 export default function LoginForm(): JSX.Element {
-  const router = useRouter();
+  const { pending } = useFormStatus();
+
   const [load, setLoad] = useState<boolean>(false);
-  const [formData, setData] = useState<state>({
+  const [data, setData] = useState<state>({
     email: "",
     password: "",
     recaptchaValid: false,
     tokenCaptcha: "",
   });
-  const [googleResponse, setGoogleResponse] = useState<string>("");
   const [visiblePass, setVisiblePass] = useState<boolean>(false);
-
-  const [login, { loading }] = useMutation(LOGIN, {
-    onError: (error) => {
-      setData((prev: state) => ({
-        ...prev,
-        recaptchaValid: false,
-        tokenCaptcha: "",
-      }));
-      swalError(error.message);
-    },
-    async onCompleted(data, clientOptions) {
-      await signIn("credentials", {
-        access_token: data.login.access_token,
-        redirect: false,
-      });
-      router.push("/");
-    },
-  });
-
-  const [googleLogin, { loading: googleLoading }] = useMutation(GOOGLELOGIN, {
-    onError(error) {
-      swalError("Failed sign in with google");
-    },
-    async onCompleted(data, clientOptions) {
-      await signIn("credentials", {
-        access_token: data.googleLogin.access_token,
-        redirect: false,
-      });
-      router.push("/");
-    },
-  });
 
   useEffect(() => {
     setLoad(true);
+
+    const queryParams = window.location.search;
+
+    const query = new URLSearchParams(queryParams);
+
+    const error = query.get("error");
+
+    if (error) {
+      swalError(error);
+
+      query.delete("error");
+
+      const url = window.location.pathname;
+
+      window.history.replaceState({}, "", url);
+    }
   }, []);
-
-  const googleSubmit = async (response: CredentialResponse) => {
-    setGoogleResponse(response.credential as string);
-
-    await googleLogin({
-      context: {
-        headers: {
-          access_token: googleResponse,
-        },
-      },
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    await login({
-      variables: {
-        login: {
-          email: Encryption.encrypt(formData.email),
-          password: Encryption.encrypt(formData.password),
-        },
-      },
-      context: {
-        headers: {
-          access_token: formData.tokenCaptcha,
-        },
-      },
-    });
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -106,10 +56,10 @@ export default function LoginForm(): JSX.Element {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        {loading || googleLoading ? (
-          <Loading type="ball" />
-        ) : (
+      {pending ? (
+        <Loading type="ball" />
+      ) : (
+        <>
           <div className="login-input-wrapper mb-4">
             <div className="form-control w-full">
               <label htmlFor="email" className="label">
@@ -121,7 +71,7 @@ export default function LoginForm(): JSX.Element {
                 className="input input-bordered rounded-xl w-full bg-white"
                 type="text"
                 name="email"
-                value={formData.email}
+                value={data.email}
                 onChange={handleChange}
                 required
                 placeholder="Masukkan Email Anda"
@@ -135,7 +85,7 @@ export default function LoginForm(): JSX.Element {
                 className="input input-bordered rounded-xl w-full bg-white"
                 type={visiblePass ? "text" : "password"}
                 name="password"
-                value={formData.password}
+                value={data.password}
                 onChange={handleChange}
                 required
                 placeholder="Masukkan Password yang Sesuai"
@@ -164,7 +114,6 @@ export default function LoginForm(): JSX.Element {
                   theme="dark"
                 />
               )}
-              ,
             </div>
             <Link
               href="/forget-password"
@@ -175,34 +124,17 @@ export default function LoginForm(): JSX.Element {
               </p>
             </Link>
           </div>
-        )}
-        <button
-          type="submit"
-          className="btn w-full text-white bg-[#8648C1] mb-2"
-          disabled={
-            formData.recaptchaValid && formData.email && formData.password
-              ? false
-              : true
-          }
-        >
-          Log in
-        </button>
-      </form>
-      <div className="container mt-2 cursor-pointer align-middle">
-        {load && (
-          <GoogleLogin
-            useOneTap
-            onSuccess={googleSubmit}
-            onError={() => {
-              swalError("Failed sign in with google");
-            }}
-            text="signin_with"
-            shape="circle"
-            size="medium"
-            cancel_on_tap_outside={true}
-          />
-        )}
-      </div>
+          <button
+            type="submit"
+            className="btn w-full text-white bg-[#8648C1] mb-2"
+            disabled={
+              data.recaptchaValid && data.email && data.password ? false : true
+            }
+          >
+            Log in
+          </button>
+        </>
+      )}
     </>
   );
 }

@@ -24,3 +24,28 @@ export interface timeLine {
     username: string;
   };
 }
+
+export interface reply {
+  _id: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+  text: string;
+  commentId: string;
+  userId: number;
+}
+
+export interface comment {
+  _id: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+  text: string;
+  postId: string;
+  userId: number;
+  Reply: reply[];
+  User: {
+    id: number;
+    UUID: string;
+    username: string;
+    imageUrl?: string;
+  };
+}

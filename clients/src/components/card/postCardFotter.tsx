@@ -9,13 +9,10 @@ import {
 } from "@/components/icon";
 import { timeLine } from "@/interfaces/post";
 import { CustomSession } from "@/interfaces/global";
-import { useMutation } from "@apollo/client";
-import { LIKEAPOST, UNLIKEAPOST } from "@/queries/post";
-import { swalError } from "@/helper/swal";
 import { useRouter } from "next/navigation";
-import Encryption from "@/helper/encryption";
-
-async function sharePost(id: string): Promise<void> {}
+import Link from "next/link";
+import { LikeAPost, UnLikeAPost } from "@/actions/post";
+import { experimental_useOptimistic as useOptimistic } from "react";
 
 export default function PostCardFooter({
   timeLine,
@@ -26,76 +23,48 @@ export default function PostCardFooter({
 }): JSX.Element {
   const router = useRouter();
 
-  const [like] = useMutation(LIKEAPOST, {
-    onError(error, clientOptions) {
-      swalError(error.message);
-      timeLine.isLiked = false;
-    },
-    errorPolicy: "all",
-  });
+  const [optimisticTimeLine, optimisticMutation] = useOptimistic(
+    timeLine,
+    (state, updatedField: { isLiked: boolean; CountLike: number }) => ({
+      ...state,
+      isLiked: updatedField.isLiked,
+      CountLike: updatedField.CountLike,
+    })
+  );
 
-  const [unLike] = useMutation(UNLIKEAPOST, {
-    onError(error, clientOptions) {
-      swalError(error.message);
-      timeLine.isLiked = true;
-    },
-    errorPolicy: "all",
-  });
-
-  async function likePost(
-    timeLine: timeLine,
-    session: CustomSession
-  ): Promise<void> {
-    timeLine.isLiked = true;
-
-    await like({
-      context: {
-        headers: {
-          access_token: session.user?.access_token,
-        },
-      },
-      variables: {
-        likeAPostId: Encryption.encrypt(timeLine._id),
-      },
-    });
-  }
-
-  async function unLikePost(
-    timeLine: timeLine,
-    session: CustomSession
-  ): Promise<void> {
-    timeLine.isLiked = false;
-
-    await unLike({
-      context: {
-        headers: {
-          access_token: session.user?.access_token,
-        },
-      },
-      variables: {
-        unLikeAPostId: Encryption.encrypt(timeLine._id),
-      },
-    });
-  }
-
-  const handleLikeButton = async () => {
-    session?.user?.access_token
-      ? !timeLine.isLiked
-        ? await likePost(timeLine, session as CustomSession)
-        : await unLikePost(timeLine, session as CustomSession)
-      : router.push("/login");
-  };
   return (
     <>
       <CardFooter className="flex flex-row justify-between p-0">
         {/* Like button */}
         <button
-          onClick={handleLikeButton}
+          onClick={async () => {
+            optimisticMutation({
+              isLiked: !optimisticTimeLine.isLiked,
+              CountLike: !optimisticTimeLine.isLiked
+                ? optimisticTimeLine.CountLike + 1
+                : optimisticTimeLine.CountLike - 1,
+            });
+            session?.user?.access_token
+              ? !optimisticTimeLine.isLiked
+                ? LikeAPost(timeLine._id).catch((err) => {
+                    optimisticMutation({
+                      isLiked: false,
+                      CountLike: optimisticTimeLine.CountLike - 1,
+                    });
+                  })
+                : UnLikeAPost(timeLine._id).catch((err) => {
+                    optimisticMutation({
+                      isLiked: true,
+                      CountLike: optimisticTimeLine.CountLike + 1,
+                    });
+                  })
+              : router.push("/login");
+          }}
           className="btn btn-ghost gap-1 text-base"
         >
           <HeartIcon
             className={`h-6 w-6 text-pink-500 ${
-              timeLine.isLiked
+              optimisticTimeLine.isLiked
                 ? "text-pink-500"
                 : "text-transparent stroke-black"
             }`}
@@ -103,10 +72,13 @@ export default function PostCardFooter({
           <span>Like</span>
         </button>
         {/* Comment button */}
-        <button className="btn btn-ghost gap-1 text-base">
+        <Link
+          className="btn btn-ghost gap-1 text-base"
+          href={`/comment/${timeLine._id}`}
+        >
           <ChatBubbleLeftIcon className="h-6 w-6" />
           <span>Comment</span>
-        </button>
+        </Link>
 
         {/* Send button */}
         <button className="btn btn-ghost gap-1 text-base">
@@ -118,7 +90,7 @@ export default function PostCardFooter({
         <button
           disabled={!session}
           onClick={() => {
-            sharePost(timeLine._id);
+            console.log("ok");
           }}
           className="btn btn-ghost gap-1 text-base"
         >

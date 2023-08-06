@@ -46,3 +46,39 @@ export const UNLIKEAPOST = gql`
     }
   }
 `;
+
+export const GETPOSTCOMMENT = gql`
+  query Query($getPostCommentId: String!) {
+    getPostComment(id: $getPostCommentId) {
+      CreatedAt
+      UpdatedAt
+      User {
+        UUID
+        id
+        imageUrl
+        username
+      }
+      _id
+      postId
+      text
+      userId
+      Reply {
+        CreatedAt
+        UpdatedAt
+        _id
+        commentId
+        text
+        userId
+      }
+    }
+  }
+`;
+
+export const COMMENTAPOST = gql`
+  mutation Mutation($text: String!, $postId: String!) {
+    commentAPost(text: $text, postId: $postId) {
+      id
+      message
+    }
+  }
+`;
