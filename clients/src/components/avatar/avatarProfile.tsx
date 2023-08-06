@@ -7,13 +7,18 @@ import { useRouter } from "next/navigation";
 export default function AvatarProfile({
   user,
 }: {
-  user: { username: string; id: number | string; image?: string; UUID: string };
+  user: {
+    username: string;
+    id: number | string;
+    imageUrl?: string;
+    UUID: string;
+  };
 }): JSX.Element {
   const router = useRouter();
   return (
     <div className="flex items-center gap-4">
       <Avatar
-        src={user.image ?? blankProfile}
+        src={user?.imageUrl ?? blankProfile}
         variant="circular"
         alt="profile-picture"
         className="cursor-pointer"
@@ -21,7 +26,7 @@ export default function AvatarProfile({
           router.push(`/user/${user.UUID}`);
         }}
       />
-      <Typography variant="h6">{user.image}</Typography>
+      <Typography variant="h6">{user.username}</Typography>
     </div>
   );
 }

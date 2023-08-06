@@ -18,6 +18,12 @@ type CommentSection = {
   isError?: boolean;
   isLoading?: boolean;
   isSuccess?: boolean;
+  User: {
+    UUID: string;
+    id: number;
+    imageUrl?: string;
+    username: string;
+  };
 };
 
 export default function Wrapper({
@@ -65,56 +71,83 @@ export default function Wrapper({
 
   const { id } = useParams() as Record<string, string>;
 
+  const actionHandler = async (formData: FormData) => {
+    const [formName] = Array.from<string>(formData.keys());
+    const [_, postId] = formName.split("-");
+
+    const text = formData.get(formName) as string;
+
+    commentMutation({
+      type: "loading",
+      data: {
+        text,
+        Reply: [],
+        _id: "",
+        isLoading: true,
+        User: {
+          id: 6,
+          UUID: "",
+          username: "test",
+          imageUrl: "",
+        },
+      },
+    });
+
+    commentAPost({ text, postId }).then(({ data, success }) => {
+      setText("");
+
+      if (!success) {
+        commentMutation({
+          type: "error",
+          data: {
+            text,
+            Reply: [],
+            _id: "",
+            isError: true,
+            User: {
+              id: 6,
+              UUID: "",
+              username: "test",
+              imageUrl: "",
+            },
+          },
+        });
+        return;
+      }
+      commentMutation({
+        type: "success",
+        data: {
+          text,
+          Reply: [],
+          _id: id,
+          isSuccess: true,
+          User: {
+            id: 6,
+            UUID: "",
+            username: "test",
+            imageUrl: "",
+          },
+        },
+        id: data.id,
+      });
+    });
+  };
+
   return (
     <>
       {optimisticComment.length ? (
         optimisticComment.map((comment, idx) => (
-          <CommentCard comment={comment} key={idx} />
+          <CommentCard
+            comment={comment}
+            key={idx}
+            commentMutation={commentMutation}
+          />
         ))
       ) : (
         <EmptyData message="Theres no commentar yet,add comment" />
       )}
       <form
-        action={async (formData) => {
-          const [formName] = Array.from<string>(formData.keys());
-
-          const text = formData.get(formName) as string;
-
-          commentMutation({
-            type: "loading",
-            data: {
-              text,
-              Reply: [],
-              _id: "",
-              isLoading: true,
-            },
-          });
-
-          commentAPost(formData).then(({ data, success }) => {
-            if (!success) {
-              commentMutation({
-                type: "error",
-                data: {
-                  text,
-                  Reply: [],
-                  _id: "",
-                  isError: true,
-                },
-              });
-              return;
-            }
-            commentMutation({
-              type: "success",
-              data: {
-                text,
-                Reply: [],
-                _id: id,
-                isSuccess: true,
-              },
-              id: data.id,
-            });
-          });
-        }}
+        action={actionHandler}
         className="sticky bottom-0 p-4"
         style={{ width: "calc(100% - 2rem)" }}
       >

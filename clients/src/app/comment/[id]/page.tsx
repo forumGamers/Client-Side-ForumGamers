@@ -32,6 +32,12 @@ async function getCommentData(id: string): Promise<comment[]> {
         text: "tes mau comment",
         postId: "645a2cd034a07b6a9a920b4c",
         userId: 6,
+        User: {
+          id: 6,
+          UUID: "widasdakndsakda",
+          username: "test",
+          imageUrl: "",
+        },
       },
     ];
   } catch (err) {

@@ -42,4 +42,10 @@ export interface comment {
   postId: string;
   userId: number;
   Reply: reply[];
+  User: {
+    id: number;
+    UUID: string;
+    username: string;
+    imageUrl?: string;
+  };
 }

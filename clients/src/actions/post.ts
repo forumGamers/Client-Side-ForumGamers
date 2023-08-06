@@ -65,17 +65,18 @@ export const UnLikeAPost = async (id: string) =>
     resolve(data);
   });
 
-export const commentAPost = async (formData: FormData): Promise<result> =>
+export const commentAPost = async ({
+  text,
+  postId,
+}: {
+  text: string;
+  postId: string;
+}): Promise<result> =>
   new Promise(async (resolve) => {
     let access_token: string | null = null;
     await checkServerSession((session) => {
       access_token = session?.user?.access_token as string;
     });
-
-    const [formName] = Array.from<string>(formData.keys());
-    const [_, postId] = formName.split("-");
-
-    const text = Encryption.encrypt(formData.get(formName) as string);
 
     const { data, errors } = await Mutate<{ id: string }>({
       mutation: COMMENTAPOST,
@@ -85,7 +86,7 @@ export const commentAPost = async (formData: FormData): Promise<result> =>
         },
       },
       variables: {
-        text,
+        text: Encryption.encrypt(text),
         postId,
       },
     });
