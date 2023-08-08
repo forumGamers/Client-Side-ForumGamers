@@ -1,3 +1,5 @@
+import { userProfile } from "./user";
+
 export interface timeLine {
   CountComment: number;
   CountLike: number;
@@ -32,6 +34,7 @@ export interface reply {
   text: string;
   commentId: string;
   userId: number;
+  User: userProfile;
 }
 
 export interface comment {
@@ -48,4 +51,21 @@ export interface comment {
     username: string;
     imageUrl?: string;
   };
+}
+
+export interface CommentSection {
+  text: string;
+  Reply: {
+    text: string;
+    _id: string;
+    User?: userProfile;
+    isError?: boolean;
+    isLoading?: boolean;
+    isSuccess?: boolean;
+  }[];
+  _id: string;
+  isError?: boolean;
+  isLoading?: boolean;
+  isSuccess?: boolean;
+  User: userProfile;
 }

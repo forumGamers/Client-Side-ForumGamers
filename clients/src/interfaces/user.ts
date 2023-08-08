@@ -39,3 +39,10 @@ export type UserData = {
   Store?: store;
   Followings?: followings[];
 };
+
+export interface userProfile {
+  UUID: string;
+  id: number;
+  imageUrl?: string;
+  username: string;
+}

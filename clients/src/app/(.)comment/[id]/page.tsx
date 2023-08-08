@@ -30,6 +30,12 @@ async function getCommentData(id: string): Promise<comment[]> {
             commentId: "64c13ab9bdf24156e9444f86",
             text: "tes mau reply comment",
             userId: 6,
+            User: {
+              id: 6,
+              UUID: "widasdakndsakda",
+              username: "test",
+              imageUrl: "",
+            },
           },
         ],
         UpdatedAt: "2023-07-26T15:24:41.394Z",
