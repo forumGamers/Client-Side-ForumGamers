@@ -64,7 +64,7 @@ export default function PostCardFooter({
         >
           <HeartIcon
             className={`h-6 w-6 text-pink-500 ${
-              optimisticTimeLine.isLiked
+              optimisticTimeLine?.isLiked
                 ? "text-pink-500"
                 : "text-transparent stroke-black"
             }`}
@@ -74,7 +74,7 @@ export default function PostCardFooter({
         {/* Comment button */}
         <Link
           className="btn btn-ghost gap-1 text-base"
-          href={`/comment/${timeLine._id}`}
+          href={`/comment/${timeLine?._id}`}
         >
           <ChatBubbleLeftIcon className="h-6 w-6" />
           <span>Comment</span>

@@ -35,16 +35,16 @@ export default function PostCard({
           <Avatar
             size="md"
             variant="circular"
-            src={timeLine.User.imageUrl || blankProfile}
+            src={timeLine?.User?.imageUrl || blankProfile}
             alt="profile-picture"
           />
           <div className="flex w-full flex-col gap-0.5">
             <div className="flex flex-row">
               <div className="flex items-start flex-col">
                 <Typography className="text-base font-bold" color="blue-gray">
-                  {timeLine.User.username}
+                  {timeLine?.User?.username}
                 </Typography>
-                <Typography className="text-xs">{timeLine.User.id}</Typography>
+                <Typography className="text-xs">{timeLine?.User?.id}</Typography>
               </div>
               <div className="flex justify-end items-center flex-grow bottom-full z-10">
                 <div className="dropdown dropdown-left">
@@ -66,27 +66,27 @@ export default function PostCard({
         </CardHeader>
         <CardBody className="mt-2 mb-2 p-0">
           <div className="flex flex-col items-start">
-            <Typography>{timeLine.text}</Typography>
-            {timeLine.Media.url && (
+            <Typography>{timeLine?.text}</Typography>
+            {timeLine?.Media?.url && (
               <LazyLoadImage
                 className="w-10/100 my-2"
                 alt="timeline image"
-                src={timeLine.Media.url}
+                src={timeLine?.Media?.url}
               />
             )}
             <div className="flex flex-row justify-between items-center w-full">
               <Typography className="text-xs">
-                {timeLine.CountLike}{" "}
-                {`like${timeLine.CountLike > 1 ? "s" : ""}`}
+                {timeLine?.CountLike}{" "}
+                {`like${timeLine?.CountLike > 1 ? "s" : ""}`}
               </Typography>
               <div className="flex flex-row justify-end items-center flex-grow">
                 <Typography className="text-xs">
-                  {timeLine.CountComment}{" "}
-                  {`comment${timeLine.CountComment > 1 ? "s" : ""}`}
+                  {timeLine?.CountComment}{" "}
+                  {`comment${timeLine?.CountComment > 1 ? "s" : ""}`}
                 </Typography>
                 <Typography className="text-xs ml-2">
-                  {timeLine.CountShare}{" "}
-                  {`share${timeLine.CountShare > 1 ? "s" : ""}`}
+                  {timeLine?.CountShare}{" "}
+                  {`share${timeLine?.CountShare > 1 ? "s" : ""}`}
                 </Typography>
               </div>
             </div>

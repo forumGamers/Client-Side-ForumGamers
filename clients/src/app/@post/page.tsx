@@ -167,6 +167,7 @@ export default async function Page(): Promise<JSX.Element> {
           alignItems: "center",
         }}
       >
+        {/* <CreatePostCard/> */}
         {data.length ? (
           data.map((timeline: timeLine) => (
             <PostCard
