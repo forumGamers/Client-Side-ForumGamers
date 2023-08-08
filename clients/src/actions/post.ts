@@ -1,6 +1,11 @@
 "use server";
 
-import { COMMENTAPOST, LIKEAPOST, UNLIKEAPOST } from "@/queries/post";
+import {
+  COMMENTAPOST,
+  LIKEAPOST,
+  REPLYCOMMENT,
+  UNLIKEAPOST,
+} from "@/queries/post";
 import { Mutate } from ".";
 import Encryption from "@/helper/encryption";
 import { checkServerSession } from "@/helper/global";
@@ -9,6 +14,7 @@ type result = {
   success: boolean;
   data?: any;
   message?: string;
+  user?: any;
 };
 
 export const LikeAPost = async (id: string) =>
@@ -74,8 +80,10 @@ export const commentAPost = async ({
 }): Promise<result> =>
   new Promise(async (resolve) => {
     let access_token: string | null = null;
+    let user: any = null;
     await checkServerSession((session) => {
       access_token = session?.user?.access_token as string;
+      user = session?.user;
     });
 
     const { data, errors } = await Mutate<{ id: string }>({
@@ -97,5 +105,42 @@ export const commentAPost = async ({
       resolve({ success: false, message });
     }
 
-    resolve({ success: true, data });
+    resolve({ success: true, data, user });
+  });
+
+export const ReplyComment = async ({
+  text,
+  commentId,
+}: {
+  text: string;
+  commentId: string;
+}): Promise<result> =>
+  new Promise(async (resolve) => {
+    let access_token: string | null = null;
+    let user: any = null;
+    await checkServerSession((session) => {
+      access_token = session?.user?.access_token as string;
+      user = session?.user;
+    });
+
+    const { data, errors } = await Mutate<{ id: string }>({
+      mutation: REPLYCOMMENT,
+      context: {
+        headers: {
+          access_token,
+        },
+      },
+      variables: {
+        text: Encryption.encrypt(text),
+        commentId,
+      },
+    });
+
+    if (!data && errors?.length) {
+      const message = errors[0].message as string;
+
+      resolve({ success: false, message });
+    }
+
+    resolve({ success: true, data, user });
   });

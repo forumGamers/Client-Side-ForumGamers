@@ -1,36 +1,26 @@
 "use client";
 
 import { Typography, Button } from "@/components/material-tailwind";
-import { useState, Fragment, useRef } from "react";
+import { useState, Fragment, useRef, Dispatch, SetStateAction } from "react";
 import CommentCollapse from "../collapse/commentCollapse";
 import AvatarProfile from "../avatar/avatarProfile";
 import { LoadingOverlay } from "@/components/global";
 import { commentAPost } from "@/actions/post";
 import { useParams } from "next/navigation";
-
-type CommentSection = {
-  text: string;
-  Reply: { text: string; _id: string }[];
-  _id: string;
-  isError?: boolean;
-  isLoading?: boolean;
-  isSuccess?: boolean;
-  User: {
-    UUID: string;
-    id: number;
-    imageUrl?: string;
-    username: string;
-  };
-};
+import { CommentSection } from "@/interfaces/post";
 
 export default function CommentCard({
   comment,
+  state,
   commentMutation,
+  setCommentData,
 }: {
   comment: CommentSection;
+  state: CommentSection[];
+  setCommentData: Dispatch<SetStateAction<CommentSection[]>>;
   commentMutation: (action: {
     data: CommentSection;
-    type: "success" | "error" | "loading";
+    type: "error" | "loading";
     id?: string;
   }) => void;
 }): JSX.Element {
@@ -69,7 +59,7 @@ export default function CommentCard({
       },
     });
 
-    commentAPost({ text, postId: id }).then(({ success, data }) => {
+    commentAPost({ text, postId: id }).then(({ success, data, user }) => {
       if (!success) {
         commentMutation({
           type: "error",
@@ -88,22 +78,20 @@ export default function CommentCard({
         });
         return;
       }
-      commentMutation({
-        type: "success",
-        data: {
+
+      setCommentData([
+        {
           text,
           Reply: [],
           _id: id,
           isSuccess: true,
           User: {
-            id: 6,
-            UUID: "",
-            username: "test",
-            imageUrl: "",
+            ...user,
+            imageUrl: user.image,
           },
         },
-        id: data.id,
-      });
+        ...state,
+      ]);
     });
   };
 
@@ -173,7 +161,12 @@ export default function CommentCard({
               color="red"
             >{`See repl${comment.Reply.length > 1 ? "ies" : "y"}`}</Button>
           ) : null}
-          <CommentCollapse open={collapse} />
+          <CommentCollapse
+            setCommentData={setCommentData}
+            commentMutation={commentMutation}
+            open={collapse}
+            comment={comment}
+          />
           <br />
           {reply &&
             comment.Reply.map((el) => (

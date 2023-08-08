@@ -7,43 +7,29 @@ import EmptyData from "@/components/emptyData";
 import { Button, Textarea } from "@/components/material-tailwind";
 import { commentAPost } from "@/actions/post";
 import { useParams } from "next/navigation";
+import { CommentSection } from "@/interfaces/post";
 const CommentCard = dinamic(() => import("@/components/card/comment"), {
   loading: () => <Loading />,
 });
-
-type CommentSection = {
-  text: string;
-  Reply: { text: string; _id: string }[];
-  _id: string;
-  isError?: boolean;
-  isLoading?: boolean;
-  isSuccess?: boolean;
-  User: {
-    UUID: string;
-    id: number;
-    imageUrl?: string;
-    username: string;
-  };
-};
 
 export default function Wrapper({
   comment,
 }: {
   comment: CommentSection[];
 }): JSX.Element {
+  const [commentData, setCommentData] = useState<CommentSection[]>(comment);
   const [optimisticComment, commentMutation] = useOptimistic(
-    comment,
+    commentData,
     (
       state,
       newComment: {
         data: CommentSection;
-        type: "success" | "error" | "loading";
+        type: "error" | "loading";
         id?: string;
       }
     ) => {
       const isError = newComment.type === "error";
       const isLoading = newComment.type === "loading";
-      const isSuccess = newComment.type === "success";
 
       switch (true) {
         case isError:
@@ -56,8 +42,6 @@ export default function Wrapper({
           ];
         case isLoading:
           return state.length ? [newComment.data, ...state] : [newComment.data];
-        case isSuccess:
-          return state.map((el) => (!el._id ? { ...el, _id: id } : el));
         default:
           return state;
       }
@@ -93,7 +77,7 @@ export default function Wrapper({
       },
     });
 
-    commentAPost({ text, postId }).then(({ data, success }) => {
+    commentAPost({ text, postId }).then(({ data, success, user }) => {
       setText("");
 
       if (!success) {
@@ -114,22 +98,20 @@ export default function Wrapper({
         });
         return;
       }
-      commentMutation({
-        type: "success",
-        data: {
+
+      setCommentData([
+        {
           text,
           Reply: [],
           _id: id,
           isSuccess: true,
           User: {
-            id: 6,
-            UUID: "",
-            username: "test",
-            imageUrl: "",
+            ...user,
+            imageUrl: user.image,
           },
         },
-        id: data.id,
-      });
+        ...commentData,
+      ]);
     });
   };
 
@@ -141,6 +123,8 @@ export default function Wrapper({
             comment={comment}
             key={idx}
             commentMutation={commentMutation}
+            setCommentData={setCommentData}
+            state={commentData}
           />
         ))
       ) : (

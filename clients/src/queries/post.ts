@@ -82,3 +82,12 @@ export const COMMENTAPOST = gql`
     }
   }
 `;
+
+export const REPLYCOMMENT = gql`
+  mutation Mutation($text: String!, $commentId: String!) {
+    replyComment(text: $text, commentId: $commentId) {
+      id
+      message
+    }
+  }
+`;

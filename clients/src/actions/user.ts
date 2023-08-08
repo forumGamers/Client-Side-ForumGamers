@@ -1,3 +1,5 @@
+"use server";
+
 import { LOGIN } from "@/queries/user";
 import { Mutate } from ".";
 
