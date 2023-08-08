@@ -2,7 +2,7 @@ import { timeLine } from "@/interfaces/post";
 import { client } from "@/lib/apolloClient";
 import { GETTIMELINE } from "@/queries/post";
 import PostCard from "@/components/card/postCard";
-import CreatePostCard from "@/components/card/postCard";
+import CreatePostCard from "@/components/card/createpostCard";
 import EmptyData from "@/components/emptyData";
 import { CustomSession } from "@/interfaces/global";
 import { checkServerSession } from "@/helper/global";
@@ -167,7 +167,7 @@ export default async function Page(): Promise<JSX.Element> {
           alignItems: "center",
         }}
       >
-        {/* <CreatePostCard/> */}
+        <CreatePostCard/>
         {data.length ? (
           data.map((timeline: timeLine) => (
             <PostCard

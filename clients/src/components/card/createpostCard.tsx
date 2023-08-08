@@ -24,7 +24,7 @@ export default function CreatePostCard(): JSX.Element {
           />
           <div className="flex w-full flex-col gap-0.5">
             <div className="flex flex-row">
-              <button className="btn btn-outline gap-1 text-base">
+              <button className="btn btn-outline gap-1 text-base rounded-full normal-case w-full">
               Start Your Post
               </button>
             </div>
