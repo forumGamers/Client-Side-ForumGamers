@@ -1,13 +1,21 @@
 "use client";
 
 import { Typography, Button } from "@/components/material-tailwind";
-import { useState, Fragment, useRef, Dispatch, SetStateAction } from "react";
+import {
+  useState,
+  Fragment,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  experimental_useOptimistic as useOptimistic,
+} from "react";
 import CommentCollapse from "../collapse/commentCollapse";
 import AvatarProfile from "../avatar/avatarProfile";
 import { LoadingOverlay } from "@/components/global";
 import { commentAPost } from "@/actions/post";
 import { useParams } from "next/navigation";
-import { CommentSection } from "@/interfaces/post";
+import { CommentSection, ReplySection } from "@/interfaces/post";
+import Reply from "./reply";
 
 export default function CommentCard({
   comment,
@@ -37,6 +45,28 @@ export default function CommentCard({
   };
 
   const { id } = useParams() as Record<string, string>;
+
+  const [optimisticReply, replyMutation] = useOptimistic(
+    state.find((el) => el._id === id)?.Reply,
+    (
+      state,
+      newReply: {
+        data: ReplySection[];
+        type: "error" | "loading";
+        id?: string;
+      }
+    ) => {
+      const isError = newReply.type === "error";
+      const isLoading = newReply.type === "loading";
+
+      switch (true) {
+        case isError:
+        case isLoading:
+        default:
+          return state;
+      }
+    }
+  );
 
   const resendHandler = () => {
     setLimit(limit + 1);
@@ -83,7 +113,7 @@ export default function CommentCard({
         {
           text,
           Reply: [],
-          _id: id,
+          _id: data.id,
           isSuccess: true,
           User: {
             ...user,
@@ -171,12 +201,7 @@ export default function CommentCard({
           {reply &&
             comment.Reply.map((el) => (
               <Fragment key={el._id}>
-                <div className="flex items-center ml-8 pl-4">
-                  <AvatarProfile user={comment.User} />
-                  <Typography className="font-normal cursor-pointer">
-                    {el.text}
-                  </Typography>
-                </div>
+                <Reply reply={el} />
                 <br />
               </Fragment>
             ))}

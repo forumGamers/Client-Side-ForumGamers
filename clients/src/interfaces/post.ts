@@ -55,17 +55,19 @@ export interface comment {
 
 export interface CommentSection {
   text: string;
-  Reply: {
-    text: string;
-    _id: string;
-    User?: userProfile;
-    isError?: boolean;
-    isLoading?: boolean;
-    isSuccess?: boolean;
-  }[];
+  Reply: ReplySection[];
   _id: string;
   isError?: boolean;
   isLoading?: boolean;
   isSuccess?: boolean;
   User: userProfile;
+}
+
+export interface ReplySection {
+  text: string;
+  _id: string;
+  User: userProfile;
+  isError?: boolean;
+  isLoading?: boolean;
+  isSuccess?: boolean;
 }
