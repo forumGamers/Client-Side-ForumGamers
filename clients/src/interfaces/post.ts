@@ -19,12 +19,7 @@ export interface timeLine {
   isShared: boolean;
   tags: string[];
   privacy: string;
-  User: {
-    UUID: string;
-    id: number;
-    imageUrl: string;
-    username: string;
-  };
+  User: userProfile;
 }
 
 export interface reply {
@@ -45,12 +40,7 @@ export interface comment {
   postId: string;
   userId: number;
   Reply: reply[];
-  User: {
-    id: number;
-    UUID: string;
-    username: string;
-    imageUrl?: string;
-  };
+  User: userProfile;
 }
 
 export interface CommentSection {

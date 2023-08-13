@@ -21,6 +21,9 @@ import {
   DialogBody,
   DialogFooter,
   Textarea,
+  Popover,
+  PopoverContent,
+  PopoverHandler
 } from "@material-tailwind/react";
 
 export {
@@ -44,4 +47,7 @@ export {
   DialogBody,
   DialogFooter,
   Textarea,
+  Popover,
+  PopoverContent,
+  PopoverHandler
 };

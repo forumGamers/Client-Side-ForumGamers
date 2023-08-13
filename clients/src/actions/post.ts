@@ -2,13 +2,15 @@
 
 import {
   COMMENTAPOST,
+  GETPOSTBYID,
   LIKEAPOST,
   REPLYCOMMENT,
   UNLIKEAPOST,
 } from "@/queries/post";
-import { Mutate } from ".";
+import { Mutate, Query } from ".";
 import Encryption from "@/helper/encryption";
 import { checkServerSession } from "@/helper/global";
+import { timeLine } from "@/interfaces/post";
 
 type result = {
   success: boolean;
@@ -143,4 +145,22 @@ export const ReplyComment = async ({
     }
 
     resolve({ success: true, data, user });
+  });
+
+export const GetAPost = async (id: string): Promise<result> =>
+  new Promise(async (resolve) => {
+    const { data, errors } = await Query<timeLine>({
+      query: GETPOSTBYID,
+      variables: {
+        getPostByIdId: id,
+      },
+    });
+
+    if (!data && errors?.length) {
+      const message = errors[0].message as string;
+
+      resolve({ success: false, message, data: [] });
+    }
+
+    resolve({ success: true, data });
   });

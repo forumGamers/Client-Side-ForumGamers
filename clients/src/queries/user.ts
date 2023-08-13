@@ -80,3 +80,19 @@ export const GOOGLELOGIN = gql`
     }
   }
 `;
+
+export const FOLLOWAUSER = gql`
+  mutation Mutation($followAUserId: String!) {
+    followAUser(id: $followAUserId) {
+      message
+    }
+  }
+`;
+
+export const UNFOLLOWAUSER = gql`
+  mutation Mutation($unFollowAUserId: String!) {
+    unFollowAUser(id: $unFollowAUserId) {
+      message
+    }
+  }
+`;

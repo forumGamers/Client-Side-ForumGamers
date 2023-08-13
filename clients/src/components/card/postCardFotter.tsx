@@ -12,25 +12,17 @@ import { CustomSession } from "@/interfaces/global";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LikeAPost, UnLikeAPost } from "@/actions/post";
-import { experimental_useOptimistic as useOptimistic } from "react";
 
 export default function PostCardFooter({
-  timeLine,
+  optimisticTimeLine,
   session,
+  optimisticMutation,
 }: {
-  timeLine: timeLine;
+  optimisticTimeLine: timeLine;
   session: CustomSession | null;
+  optimisticMutation: (action: timeLine) => void;
 }): JSX.Element {
   const router = useRouter();
-
-  const [optimisticTimeLine, optimisticMutation] = useOptimistic(
-    timeLine,
-    (state, updatedField: { isLiked: boolean; CountLike: number }) => ({
-      ...state,
-      isLiked: updatedField.isLiked,
-      CountLike: updatedField.CountLike,
-    })
-  );
 
   return (
     <>
@@ -39,6 +31,7 @@ export default function PostCardFooter({
         <button
           onClick={async () => {
             optimisticMutation({
+              ...optimisticTimeLine,
               isLiked: !optimisticTimeLine.isLiked,
               CountLike: !optimisticTimeLine.isLiked
                 ? optimisticTimeLine.CountLike + 1
@@ -46,14 +39,16 @@ export default function PostCardFooter({
             });
             session?.user?.access_token
               ? !optimisticTimeLine.isLiked
-                ? LikeAPost(timeLine._id).catch((err) => {
+                ? LikeAPost(optimisticTimeLine._id).catch((err) => {
                     optimisticMutation({
+                      ...optimisticTimeLine,
                       isLiked: false,
                       CountLike: optimisticTimeLine.CountLike - 1,
                     });
                   })
-                : UnLikeAPost(timeLine._id).catch((err) => {
+                : UnLikeAPost(optimisticTimeLine._id).catch((err) => {
                     optimisticMutation({
+                      ...optimisticTimeLine,
                       isLiked: true,
                       CountLike: optimisticTimeLine.CountLike + 1,
                     });
@@ -74,7 +69,7 @@ export default function PostCardFooter({
         {/* Comment button */}
         <Link
           className="btn btn-ghost gap-1 text-base"
-          href={`/comment/${timeLine._id}`}
+          href={`/comment/${optimisticTimeLine._id}`}
         >
           <ChatBubbleLeftIcon className="h-6 w-6" />
           <span>Comment</span>
@@ -87,16 +82,13 @@ export default function PostCardFooter({
         </button>
 
         {/* Share button */}
-        <button
-          disabled={!session}
-          onClick={() => {
-            console.log("ok");
-          }}
+        <Link
           className="btn btn-ghost gap-1 text-base"
+          href={`/share/${optimisticTimeLine._id}`}
         >
           <ShareIcon className="h-6 w-6" />
           <span>Share</span>
-        </button>
+        </Link>
       </CardFooter>
     </>
   );
