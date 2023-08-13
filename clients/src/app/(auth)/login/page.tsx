@@ -11,7 +11,7 @@ import { RedirectType } from "next/dist/client/components/redirect";
 
 export default async function LoginPage(): Promise<JSX.Element> {
   await checkServerSession((session) => {
-    if (session) redirect("/",RedirectType.replace);
+    if (session) redirect("/", RedirectType.replace);
   });
 
   const action = async (formData: FormData) => {
