@@ -4,7 +4,7 @@ import Encryption from "@/helper/encryption";
 import { comment } from "@/interfaces/post";
 import { client } from "@/lib/apolloClient";
 import { GETPOSTCOMMENT } from "@/queries/post";
-import Wrapper from "@/app/comment/[id]/wrapper";
+import Wrapper from "@/app/(home)/comment/[id]/wrapper";
 const Modal = dinamic(() => import("@/components/modal/longModal"), {
   loading: () => <Loading />,
 });

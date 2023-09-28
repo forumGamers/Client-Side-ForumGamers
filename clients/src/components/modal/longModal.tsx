@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogHeader,
   DialogBody,
-  DialogFooter,
 } from "@/components/material-tailwind";
 
 export default function Modal({

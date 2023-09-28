@@ -69,9 +69,9 @@ export default function Wrapper({
         _id: "",
         isLoading: true,
         User: {
-          id: 6,
+          id: 0,
           UUID: "",
-          username: "test",
+          username: "",
           imageUrl: "",
         },
       },
@@ -89,10 +89,8 @@ export default function Wrapper({
             _id: "",
             isError: true,
             User: {
-              id: 6,
-              UUID: "",
-              username: "test",
-              imageUrl: "",
+              ...user,
+              imageUrl: user.image,
             },
           },
         });
@@ -103,7 +101,7 @@ export default function Wrapper({
         {
           text,
           Reply: [],
-          _id: id,
+          _id: data.id,
           isSuccess: true,
           User: {
             ...user,

@@ -1,15 +1,21 @@
-import {
-  Card,
-  CardHeader,
-  Avatar,
-  } from "@/components/material-tailwind";
+import { Card, CardHeader, CardFooter } from "@/components/material-tailwind";
 import { blankProfile } from "@/constants";
-import CreatePostCardFooter from "./createpostCardFooter";
+import { Avatar } from "@material-tailwind/react";
+import {
+  PhotoIcon,
+  VideoCameraIcon,
+  CalendarDaysIcon,
+  NewspaperIcon,
+} from "@/components/icon";
 
 export default function CreatePostCard(): JSX.Element {
   return (
     <>
-      <Card color="transparent" shadow={false} className="w-full bg-white max-w-[42rem] p-5 m-3">
+      <Card
+        color="transparent"
+        shadow={false}
+        className="w-full bg-white max-w-[42rem] p-5 m-3"
+      >
         <CardHeader
           color="transparent"
           floated={false}
@@ -30,7 +36,30 @@ export default function CreatePostCard(): JSX.Element {
             </div>
           </div>
         </CardHeader>
-        <CreatePostCardFooter/>
+        <CardFooter className="flex flex-row justify-between p-0">
+          {/* Like button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <PhotoIcon className="h-6 w-6" />
+            <span>Foto</span>
+          </button>
+          {/* Comment button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <VideoCameraIcon className="h-6 w-6" />
+            <span>VIdeo</span>
+          </button>
+
+          {/* Share button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <CalendarDaysIcon className="h-6 w-6" />
+            <span>Acara</span>
+          </button>
+
+          {/* Send button */}
+          <button className="btn btn-ghost gap-1 text-base">
+            <NewspaperIcon className="h-6 w-6" />
+            <span>Artikel</span>
+          </button>
+        </CardFooter>
       </Card>
     </>
   );

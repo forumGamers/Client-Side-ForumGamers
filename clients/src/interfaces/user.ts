@@ -45,4 +45,7 @@ export interface userProfile {
   id: number;
   imageUrl?: string;
   username: string;
+  bio?: string | null;
+  isfollowed?: boolean;
+  backgroundImage?: string;
 }

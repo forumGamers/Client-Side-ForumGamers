@@ -15,8 +15,10 @@ export const GETTIMELINE = gql`
       UpdatedAt
       User {
         UUID
+        bio
         id
         imageUrl
+        isfollowed
         username
       }
       _id
@@ -88,6 +90,37 @@ export const REPLYCOMMENT = gql`
     replyComment(text: $text, commentId: $commentId) {
       id
       message
+    }
+  }
+`;
+
+export const GETPOSTBYID = gql`
+  query GetPostById($getPostByIdId: String!) {
+    getPostById(id: $getPostByIdId) {
+      CountComment
+      CountLike
+      CountShare
+      CreatedAt
+      Media {
+        id
+        type
+        url
+      }
+      UpdatedAt
+      User {
+        UUID
+        id
+        imageUrl
+        username
+      }
+      _id
+      allowComment
+      isLiked
+      isShared
+      privacy
+      tags
+      text
+      userId
     }
   }
 `;

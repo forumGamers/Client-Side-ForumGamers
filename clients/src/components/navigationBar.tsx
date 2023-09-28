@@ -30,8 +30,11 @@ import {
   ArrowLeftOnRectangleIcon,
 } from "@/components/icon";
 import { blankProfile } from "@/constants";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 function ProfileMenu({ session }: { session: CustomSession | null }) {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const triggers = {
     onMouseEnter: () => setIsMenuOpen(true),
@@ -43,34 +46,52 @@ function ProfileMenu({ session }: { session: CustomSession | null }) {
         {
           label: "My Profile",
           icon: UserCircleIcon,
+          handler: () => {
+            router.prefetch("/user");
+          },
         },
         {
           label: "Edit Profile",
           icon: Cog6ToothIcon,
+          handler: () => {
+            router.prefetch("/user/edit");
+          },
         },
         {
           label: "Inbox",
           icon: InboxArrowDownIcon,
+          handler: () => {
+            router.prefetch("/message");
+          },
         },
         {
           label: "Help",
           icon: LifebuoyIcon,
+          handler: () => {
+            router.prefetch("/help");
+          },
         },
         {
           label: "Sign Out",
           icon: PowerIcon,
+          handler: async () => {
+            await signOut();
+          },
         },
       ]
     : [
         {
           label: "Sign In",
           icon: ArrowLeftOnRectangleIcon,
+          handler: () => {
+            router.prefetch("/login");
+          },
         },
       ];
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
+      <MenuHandler {...triggers}>
         <Button
           variant="text"
           color="blue-gray"
@@ -92,31 +113,33 @@ function ProfileMenu({ session }: { session: CustomSession | null }) {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, handler }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <MenuItem
-              key={label}
-              {...triggers}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
+            <div {...triggers} key={label} onClick={handler}>
+              <MenuItem
+                {...triggers}
+                className={`flex items-center gap-2 rounded ${
+                  isLastItem
+                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    : ""
+                }`}
               >
-                {label}
-              </Typography>
-            </MenuItem>
+                {createElement(icon, {
+                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color={isLastItem ? "red" : "inherit"}
+                  {...triggers}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            </div>
           );
         })}
       </MenuList>
@@ -264,7 +287,7 @@ export default function NavigationBar({
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 top-0 fixed items-center z-50 justify-center">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
         <Typography
           as="a"
