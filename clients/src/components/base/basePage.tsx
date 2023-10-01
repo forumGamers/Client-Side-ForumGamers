@@ -3,6 +3,8 @@ import NavigationBar from "../navigationBar";
 import { checkServerSession } from "@/helper/global";
 import { Typography } from "@/components/material-tailwind";
 import Link from "next/link";
+import ItemCard from "../card/cardItem";
+import Msgcard from "../card/cardmsg";
 
 export default async function BasePage({
   children,
@@ -15,10 +17,11 @@ export default async function BasePage({
   });
   return (
     <>
-      <main className="container">
-        <NavigationBar session={userSession} />
+        <NavigationBar session={userSession}/>
         {children}
-      </main>
+        <div className="flex flex-1 flex-row justify-end mr-4">
+        <Msgcard/>
+        </div>
       <footer className="w-full bg-white p-8 bottom-0">
         <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white text-center md:justify-between">
           <img src="/img/logo-ct-dark.png" alt="logo-ct" className="w-10" />

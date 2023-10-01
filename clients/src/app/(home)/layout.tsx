@@ -6,25 +6,22 @@ import BasePage from "@/components/base/basePage";
 
 export default function RootLayout({
   children,
-  store,
-  tour,
-  post,
+  // store,
+  // tour,
 }: {
   children: React.ReactNode;
-  store: React.ReactNode;
-  tour: React.ReactNode;
-  post: React.ReactNode;
+  // store: React.ReactNode;
+  // tour: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <HeaderApp />
-      <body style={{ backgroundColor: "#252525" }}>
+      <body style={{ backgroundColor: "rgb(3, 7, 18)" }}>
         <ProviderWrapper>
           <BasePage>
             {children}
-            {post}
-            {store}
-            {tour}
+            {/* {store}
+            {tour} */}
           </BasePage>
         </ProviderWrapper>
       </body>

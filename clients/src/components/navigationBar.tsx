@@ -28,6 +28,10 @@ import {
   RocketLaunchIcon,
   Bars2Icon,
   ArrowLeftOnRectangleIcon,
+  HomeIcon,
+  UserGroupIcon,
+  BuildingStorefrontIcon,
+  PuzzlePieceIcon,
 } from "@/components/icon";
 import { blankProfile } from "@/constants";
 import { useRouter } from "next/navigation";
@@ -141,7 +145,7 @@ function ProfileMenu({ session }: { session: CustomSession | null }) {
               </MenuItem>
             </div>
           );
-        })}
+        })} 
       </MenuList>
     </Menu>
   );
@@ -194,21 +198,21 @@ function NavListMenu() {
           <Typography as="a" href="#" variant="small" className="font-normal">
             <MenuItem
               {...triggers}
-              className="hidden items-center gap-2 text-blue-gray-900 lg:flex lg:rounded-full"
+              className="hidden items-center gap-2 text-blue-gray-900 lg:flex lg:rounded-full text-white"
             >
-              <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Pages{" "}
-              <ChevronDownIcon
+              {/* <Square3Stack3DIcon className="h-[18px] w-[18px] text-white" /> Home{" "} */}
+              {/* <ChevronDownIcon
                 strokeWidth={2}
                 className={`h-3 w-3 transition-transform ${
                   isMenuOpen ? "rotate-180" : ""
                 }`}
-              />
+              /> */}
             </MenuItem>
           </Typography>
         </MenuHandler>
         <MenuList
           {...triggers}
-          className="hidden w-[36rem] grid-cols-7 gap-3 overflow-visible lg:grid"
+          className="hidden w-[36rem] grid-cols-7 gap-3 overflow-visible lg:grid text-white"
         >
           <Card
             color="blue"
@@ -223,8 +227,8 @@ function NavListMenu() {
           </ul>
         </MenuList>
       </Menu>
-      <MenuItem className="flex items-center gap-2 text-blue-gray-900 lg:hidden">
-        <Square3Stack3DIcon className="h-[18px] w-[18px]" /> Pages{" "}
+      <MenuItem className="flex items-center gap-2 text-blue-gray-900 lg:hidden text-white">
+        {/* <Square3Stack3DIcon className="h-[18px] w-[18px] text-white" /> Home{" "} */}
       </MenuItem>
       <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
         {renderItems}
@@ -236,16 +240,20 @@ function NavListMenu() {
 // nav list component
 const navListItems = [
   {
-    label: "Account",
-    icon: UserCircleIcon,
+    label: "Home",
+    icon: HomeIcon,
   },
   {
-    label: "Blocks",
-    icon: CubeTransparentIcon,
+    label: "Community",
+    icon: UserGroupIcon,
   },
   {
-    label: "Docs",
-    icon: CodeBracketSquareIcon,
+    label: "Market",
+    icon: BuildingStorefrontIcon,
+  },
+  {
+    label: "Tournament",
+    icon: PuzzlePieceIcon,
   },
 ];
 
@@ -260,7 +268,7 @@ function NavList() {
           href="#"
           variant="small"
           color="blue-gray"
-          className="font-normal"
+          className="font-normal text-white"
         >
           <MenuItem className="flex items-center gap-2 lg:rounded-full">
             {createElement(icon, { className: "h-[18px] w-[18px]" })} {label}
@@ -287,12 +295,12 @@ export default function NavigationBar({
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 top-0 fixed items-center z-50 justify-center">
-      <div className="relative mx-auto flex items-center text-blue-gray-900">
+    <Navbar className="block max-w-full rounded-none py-4 px-8 shadow-opacity-50 backdrop-saturate-none backdrop-blur-none bg-opacity-100 border-b border-white/80 w-full fixed items-center justify-center bg-[#030712] z-50 !important">
+      <div className="relative flex items-center text-blue-gray-900">
         <Typography
           as="a"
           href="/"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-white"
         >
           Forum Gamers
         </Typography>

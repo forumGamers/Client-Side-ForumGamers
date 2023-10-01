@@ -33,13 +33,13 @@ export default function PostCard({
       <Card
         color="transparent"
         shadow={false}
-        className="w-full bg-white max-w-[42rem] p-5 m-3"
+        className="w-full max-w-[75rem] p-5 m-3 bg-[#030712] border border-white/50"
       >
         <CardHeader
           color="transparent"
           floated={false}
           shadow={false}
-          className="relative mx-0 flex bg-red items-start gap-3 mt-2 mb-2"
+          className="relative mx-0 flex bg-red items-start gap-3 mt-2 mb-2 text-white"
         >
           <div className="flex w-full flex-col gap-0.5">
             <div className="flex flex-row">
@@ -47,7 +47,7 @@ export default function PostCard({
               <div className="flex justify-end items-center flex-grow bottom-full z-10">
                 <div className="dropdown dropdown-left">
                   <button className="btn btn-ghost btn-circle m-1" tabIndex={0}>
-                    <EllipsisVerticalIcon className="h-6 w-6" />
+                    <EllipsisVerticalIcon className="h-6 w-6 text-white" />
                     <ul
                       tabIndex={0}
                       className="dropdown-content z-[1] menu p-2 shadow-lg bg-ghost rounded-box w-52"
@@ -63,7 +63,7 @@ export default function PostCard({
           </div>
         </CardHeader>
         <CardBody className="mt-2 mb-2 p-0">
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start text-white">
             <Typography>{optimisticTimeLine.text}</Typography>
             {optimisticTimeLine.Media.url && (
               <LazyLoadImage

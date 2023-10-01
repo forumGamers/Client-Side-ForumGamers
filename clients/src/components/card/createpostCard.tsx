@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardFooter } from "@/components/material-tailwind";
 import { blankProfile } from "@/constants";
-import { Avatar } from "@material-tailwind/react";
+import { Avatar } from "@/components/material-tailwind";
 import {
   PhotoIcon,
   VideoCameraIcon,
@@ -14,13 +14,13 @@ export default function CreatePostCard(): JSX.Element {
       <Card
         color="transparent"
         shadow={false}
-        className="w-full bg-white max-w-[42rem] p-5 m-3"
+        className="w-full max-w-[75rem] p-3 mt-12 mb-3 bg-[#030712] border border-white/50"
       >
         <CardHeader
           color="transparent"
           floated={false}
           shadow={false}
-          className="relative mx-0 flex bg-red items-start gap-3 mt-2 mb-2"
+          className="relative mx-0 flex bg-red items-start gap-3 mt-2 mb-3"
         >
           <Avatar
             src={blankProfile}
@@ -28,36 +28,28 @@ export default function CreatePostCard(): JSX.Element {
             alt="profile-picture"
             className="cursor-pointer"
           />
-          <div className="flex w-full flex-col gap-0.5">
-            <div className="flex flex-row">
-              <button className="btn btn-outline gap-1 text-base rounded-full normal-case w-full">
-              Start Your Post
+          <div className="flex w-full">
+              <button className="btn btn-ghost flex justify-start gap-1 text-white/50 border border-white/50 rounded-2xl w-full">
+                <span style={{ textTransform: "none" }}>Start Create Post</span>
               </button>
-            </div>
           </div>
         </CardHeader>
         <CardFooter className="flex flex-row justify-between p-0">
-          {/* Like button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <PhotoIcon className="h-6 w-6" />
-            <span>Foto</span>
+          {/* Foto button */}
+          <button className="btn btn-ghost gap-1 text-white/50">
+            <PhotoIcon className="h-6 w-6 text-[#EE2924]" />
+            <span style={{ textTransform: "none" }}>Foto</span>
           </button>
-          {/* Comment button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <VideoCameraIcon className="h-6 w-6" />
-            <span>VIdeo</span>
-          </button>
-
-          {/* Share button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <CalendarDaysIcon className="h-6 w-6" />
-            <span>Acara</span>
+          {/* Video button */}
+          <button className="btn btn-ghost gap-1 text-white/50">
+            <VideoCameraIcon className="h-6 w-6 text-[#EE2924]" />
+            <span style={{ textTransform: "none" }}>Video</span>
           </button>
 
-          {/* Send button */}
-          <button className="btn btn-ghost gap-1 text-base">
-            <NewspaperIcon className="h-6 w-6" />
-            <span>Artikel</span>
+          {/* Event button */}
+          <button className="btn btn-ghost gap-1 text-white/50">
+            <CalendarDaysIcon className="h-6 w-6 text-[#EE2924]" />
+            <span style={{ textTransform: "none" }}>Event</span>
           </button>
         </CardFooter>
       </Card>

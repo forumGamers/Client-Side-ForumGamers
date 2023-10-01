@@ -58,36 +58,36 @@ export default function PostCardFooter({
           className="btn btn-ghost gap-1 text-base"
         >
           <HeartIcon
-            className={`h-6 w-6 text-pink-500 ${
+            className={`h-6 w-6 text-[#EE2924] ${
               optimisticTimeLine?.isLiked
-                ? "text-pink-500"
-                : "text-transparent stroke-black"
+                ? "text-[#EE2924]"
+                : "text-transparent stroke-[#EE2924]"
             }`}
           />
-          <span>Like</span>
+          <span style={{ textTransform: "none" }}>Like</span>
         </button>
         {/* Comment button */}
         <Link
-          className="btn btn-ghost gap-1 text-base"
+          className="btn btn-ghost gap-1 text-white/50"
           href={`/comment/${optimisticTimeLine._id}`}
         >
-          <ChatBubbleLeftIcon className="h-6 w-6" />
-          <span>Comment</span>
+          <ChatBubbleLeftIcon className="h-6 w-6 text-[#EE2924]" />
+          <span style={{ textTransform: "none" }}>Comment</span>
         </Link>
 
         {/* Send button */}
-        <button className="btn btn-ghost gap-1 text-base">
-          <PaperAirplaneIcon className="h-6 w-6" />
-          <span>Send</span>
+        <button className="btn btn-ghost gap-1 text-white/50">
+          <PaperAirplaneIcon className="h-6 w-6 text-[#EE2924]" />
+          <span style={{ textTransform: "none" }}>Send</span>
         </button>
 
         {/* Share button */}
         <Link
-          className="btn btn-ghost gap-1 text-base"
+          className="btn btn-ghost gap-1 text-white/50"
           href={`/share/${optimisticTimeLine._id}`}
         >
-          <ShareIcon className="h-6 w-6" />
-          <span>Share</span>
+          <ShareIcon className="h-6 w-6 text-[#EE2924]" />
+          <span style={{ textTransform: "none" }}>Share</span>
         </Link>
       </CardFooter>
     </>
