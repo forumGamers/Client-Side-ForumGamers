@@ -2,15 +2,18 @@
 const nextConfig = {
   experimental: {
     appDir: true,
+    serverActions: true,
   },
   env: {
     URL: process.env.URL,
     ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
     SECRET: process.env.SECRET,
     KEY: process.env.KEY,
-    REDIS_HOST: process.env.REDIS_HOST,
-    REDIS_PASS: process.env.REDIS_PASS,
     secret: process.env.secret,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    GOOGLE_OAUTH_CLIENTID: process.env.GOOGLE_OAUTH_CLIENTID,
+    GOOGLE_OAUTH_CLIENT_SECRET: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
   },
   typescript: {
     ignoreBuildErrors: false,
@@ -35,6 +38,9 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  images: {
+    domains: ["ik.imagekit.io"],
   },
 };
 

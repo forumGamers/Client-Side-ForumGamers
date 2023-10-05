@@ -1,57 +1,97 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Silkscreen", cursive;
+}
+
+:root {
+  --main-background: #fff;
+  --sec-background: #8648c1;
+  --txt-primary: #f7f7f7;
+  --txt-secondary: #222;
+}
+
 .body {
-  background-color: rgba(91, 112, 131, 0.4);
-}
-
-.login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 32px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.login-title {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 32px;
-}
-
-.login-input-container {
-  margin-bottom: 16px;
-}
-
-.login-label {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: #1c1e21;
-}
-
-.login-input {
-  display: block;
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccd6dd;
-  border-radius: 9999px;
-  font-size: 16px;
-  font-weight: 400;
+  height: auto;
+  min-height: 100vh;
+  position: absolute;
+  background-image: url("https://ik.imagekit.io/b8ugipzgo/FrontEnd/bg-login.jpg?updatedAt=1681700343737");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+}
+
+.wrapper-login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button{
+  background-color: tomato;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 450px;
+  height: 570px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.input {
+  border: 2px solid var(--sec-background);
+  font-size: 14px;
   color: #1c1e21;
-  transition: all 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-input:focus {
-  border-color: #1da1f2;
+  box-shadow: #fff;
   outline: none;
 }
 
-.login-button {
-  display: block;
-  width: 100%;
-  padding: 16px;
-  background-color: #1da1f2;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
+.btn:hover {
+  background-color: var(--main-background);
+  color: var(--sec-background);
+  transition: 0.1s ease-in-out;
+}
+
+.login-link {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 476px) {
+  .login-wrapper {
+    width: 250px;
+  }
+
+  .login-input {
+    width: 90%;
+  }
+
+  .img-bg-wp {
+    background-size: 470px 510px;
+  }
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
 }

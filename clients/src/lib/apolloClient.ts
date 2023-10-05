@@ -3,20 +3,20 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
   HttpLink,
+  ApolloLink,
 } from "@apollo/client";
-import { SchemaLink } from "@apollo/client/link/schema";
 import { useMemo } from "react";
-const uri = process.env.URL || "http://localhost:3000/api/graphql";
-import { schema } from "@/server/schema";
+const uri = process.env.URL || "http://localhost:5000";
+import { createUploadLink } from "apollo-upload-client";
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   uri,
   cache: new InMemoryCache(),
+  ssrMode: typeof window === "undefined",
+  link: ApolloLink.from([createUploadLink({ uri })]),
 });
 
 function createIsoMorphLink() {
-  if (typeof window === "undefined") return new SchemaLink({ schema });
-
   return new HttpLink({
     uri,
     credentials: "same-origin",

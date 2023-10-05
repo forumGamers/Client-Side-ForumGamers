@@ -22,7 +22,7 @@ export default function Custom404(): JSX.Element {
           src={image}
           alt="404 Not Found"
           className="image"
-          placeholderSrc="https://ik.imagekit.io/b8ugipzgo/FrontEnd/404.png?updatedAt=1678668766605"
+          placeholderSrc={image}
         />
       </div>
     </div>

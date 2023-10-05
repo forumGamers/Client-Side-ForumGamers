@@ -25,15 +25,15 @@ export const VERIFYUSER = gql`
 `;
 
 export const GETUSERDATA = gql`
-  query GetUserData($accessToken: String!) {
-    getUserData(access_token: $accessToken) {
+  query GetUserData {
+    getUserData {
       Followings {
         StoreId
       }
       Store {
         background
         description
-        id
+        ID
         image
         name
       }
@@ -52,6 +52,47 @@ export const GETUSERDATA = gql`
       point
       role
       username
+      backgroundImage
+    }
+  }
+`;
+
+export const USERRESETPASSWORD = gql`
+  mutation Mutation($email: String!) {
+    resetPassword(email: $email) {
+      message
+    }
+  }
+`;
+
+export const USERCHANGEFORGETPASS = gql`
+  mutation Mutation($payload: forgetPass!) {
+    changeForgetPassword(payload: $payload) {
+      message
+    }
+  }
+`;
+
+export const GOOGLELOGIN = gql`
+  mutation GoogleLogin {
+    googleLogin {
+      access_token
+    }
+  }
+`;
+
+export const FOLLOWAUSER = gql`
+  mutation Mutation($followAUserId: String!) {
+    followAUser(id: $followAUserId) {
+      message
+    }
+  }
+`;
+
+export const UNFOLLOWAUSER = gql`
+  mutation Mutation($unFollowAUserId: String!) {
+    unFollowAUser(id: $unFollowAUserId) {
+      message
     }
   }
 `;
