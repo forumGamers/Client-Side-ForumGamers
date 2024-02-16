@@ -17,11 +17,14 @@ import {
   PaperAirplaneIcon,
   ShareIcon,
   EllipsisVerticalIcon,
+  PhotoIcon,
+  FaceSmileIcon,
+  XMarkIcon,
+  ChevronUpIcon
 } from "@heroicons/react/24/outline";
 
 import {
   StarIcon,
-  PhotoIcon,
   VideoCameraIcon,
   CalendarDaysIcon,
   NewspaperIcon,
@@ -63,4 +66,7 @@ export {
   BuildingStorefrontIcon,
   PencilSquareIcon,
   MagnifyingGlassIcon,
+  FaceSmileIcon,
+  XMarkIcon,
+  ChevronUpIcon
 };

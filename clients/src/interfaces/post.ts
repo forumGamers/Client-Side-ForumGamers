@@ -1,6 +1,7 @@
 import { userProfile } from "./user";
 
 export interface timeLine {
+  isclick: boolean;
   CountComment: number;
   CountLike: number;
   CountShare: number;

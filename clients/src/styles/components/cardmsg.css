@@ -1,0 +1,66 @@
+.tab-bar {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    transition: border-bottom 0.3s ease, color 0.3s ease;
+    width: 50%;
+    text-align: center;
+  }
+  
+  .tab-bar.active {
+    color: rgb(37 99 235);
+    border-bottom: 2px solid rgb(37 99 235);
+  }
+  
+  .tab-bar:hover {
+    color: rgb(37 99 235);
+  }
+
+  /* Styles.css */
+.chat-preview {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sender-info {
+    display: flex;
+    flex-direction: row;
+    gap: 2;
+    align-items: center;
+  }
+  
+  .sender-avatar {
+    width: 16px; /* Sesuaikan dengan ukuran yang diinginkan */
+    height: 16px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+  }
+  
+  .sender-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .chat-preview-info {
+    flex-grow: 1;
+  }
+  
+  .message-preview {
+    margin: 0;
+  }
+
+  .message-info{
+    display: flex;
+    flex-direction: row;
+    gap: 2;
+    justify-content: space-between;
+  }
+
+  .chat-list{
+    margin-top: 10px;
+  }
+  

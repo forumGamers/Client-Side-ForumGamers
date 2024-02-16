@@ -50,7 +50,7 @@ export default function PostCard({
                     <EllipsisVerticalIcon className="h-6 w-6 text-white" />
                     <ul
                       tabIndex={0}
-                      className="dropdown-content z-[1] menu p-2 shadow-lg bg-ghost rounded-box w-52"
+                      className="dropdown-content menu p-2 shadow-lg bg-ghost rounded-box w-52 z-[1]"
                     >
                       <li>
                         <a>Edit</a>

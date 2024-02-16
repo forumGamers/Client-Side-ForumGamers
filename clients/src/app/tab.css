@@ -1,0 +1,28 @@
+.tab-bar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #128c7e;
+    color: white;
+  }
+  
+  .tab-button {
+    flex-grow: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tab-button.active {
+    background-color: #075e54;
+  }
+  
+  .tab-indicator {
+    height: 3px;
+    background-color: #25d366;
+    position: absolute;
+    bottom: 0;
+    width: 33.333%; /* Sesuaikan dengan jumlah tab yang Anda miliki */
+    transition: left 0.3s;
+  }
+  

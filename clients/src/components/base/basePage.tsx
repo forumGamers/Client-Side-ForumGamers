@@ -3,8 +3,9 @@ import NavigationBar from "../navigationBar";
 import { checkServerSession } from "@/helper/global";
 import { Typography } from "@/components/material-tailwind";
 import Link from "next/link";
-import ItemCard from "../card/cardItem";
-import Msgcard from "../card/cardmsg";
+import CardMsg from "../organ/CardMsg";
+import RoomChat from "../organ/RoomChat";
+import Chat from "../mollecul/Chat";
 
 export default async function BasePage({
   children,
@@ -17,11 +18,19 @@ export default async function BasePage({
   });
   return (
     <>
-        <NavigationBar session={userSession}/>
-        {children}
-        <div className="flex flex-1 flex-row justify-end mr-4">
-        <Msgcard/>
-        </div>
+      <NavigationBar session={userSession}/>
+      {children}
+      <div className="w-full gap-5 flex flex-row items-end justify-end margin-top-auto fixed bottom-0 right-5 z-[10]">
+        <RoomChat session={null}/>
+        <CardMsg session={null}/>
+      </div>
+
+      {/* <div className="w-full">
+        <CardCht session={null}/>
+      </div>
+      <div  className="w-full">
+      <Msgcard session={null} />
+      </div> */}
       <footer className="w-full bg-white p-8 bottom-0">
         <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white text-center md:justify-between">
           <img src="/img/logo-ct-dark.png" alt="logo-ct" className="w-10" />
